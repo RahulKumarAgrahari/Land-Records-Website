@@ -1,271 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-Land Records - User Registration</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <header>
-      <div class="logo-title">
-        <img src="earth.png" alt="Logo" />
-        <h1>E-Land Records</h1>
-      </div>
-      <div class="header-title">Land Record Management System</div>
-    </header>
 
-    <div class="register-container">
-      <div class="register-box">
-        <h2>Create User Registration</h2>
-        <form id="registrationForm" onsubmit="return validateForm()">
-          <div class="form-grid">
-            <!-- Personal Information -->
-            <div class="form-section">
-              <h3><i class="fas fa-user"></i> Personal Information</h3>
-              <div class="form-group">
-                <label for="first-name"
-                  >First Name <span class="required">*</span></label
-                >
-                <input type="text" id="first-name" required />
-              </div>
-              <div class="form-group">
-                <label for="middle-name">Middle Name</label>
-                <input type="text" id="middle-name" />
-              </div>
-              <div class="form-group">
-                <label for="last-name"
-                  >Last Name <span class="required">*</span></label
-                >
-                <input type="text" id="last-name" required />
-              </div>
-              <div class="form-group">
-                <label for="dob"
-                  >Date of Birth <span class="required">*</span></label
-                >
-                <input type="date" id="dob" required />
-              </div>
-              <div class="form-group">
-                <label for="gender"
-                  >Gender <span class="required">*</span></label
-                >
-                <select id="gender" required>
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Land Records - User Registration</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+
+<body>
+  <header>
+    <div class="logo-title">
+      <img src="earth.png" alt="Logo" />
+      <h1>E-Land Records</h1>
+    </div>
+    <div class="header-title">Land Record Management System</div>
+  </header>
+
+  <div class="register-container">
+    <div class="register-box">
+      <h2>Create User Registration</h2>
+      <form id="registrationForm" onsubmit="return validateForm()">
+        <div class="form-grid">
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h3><i class="fas fa-user"></i> Personal Information</h3>
+            <div class="form-group">
+              <label for="first-name">First Name <span class="required">*</span></label>
+              <input type="text" id="first-name" required />
             </div>
-
-            <!-- Contact Information -->
-            <div class="form-section">
-              <h3><i class="fas fa-address-card"></i> Contact Information</h3>
-              <div class="form-group">
-                <label for="phone"
-                  >Phone Number <span class="required">*</span></label
-                >
-                <input type="tel" id="phone" required />
-              </div>
-              <div class="form-group">
-                <label for="email"
-                  >Email Address <span class="required">*</span></label
-                >
-                <input type="email" id="email" required />
-              </div>
-              <div class="form-group">
-                <label for="aadhar"
-                  >Aadhar Number <span class="required">*</span></label
-                >
-                <input type="text" id="aadhar" required maxlength="12" />
-              </div>
-              <div class="form-group">
-                <label for="address"
-                  >Residential Address <span class="required">*</span></label
-                >
-                <textarea id="address" required></textarea>
-              </div>
+            <div class="form-group">
+              <label for="middle-name">Middle Name</label>
+              <input type="text" id="middle-name" />
             </div>
-
-            <!-- Account Security -->
-            <div class="form-section full-width">
-              <h3><i class="fas fa-lock"></i> Account Security</h3>
-              <div class="form-group">
-                <label for="username"
-                  >Username <span class="required">*</span></label
-                >
-                <input type="text" id="username" required />
-              </div>
-              <div class="form-group">
-                <label for="password"
-                  >Password <span class="required">*</span></label
-                >
-                <input type="password" id="password" required />
-              </div>
-              <div class="form-group">
-                <label for="confirm-password"
-                  >Confirm Password <span class="required">*</span></label
-                >
-                <input type="password" id="confirm-password" required />
-              </div>
+            <div class="form-group">
+              <label for="last-name">Last Name <span class="required">*</span></label>
+              <input type="text" id="last-name" required />
             </div>
-
-            <!-- OTP Verification -->
-            <div class="form-section full-width">
-              <h3><i class="fas fa-shield-alt"></i> Identity Verification</h3>
-              <div class="form-group">
-                <button type="button" class="send-otp-button">
-                  <i class="fas fa-paper-plane"></i> Send OTP
-                </button>
-              </div>
-              <div class="otp-input-group">
-                <div class="otp-boxes">
-                  <input type="text" class="otp-box" maxlength="1" />
-                  <input type="text" class="otp-box" maxlength="1" />
-                  <input type="text" class="otp-box" maxlength="1" />
-                  <input type="text" class="otp-box" maxlength="1" />
-                  <input type="text" class="otp-box" maxlength="1" />
-                  <input type="text" class="otp-box" maxlength="1" />
-                </div>
-                <div class="otp-timer">
-                  Time remaining: <span id="timer">02:00</span>
-                </div>
-              </div>
+            <div class="form-group">
+              <label for="dob">Date of Birth <span class="required">*</span></label>
+              <input type="date" id="dob" required />
             </div>
+            <div class="form-group">
+              <label for="gender">Gender <span class="required">*</span></label>
+              <select id="gender" required>
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
 
-            <!-- Terms and Conditions -->
-            <div class="form-section full-width">
-              <div class="checkbox-group">
-                <input type="checkbox" id="terms" required />
-                <label for="terms">
-                  I agree to the <a href="#">Terms and Conditions</a> and
-                  <a href="#">Privacy Policy</a>
-                </label>
+          <!-- Contact Information -->
+          <div class="form-section">
+            <h3><i class="fas fa-address-card"></i> Contact Information</h3>
+            <div class="form-group">
+              <label for="phone">Phone Number <span class="required">*</span></label>
+              <input type="tel" id="phone" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address <span class="required">*</span></label>
+              <input type="email" id="email" required />
+            </div>
+            <div class="form-group">
+              <label for="aadhar">Aadhar Number <span class="required">*</span></label>
+              <input type="text" id="aadhar" required maxlength="12" />
+            </div>
+            <div class="form-group">
+              <label for="address">Residential Address <span class="required">*</span></label>
+              <textarea id="address" required></textarea>
+            </div>
+          </div>
+
+          <!-- Account Security -->
+          <div class="form-section full-width">
+            <h3><i class="fas fa-lock"></i> Account Security</h3>
+            <div class="form-group">
+              <label for="username">Username <span class="required">*</span></label>
+              <input type="text" id="username" required />
+            </div>
+            <div class="form-group">
+              <label for="password">Password <span class="required">*</span></label>
+              <input type="password" id="password" required />
+            </div>
+            <div class="form-group">
+              <label for="confirm-password">Confirm Password <span class="required">*</span></label>
+              <input type="password" id="confirm-password" required />
+            </div>
+          </div>
+
+          <!-- OTP Verification -->
+          <div class="form-section full-width">
+            <h3><i class="fas fa-shield-alt"></i> Identity Verification</h3>
+            <div class="form-group">
+              <button type="button" class="send-otp-button">
+                <i class="fas fa-paper-plane"></i> Send OTP
+              </button>
+            </div>
+            <div class="otp-input-group">
+              <div class="otp-boxes">
+                <input type="text" class="otp-box" maxlength="1" />
+                <input type="text" class="otp-box" maxlength="1" />
+                <input type="text" class="otp-box" maxlength="1" />
+                <input type="text" class="otp-box" maxlength="1" />
+                <input type="text" class="otp-box" maxlength="1" />
+                <input type="text" class="otp-box" maxlength="1" />
+              </div>
+              <div class="otp-timer">
+                Time remaining: <span id="timer">02:00</span>
               </div>
             </div>
           </div>
 
-          <button type="submit" class="register-button">
-            <i class="fas fa-user-plus"></i> Create User Account
-          </button>
-        </form>
+          <!-- Terms and Conditions -->
+          <div class="form-section full-width">
+            <div class="checkbox-group">
+              <input type="checkbox" id="terms" required />
+              <label for="terms">
+                I agree to the <a href="#">Terms and Conditions</a> and
+                <a href="#">Privacy Policy</a>
+              </label>
+            </div>
+          </div>
+        </div>
 
-        <p class="login-link">
-          Already have an account? <a href="index.html">Login here</a>
-        </p>
-      </div>
+        <button type="submit" class="register-button">
+          <i class="fas fa-user-plus"></i> Create User Account
+        </button>
+      </form>
+
+      <p class="login-link">
+        Already have an account? <a href="index.html">Login here</a>
+      </p>
     </div>
+  </div>
 
-    <script>
+  <script>
 
-const validationRegex = {
-      username: /^[a-zA-Z0-9_]{3,20}$/,  // Alphanumeric, 3-20 characters
-      phone: /^[6-9]\d{9}$/,            // Indian phone number (10 digits)
-      email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,  // Standard email format
-      aadhaar: /^\d{12}$/,              // Aadhaar number (12 digits)
-      address: /^[a-zA-Z0-9\s,.'-]{10,}$/, // Allows letters, numbers, spaces, and symbols (min 10 chars)
-      password: /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/  // Strong password
+    const validationRegex = {
+      username: [{
+        regex: /^[a-zA-Z0-9_]{3,20}$/,
+        errorMsg: 'username should contain 3 to 20 char'
+      }],  // Alphanumeric, 3-20 characters
+      // phone: /^[6-9]\d{9}$/,            // Indian phone number (10 digits)
+      // email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,  // Standard email format
+      // aadhaar: /^\d{12}$/,              // Aadhaar number (12 digits)
+      // address: /^[a-zA-Z0-9\s,.'-]{10,}$/, // Allows letters, numbers, spaces, and symbols (min 10 chars)
+      // password: /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/  // Strong password
     };
 
     function validateForm() {
       event.preventDefault(); // Prevent form submission
 
-      const requiredFields = ['first_name','last_name','dob','phone','address','email','aadhaar','username','password','confirmPassword'];
 
+      const errors = {}
       const formData = {
-        
         first_name: {
-          id: "first_name",
-          req: true
+          id: "first-name",
+          errors: [],
+          value: ""
         },
         last_name: {
-          id: "last_name",
-          req: true
+          id: "last-name",
+          errors: [],
+          value: ""
         },
-        dob: {
-          id: "dob",
-          req: true
-        },
-        phone: {
-          id: "phone",
-          req: true
-        },
-        address: {
-          id: "address",
-          req: true
-        },
-        email: {
-          id: "email",
-          req: true
-        },
-        aadhaar: {
-          id: "aadhaar",
-          req: true
-        },
-        username: {
-          id: "username",
-          req: true
-        },
+        // dob: {
+        //   id: "dob",
+        //   errors: [],
+        //   value: ""
+        // },
+        // phone: {
+        //   id: "phone",
+        //   errors: [],
+        //   value: ""
+        // },
+        // address: {
+        //   id: "address",
+        //   errors: [],
+        //   value: ""
+        // },
+        // email: {
+        //   id: "email",
+        //   errors: [],
+        //   value: ""
+        // },
+        // aadhaar: {
+        //   id: "aadhaar",
+        //   errors: [],
+        //   value: ""
+        // },
+        // username: {
+        //   id: "username",
+        //   errors: [],
+        //   value: ""
+        // },
         password: {
           id: "password",
-          req: true
+          errors: [],
+          value: ""
         },
         confirmPassword: {
-          id: "confirmPassword",
-          req: true
+          id: "confirm-password",
+          errors: [],
+          value: ""
         }
       }
 
-      let first_name = document.getElementById("first_name").value;
-      let middle_name = document.getElementById("middle_name").value; // optional
-      let last_name = document.getElementById("last_name").value;
-      let dob = document.getElementById("dob").value;
-      let gender = document.getElementById("gender").value; // select
-
-      let phone = document.getElementById("phone").value;
-      let email = document.getElementById("email").value;
-      let aadhaar = document.getElementById("aadhaar").value;
-      let address = document.getElementById("address").value;
-
-
-      let username = document.getElementById("username").value;
-      let password = document.getElementById("password").value;
-      let confirmPassword = document.getElementById("confirm-password").value;
-
-
-      // Add basic form validation
+      // get all fiels value
       
+      Object.keys(formData).forEach(e => {
+        const val = document.getElementById(formData[e].id).value
+        formData[e].value = val
+      })
+      console.log(formData)
 
-        if (password !== confirmPassword) {
-          alert("Passwords do not match!");
-          return false;
-        }
-
-        const aadhar = document.getElementById("aadhar").value;
-        if (aadhar.length !== 12 || isNaN(aadhar)) {
-          alert("Please enter a valid 12-digit Aadhar number!");
-          return false;
-        }
-
-        return true;
+      if (formData.password.value !== formData.confirmPassword.value) {
+        // alert("Passwords do not match!");
+        formData.confirmPassword.errors.push("Passwords do not match!")
+        return false;
       }
 
-      // Auto-focus next OTP input
-      document.querySelectorAll(".otp-box").forEach((input, index) => {
-        input.addEventListener("input", function () {
-          if (this.value.length === 1 && index < 5) {
-            document.querySelectorAll(".otp-box")[index + 1].focus();
-          }
-        });
+      // const aadhar = document.getElementById("aadhar").value;
+      // if (aadhar.length !== 12 || isNaN(aadhar)) {
+      //   alert("Please enter a valid 12-digit Aadhar number!");
+      //   return false;
+      // }
+
+      // return true;
+    }
+
+    // Auto-focus next OTP input
+    document.querySelectorAll(".otp-box").forEach((input, index) => {
+      input.addEventListener("input", function () {
+        if (this.value.length === 1 && index < 5) {
+          document.querySelectorAll(".otp-box")[index + 1].focus();
+        }
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
+
 </html>
