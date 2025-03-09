@@ -1,189 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-Land Records - Officer Registration</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      src="https://kit.fontawesome.com/your-kit-code.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    <!-- Header -->
-    <div class="blue-line">
-      <div class="logo-container">
-        <img src="earth.png" alt="Logo" />
-        <span class="title">E-Land Records</span>
-      </div>
-      <span class="header-title">Land Record Management System</span>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Land Records - Officer Registration</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!-- Header -->
+  <div class="blue-line">
+    <div class="logo-container">
+      <img src="earth.png" alt="Logo" />
+      <span class="title">E-Land Records</span>
     </div>
+    <span class="header-title">Land Record Management System</span>
+  </div>
 
-    <div class="register-container">
-      <div class="register-box">
-        <h2>Create Official Account</h2>
-        <form class="form-grid">
-          <!-- Personal Information -->
-          <div class="form-section">
-            <h3><i class="fas fa-user-tie"></i> Officer Information</h3>
-            <div class="form-group">
-              <label for="firstName"
-                >First Name <span class="required">*</span></label
-              >
-              <input type="text" id="firstName" name="firstName" required />
-            </div>
-            <div class="form-group">
-              <label for="lastName"
-                >Last Name <span class="required">*</span></label
-              >
-              <input type="text" id="lastName" name="lastName" required />
-            </div>
-            <div class="form-group">
-              <label for="designation"
-                >Designation <span class="required">*</span></label
-              >
-              <select id="designation" name="designation" required>
-                <option value="">Select Designation</option>
-                <option value="ministry_welfare">Ministry of Welfare</option>
-                <option value="district_collector">District Collector</option>
-                <option value="joint_collector">Joint Collector</option>
-                <option value="revenue_dept_officer">
-                  Revenue Department Officer
-                </option>
-                <option value="project_officer">Project Officer</option>
-                <option value="mro">MRO (Mandal Revenue Officer)</option>
-                <option value="surveyor">Surveyor</option>
-                <option value="revenue_inspector">Revenue Inspector</option>
-                <option value="vro">VRO (Village Revenue Officer)</option>
-                <option value="superintendent">Superintendent</option>
-                <option value="clerk">Clerk</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="department"
-                >Department <span class="required">*</span></label
-              >
-              <select id="department" name="department" required>
-                <option value="">Select Department</option>
-                <option value="revenue">Revenue Department</option>
-                <option value="welfare">Welfare Department</option>
-                <option value="survey">Survey Department</option>
-                <option value="collector_office">Collector Office</option>
-                <option value="mandal_office">Mandal Office</option>
-                <option value="village_office">Village Office</option>
-              </select>
-            </div>
+  <div class="register-container">
+    <div class="register-box">
+      <h2>Create Official Account</h2>
+      <form class="form-grid" id="registrationForm" onsubmit="return validateForm()">
+        <!-- Personal Information -->
+        <div class="form-section">
+          <h3><i class="fas fa-user-tie"></i> Officer Information</h3>
+          <div class="form-group">
+            <label for="firstName">First Name <span class="required">*</span></label>
+            <input type="text" id="first-name" name="firstName" required />
+            <span id="error-first-name"></span>
           </div>
-
-          <!-- Contact Information -->
-          <div class="form-section">
-            <h3><i class="fas fa-address-card"></i> Contact Details</h3>
-            <div class="form-group">
-              <label for="email"
-                >Official Email <span class="required">*</span></label
-              >
-              <input type="email" id="email" name="email" required />
-            </div>
-            <div class="form-group">
-              <label for="phone"
-                >Mobile Number <span class="required">*</span></label
-              >
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                required
-                pattern="[0-9]{10}"
-              />
-            </div>
-            <div class="form-group">
-              <label for="officeId"
-                >Office ID <span class="required">*</span></label
-              >
-              <input type="text" id="officeId" name="officeId" required />
-            </div>
+          <div class="form-group">
+            <label for="lastName">Last Name <span class="required">*</span></label>
+            <input type="text" id="last-name" name="lastName" required />
+            <span id="error-last-name"></span>
           </div>
-
-          <!-- Account Security -->
-          <div class="form-section full-width">
-            <h3><i class="fas fa-lock"></i> Account Security</h3>
-            <div class="form-group">
-              <label for="username"
-                >Username <span class="required">*</span></label
-              >
-              <input type="text" id="username" name="username" required />
-            </div>
-            <div class="form-group">
-              <label for="password"
-                >Password <span class="required">*</span></label
-              >
-              <input type="password" id="password" name="password" required />
-            </div>
-            <div class="form-group">
-              <label for="confirmPassword"
-                >Confirm Password <span class="required">*</span></label
-              >
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                required
-              />
-            </div>
+          <div class="form-group">
+            <label for="designation">Designation <span class="required">*</span></label>
+            <select id="designation" name="designation" required>
+              <option value="">Select Designation</option>
+              <option value="ministry_welfare">Ministry of Welfare</option>
+              <option value="district_collector">District Collector</option>
+              <option value="joint_collector">Joint Collector</option>
+              <option value="revenue_dept_officer">
+                Revenue Department Officer
+              </option>
+              <option value="project_officer">Project Officer</option>
+              <option value="mro">MRO (Mandal Revenue Officer)</option>
+              <option value="surveyor">Surveyor</option>
+              <option value="revenue_inspector">Revenue Inspector</option>
+              <option value="vro">VRO (Village Revenue Officer)</option>
+              <option value="superintendent">Superintendent</option>
+              <option value="clerk">Clerk</option>
+            </select>
           </div>
-
-          <!-- OTP Verification -->
-          <div class="form-section full-width">
-            <h3><i class="fas fa-shield-alt"></i> OTP Verification</h3>
-            <div class="form-group">
-              <button type="button" class="send-otp-button" onclick="sendOTP()">
-                <i class="fas fa-paper-plane"></i> Send OTP
-              </button>
-            </div>
-            <div class="form-group otp-input-group">
-              <label for="otp">Enter OTP <span class="required">*</span></label>
-              <div class="otp-boxes">
-                <input type="text" maxlength="1" class="otp-box" required />
-                <input type="text" maxlength="1" class="otp-box" required />
-                <input type="text" maxlength="1" class="otp-box" required />
-                <input type="text" maxlength="1" class="otp-box" required />
-                <input type="text" maxlength="1" class="otp-box" required />
-                <input type="text" maxlength="1" class="otp-box" required />
-              </div>
-              <div class="otp-timer">
-                Time remaining: <span id="timer">02:00</span>
-              </div>
-            </div>
+          <div class="form-group">
+            <label for="department">Department <span class="required">*</span></label>
+            <select id="department" name="department" required>
+              <option value="">Select Department</option>
+              <option value="revenue">Revenue Department</option>
+              <option value="welfare">Welfare Department</option>
+              <option value="survey">Survey Department</option>
+              <option value="collector_office">Collector Office</option>
+              <option value="mandal_office">Mandal Office</option>
+              <option value="village_office">Village Office</option>
+            </select>
           </div>
+        </div>
 
-          <!-- Terms and Conditions -->
-          <div class="form-section full-width">
-            <div class="form-group checkbox-group">
-              <input type="checkbox" id="terms" name="terms" required />
-              <label for="terms"
-                >I agree to the <a href="#">Terms and Conditions</a> and
-                <a href="#">Privacy Policy</a></label
-              >
-            </div>
+        <!-- Contact Information -->
+        <div class="form-section">
+          <h3><i class="fas fa-address-card"></i> Contact Details</h3>
+          <div class="form-group">
+            <label for="email">Official Email <span class="required">*</span></label>
+            <input type="email" id="email" name="email" required />
+            <span id="error-email"></span>
           </div>
+          <div class="form-group">
+            <label for="phone">Mobile Number <span class="required">*</span></label>
+            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" />
+            <span id="error-phone"></span>
+          </div>
+          <div class="form-group">
+            <label for="officeId">Office ID <span class="required">*</span></label>
+            <input type="text" id="officeId" name="officeId" required />
+          </div>
+        </div>
 
-          <!-- Submit Button -->
-          <div class="form-section full-width">
-            <button type="submit" class="register-button">
-              <i class="fas fa-user-plus"></i> Create Official Account
+        <!-- Account Security -->
+        <div class="form-section full-width">
+          <h3><i class="fas fa-lock"></i> Account Security</h3>
+          <div class="form-group">
+            <label for="username">Username <span class="required">*</span></label>
+            <input type="text" id="username" name="username" required />
+            <span id="error-username"></span>
+          </div>
+          <div class="form-group">
+            <label for="password">Password <span class="required">*</span></label>
+            <input type="password" id="password" name="password" required />
+            <span id="error-password"></span>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword"> Confirm Password <span class="required">*</span>
+            </label>
+            <input type="password" id="confirm-password" name="confirmPassword" required />
+          </div>
+        </div>
+
+        <!-- OTP Verification -->
+        <div class="form-section full-width">
+          <h3><i class="fas fa-shield-alt"></i> OTP Verification</h3>
+          <div class="form-group">
+            <button type="button" class="send-otp-button" onclick="sendOTP()">
+              <i class="fas fa-paper-plane"></i> Send OTP
             </button>
           </div>
-        </form>
-
-        <div class="login-link">
-          Already have an account? <a href="index.html">Login here</a>
+          <div class="form-group otp-input-group">
+            <label for="otp">Enter OTP <span class="required">*</span></label>
+            <div class="otp-boxes">
+              <input type="text" maxlength="1" class="otp-box" required />
+              <input type="text" maxlength="1" class="otp-box" required />
+              <input type="text" maxlength="1" class="otp-box" required />
+              <input type="text" maxlength="1" class="otp-box" required />
+              <input type="text" maxlength="1" class="otp-box" required />
+              <input type="text" maxlength="1" class="otp-box" required />
+            </div>
+            <div class="otp-timer">
+              Time remaining: <span id="timer">02:00</span>
+            </div>
+          </div>
         </div>
+
+        <!-- Terms and Conditions -->
+        <div class="form-section full-width">
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="terms" name="terms" required />
+            <label for="terms">I agree to the <a href="#">Terms and Conditions</a> and
+              <a href="#">Privacy Policy</a></label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-section full-width">
+          <button type="submit" class="register-button">
+            <i class="fas fa-user-plus"></i> Create Official Account
+          </button>
+        </div>
+      </form>
+
+      <div class="login-link">
+        Already have an account? <a href="index.html">Login here</a>
       </div>
     </div>
-  </body>
+  </div>
+  <script>
+
+    const validationRegex = {
+      first_name: [{
+        regex: /^[a-zA-Z]{3,20}$/,
+        errorMsg: "Enter Valid Name"
+      }],
+      last_name: [{
+        regex: /^[a-zA-Z]{3,20}$/,
+        errorMsg: "Enter Valid Name"
+      }],
+      username: [{
+        regex: /^[a-zA-Z0-9_]{3,20}$/,
+        errorMsg: 'Enter a Valid Username that should contain 3 to 20 chachters'
+      }],  // Alphanumeric, 3-20 characters
+      phone: [{
+        regex: /^[6-9]\d{9}$/,
+        errorMsg: 'Enter Valid 10 digit Indian phone number'
+      }],
+      email: [{
+        regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        errorMsg: 'Enter Valid Email Address'
+      }],
+      aadhar: [{
+        regex: /^\d{12}$/,
+        errorMsg: 'Enter Valid 12 digit Aadhar Number'
+      }],
+      address: [{
+        regex: /^[a-zA-Z0-9\s,.'-]{10,}$/,
+        errorMsg: 'Enter a Valid address'
+      }]
+      // password: [{
+      //   regex: /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{6,}$/,
+      //   errorMsg: 'Enter a Strong Password'
+      // }]
+    };
+
+    async function validateForm() {
+      event.preventDefault(); // Prevent form submission
+
+
+      const errors = {}
+      const formData = {
+        first_name: {
+          id: "first-name",
+          errors: [],
+          value: ""
+        },
+        middle_name: {
+          id: "middle-name",
+          errors: [],
+          value: ""
+        },
+        last_name: {
+          id: "last-name",
+          errors: [],
+          value: ""
+        },
+        dob: {
+          id: "dob",
+          errors: [],
+          value: ""
+        },
+        gender: {
+          id: "gender",
+          errors: [],
+          value: ""
+        },
+        phone: {
+          id: "phone",
+          errors: [],
+          value: ""
+        },
+        email: {
+          id: "email",
+          errors: [],
+          value: ""
+        },
+        aadhar: {
+          id: "aadhar",
+          errors: [],
+          value: ""
+        },
+        address: {
+          id: "address",
+          errors: [],
+          value: ""
+        },
+        username: {
+          id: "username",
+          errors: [],
+          value: ""
+        },
+        password: {
+          id: "password",
+          errors: [],
+          value: ""
+        },
+        confirmPassword: {
+          id: "confirm-password",
+          errors: [],
+          value: ""
+        }
+      }
+
+      // get all fields value
+
+      Object.keys(formData).forEach(e => {
+        const val = document.getElementById(formData[e].id).value
+        formData[e].value = val
+      })
+      console.log(formData)
+      Object.keys(validationRegex).forEach((e) => {
+        const validation = validationRegex[e]
+      })
+      if (formData.password.value !== formData.confirmPassword.value) {
+        // alert("Passwords do not match!");
+        formData.confirmPassword.errors.push("Passwords do not match!")
+        // return false;
+      }
+
+      //validate all form data
+      Object.keys(formData).forEach((e) => {
+        const validations = validationRegex[e]
+        if (validations) {
+          validations.forEach((cases) => {
+            if (!cases.regex.test(formData[e].value)) {
+              formData[e].errors.push(cases.errorMsg)
+            }
+          })
+        }
+      })
+
+      // Insert Error 
+      let isValid = true
+      Object.keys(formData).forEach(e => {
+        const error = document.getElementById(`error-${formData[e].id}`)
+        if (formData[e].errors.length) {
+          isValid = false
+          error.innerHTML = formData[e].errors[0]
+        }
+      })
+
+      // Send Data to backend
+      if (isValid) {
+        try {
+          const payload = {}
+          Object.keys(formData).forEach((e) => {
+            payload[e] = formData[e].value
+          })
+
+          const response = await fetch("http://localhost:8080/create-user", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              mode: 'no-cors'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          console.log(response)
+          if (response.ok) {
+            alert("User created successfully!");
+            document.getElementById("myForm").reset();
+          } else {
+            alert("Failed to create user. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Server error. Please try again later.");
+        }
+      }
+
+      // const aadhar = document.getElementById("aadhar").value;
+      // if (aadhar.length !== 12 || isNaN(aadhar)) {
+      //   alert("Please enter a valid 12-digit Aadhar number!");
+      //   return false;
+      // }
+
+      // return true;
+    }
+
+    // Auto-focus next OTP input
+    document.querySelectorAll(".otp-box").forEach((input, index) => {
+      input.addEventListener("input", function () {
+        if (this.value.length === 1 && index < 5) {
+          document.querySelectorAll(".otp-box")[index + 1].focus();
+        }
+      });
+    });
+  </script>
+</body>
+
 </html>

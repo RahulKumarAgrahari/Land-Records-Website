@@ -1,0 +1,28 @@
+[
+    {
+        "value": 1,
+        "post": "Clerk",
+        "level": 1
+    },
+    {
+        "value": 2,
+        "post": "Superintendent",
+        "level": 2
+    },
+    {
+        "value": 3,
+        "post": "PO",
+        "level": 3
+    },
+    {
+        "value": 4,
+        "post": "MRO",
+        "level": 4
+    },
+    {
+        "value": 5,
+        "post": "surveyor",
+        "level": 5
+    },
+
+]

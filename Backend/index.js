@@ -16,6 +16,43 @@ try {
     console.log("connection successfull")
     app.get('/', function (req, res) {
         res.send('Hello World')
+
+    })
+    app.post('/user-login', async function (req, res) {
+        const body = req.body
+        try {
+            const { username, password } = body;
+            const user = await User.findOne({ username, password });
+            if (user) {
+                res.send({
+                    message: "Login successfuly",
+                    data: user,
+                    status: true
+                })
+            }
+
+        } catch (error) {
+            if (err.name === 'ValidationError') {
+                // Collect all validation errors
+                const errorMessages = [];
+                for (let field in err.errors) {
+                    errorMessages.push(err.errors[field].message); // Store the error messages
+                }
+
+                // Return the errors to the client
+                res.status(400).json({
+                    message: 'Validation errors',
+                    errors: errorMessages
+                });
+                return
+            }
+
+            // For other errors (e.g., database issues)
+            res.status(500).json({
+                message: 'Internal Server Error',
+                error: err.message
+            });
+        }
     })
     app.post('/create-user', async function (req, res) {
         res.header("Access-Control-Allow-Origin", "*");
@@ -24,7 +61,7 @@ try {
             console.log(body)
             const userData = await user.create(body)
             res.send({
-                message:"user created successfuly",
+                message: "user created successfuly",
                 status: true
             })
         } catch (err) {
@@ -54,17 +91,17 @@ try {
     app.post('/login', async function (req, res) {
         const body = req.body
         try {
-            const userData = await user.findOne({email:body.email})
-            if(!userData){
+            const userData = await user.findOne({ email: body.email })
+            if (!userData) {
                 res.status(404).json({
-                    status:false,
-                    message:"user not found"
+                    status: false,
+                    message: "user not found"
                 })
                 return
             }
             res.send({
-                status:true,
-                data:{...userData._doc, token:"jsfgjshgfhsdgfshdfhs"}
+                status: true,
+                data: { ...userData._doc, token: "jsfgjshgfhsdgfshdfhs" }
             })
         } catch (err) {
             if (err.name === 'ValidationError') {
