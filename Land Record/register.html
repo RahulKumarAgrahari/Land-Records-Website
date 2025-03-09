@@ -30,22 +30,22 @@
             <div class="form-group">
               <label for="first-name">First Name <span class="required">*</span></label>
               <input type="text" id="first-name" required />
-              <span id="error-first-name" ></span>
+              <span id="error-first-name"></span>
             </div>
             <div class="form-group">
               <label for="middle-name">Middle Name</label>
               <input type="text" id="middle-name" />
-              <span id="error-middle-name" ></span>
+              <span id="error-middle-name"></span>
             </div>
             <div class="form-group">
               <label for="last-name">Last Name <span class="required">*</span></label>
               <input type="text" id="last-name" required />
-              <span id="error-last-name" ></span>
+              <span id="error-last-name"></span>
             </div>
             <div class="form-group">
               <label for="dob">Date of Birth <span class="required">*</span></label>
               <input type="date" id="dob" required min="1900-01-01" max="2010-12-31" />
-              <span id="error-dob" ></span>
+              <span id="error-dob"></span>
             </div>
             <div class="form-group">
               <label for="gender">Gender <span class="required">*</span></label>
@@ -55,7 +55,7 @@
                 <option value="female">Female</option>
                 <option value="other">Other</option>
               </select>
-              <span id="error-gender" ></span>
+              <span id="error-gender"></span>
             </div>
           </div>
 
@@ -65,22 +65,22 @@
             <div class="form-group">
               <label for="phone">Phone Number <span class="required">*</span></label>
               <input type="tel" id="phone" required />
-              <span id="error-phone" ></span>
+              <span id="error-phone"></span>
             </div>
             <div class="form-group">
               <label for="email">Email Address <span class="required">*</span></label>
               <input type="email" id="email" required />
-              <span id="error-email" ></span>
+              <span id="error-email"></span>
             </div>
             <div class="form-group">
               <label for="aadhar">Aadhar Number <span class="required">*</span></label>
               <input type="text" id="aadhar" required maxlength="12" />
-              <span id="error-aadhar" ></span>
+              <span id="error-aadhar"></span>
             </div>
             <div class="form-group">
               <label for="address">Residential Address <span class="required">*</span></label>
               <textarea id="address" required></textarea>
-              <span id="error-address" ></span>
+              <span id="error-address"></span>
             </div>
           </div>
 
@@ -90,17 +90,17 @@
             <div class="form-group">
               <label for="username">Username <span class="required">*</span></label>
               <input type="text" id="username" required />
-              <span id="error-username" ></span>
+              <span id="error-username"></span>
             </div>
             <div class="form-group">
               <label for="password">Password <span class="required">*</span></label>
               <input type="password" id="password" required />
-              <span id="error-password" ></span>
+              <span id="error-password"></span>
             </div>
             <div class="form-group">
               <label for="confirm-password">Confirm Password <span class="required">*</span></label>
               <input type="password" id="confirm-password" required />
-              <span id="error-confirm-password" >YO</span>
+              <span class="error" id="error-confirm-password"></span>
             </div>
           </div>
 
@@ -153,6 +153,10 @@
   <script>
 
     const validationRegex = {
+      first_name: [{
+        regex: /^[a-zA-Z]{3,20}$/,
+        errorMsg: "please input valid name"
+      }],
       username: [{
         regex: /^[a-zA-Z0-9_]{3,20}$/,
         errorMsg: 'username should contain 3 to 20 char'
@@ -223,7 +227,7 @@
       }
 
       // get all fields value
-      
+
       Object.keys(formData).forEach(e => {
         const val = document.getElementById(formData[e].id).value
         formData[e].value = val
@@ -235,19 +239,30 @@
       if (formData.password.value !== formData.confirmPassword.value) {
         // alert("Passwords do not match!");
         formData.confirmPassword.errors.push("Passwords do not match!")
-        return false;
+        // return false;
       }
+
+      //validate all form data
+      Object.keys(formData).forEach((e) => {
+        const validations = validationRegex[e]
+        if (validations) {
+          validations.forEach((cases) => {
+            if(!cases.regex.test(formData[e].value)){
+              formData[e].errors.push(cases.errorMsg)
+            }
+          })
+        }
+      })
 
       // Insert Error   
       Object.keys(formData).forEach(e => {
         const error = document.getElementById(`error-${formData[e].id}`)
-        if (formData[e].errors.length)
-        {
+        if (formData[e].errors.length) {
           console.log(error)
           error.innerHTML = formData[e].errors[0]
         }
       })
-      
+
 
       // const aadhar = document.getElementById("aadhar").value;
       // if (aadhar.length !== 12 || isNaN(aadhar)) {

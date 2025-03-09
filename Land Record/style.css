@@ -3516,4 +3516,6 @@ nav ul li a:hover {
 .spacer {
   height: 59px; /* Height of the select element */
 }
-  
+.error {
+    color: red
+}
