@@ -168,7 +168,7 @@
       // password: /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/  // Strong password
     };
 
-    function validateForm() {
+    async function validateForm() {
       event.preventDefault(); // Prevent form submission
 
 
@@ -199,11 +199,11 @@
         //   errors: [],
         //   value: ""
         // },
-        // email: {
-        //   id: "email",
-        //   errors: [],
-        //   value: ""
-        // },
+        email: {
+          id: "email",
+          errors: [],
+          value: ""
+        },
         // aadhaar: {
         //   id: "aadhaar",
         //   errors: [],
@@ -247,22 +247,53 @@
         const validations = validationRegex[e]
         if (validations) {
           validations.forEach((cases) => {
-            if(!cases.regex.test(formData[e].value)){
+            if (!cases.regex.test(formData[e].value)) {
               formData[e].errors.push(cases.errorMsg)
             }
           })
         }
       })
 
-      // Insert Error   
+      // Insert Error 
+      let isValid = true
       Object.keys(formData).forEach(e => {
         const error = document.getElementById(`error-${formData[e].id}`)
         if (formData[e].errors.length) {
-          console.log(error)
+          isValid = false
           error.innerHTML = formData[e].errors[0]
         }
       })
 
+      // Send Data to backend
+      if (isValid) {
+        try {
+          const payload = {}
+          Object.keys(formData).forEach((e) => {
+            payload[e] = formData[e].value
+          })
+
+          const response = await fetch("http://localhost:8080/create-user", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin":"*",
+              mode:'no-cors'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          console.log(response)
+          if (response.ok) {
+            alert("User created successfully!");
+            document.getElementById("myForm").reset();
+          } else {
+            alert("Failed to create user. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Server error. Please try again later.");
+        }
+      }
 
       // const aadhar = document.getElementById("aadhar").value;
       // if (aadhar.length !== 12 || isNaN(aadhar)) {
