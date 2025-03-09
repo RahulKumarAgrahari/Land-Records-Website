@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Land Records - User Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script>
+      function toggleForm(formId) {
+        const form = document.getElementById(formId);
+        if (form.style.display === "none") {
+          form.style.display = "block";
+          form.scrollIntoView({ behavior: "smooth" });
+        } else {
+          form.style.display = "none";
+        }
+      }
+
+      function showDashboardSection(sectionId) {
+        // Hide all sections first
+        const sections = document.querySelectorAll(".content > div");
+        sections.forEach((section) => {
+          section.style.display = "none";
+        });
+
+        // Show the selected section
+        switch (sectionId) {
+          case "landRecords":
+            document.querySelector(
+              ".content .rectangle:first-child"
+            ).style.display = "block";
+            document.getElementById("recordForm").style.display = "none";
+            break;
+          case "applications":
+            document.getElementById("applicationsSection").style.display =
+              "block";
+            break;
+          case "ownership":
+            document.getElementById("ownershipSection").style.display = "block";
+            break;
+          case "verification":
+            document.getElementById("verificationSection").style.display =
+              "block";
+            break;
+          case "reports":
+            document.getElementById("reportsSection").style.display = "block";
+            break;
+          case "tasks":
+            document.getElementById("tasksSection").style.display = "block";
+            break;
+          case "messages":
+            document.getElementById("messagesSection").style.display = "block";
+            break;
+          case "downloads":
+            document.getElementById("downloadsSection").style.display = "block";
+            break;
+        }
+      }
+
+      function handleNewApplication() {
+        // Hide any other open forms or sections first
+        const forms = document.querySelectorAll(".form-container");
+        forms.forEach((form) => {
+          form.style.display = "none";
+        });
+
+        // Show the record form
+        const recordForm = document.getElementById("recordForm");
+        recordForm.style.display = "block";
+        recordForm.scrollIntoView({ behavior: "smooth" });
+
+        // Reset the form if it has any existing data
+        document.getElementById("landRegistrationForm").reset();
+
+        // Set current date as default for registration date
+        const today = new Date().toISOString().split("T")[0];
+        document.querySelector('input[name="regDate"]').value = today;
+      }
+
+      function handleNewLandApplication() {
+        // Hide any other open forms or sections first
+        const forms = document.querySelectorAll(".form-container");
+        forms.forEach((form) => {
+          form.style.display = "none";
+        });
+
+        // Show the new application form
+        const newApplicationForm =
+          document.getElementById("newApplicationForm");
+        newApplicationForm.style.display = "block";
+        newApplicationForm.scrollIntoView({ behavior: "smooth" });
+
+        // Reset the form if it has any existing data
+        document.getElementById("landApplicationForm").reset();
+      }
+
+      function toggleNewApplicationForm() {
+        const form = document.getElementById("newApplicationForm");
+        form.style.display = form.style.display === "none" ? "block" : "none";
+      }
+
+      function submitLandApplication(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const applicationType = formData.get("applicationType");
+        const surveyNumber = formData.get("surveyNumber");
+        const currentOwner = formData.get("currentOwner");
+
+        // In a real application, this would submit to a server
+        // For now, we'll just add it to the table
+        const table = document.querySelector(
+          "#applicationsSection .records-table tbody"
+        );
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+          <td>APP${Math.floor(Math.random() * 1000)}</td>
+          <td>${applicationType}</td>
+          <td>${new Date().toLocaleDateString()}</td>
+          <td>Pending</td>
+          <td>
+            <div class="action-icons">
+              <i class="fas fa-eye" title="View"></i>
+              <i class="fas fa-edit" title="Edit"></i>
+              <i class="fas fa-trash-alt" title="Delete"></i>
+            </div>
+          </td>
+        `;
+        table.insertBefore(newRow, table.firstChild);
+
+        // Show success message and close form
+        alert("Application submitted successfully!");
+        toggleNewApplicationForm();
+        return false;
+      }
+
+      // Add file upload preview for application documents
+      document
+        .getElementById("application-docs")
+        .addEventListener("change", function (e) {
+          const fileName = e.target.files[0]?.name;
+          if (fileName) {
+            e.target.nextElementSibling.querySelector("span").textContent =
+              fileName;
+          }
+        });
+    </script>
+  </head>
+  <body>
+    <div class="blue-line">
+      <div class="logo-container">
+        <img src="earth.png" alt="Logo" />
+        <span class="title">E-Land Records</span>
+      </div>
+      <span class="header-title">E-Land Record Management System</span>
+    </div>
+
+    <div class="second-bar">
+      <div class="menu-item">
+        <i class="fas fa-bell"></i>
+        <span>Notifications</span>
+      </div>
+      <div class="menu-item">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </div>
+      <div class="menu-item">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </div>
+      <div class="menu-item">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="user-logo">K</div>
+      <div class="user-name">Krishna</div>
+      <ul>
+        <li>
+          <a href="#" class="active">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('landRecords')">
+            <i class="fas fa-landmark"></i>
+            <span>Land Records</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('ownership')">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Ownership Transfer</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('verification')">
+            <i class="fas fa-check-circle"></i>
+            <span>Verification</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('reports')">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reports</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('messages')">
+            <i class="fas fa-envelope"></i>
+            <span>Messages</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('downloads')">
+            <i class="fas fa-download"></i>
+            <span>Downloads</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <!-- Land Records Section -->
+      <div class="rectangle">
+        <div class="rectangle-title">
+          <i class="fas fa-landmark"></i>
+          <span>Land Records</span>
+        </div>
+        <div class="rectangle-notes">
+          View and manage your land records, certificates, and documentation.
+        </div>
+        <div class="quick-actions">
+          <button class="action-button" onclick="handleNewApplication()">
+            <i class="fas fa-plus-circle"></i>
+            New Application
+          </button>
+          <button class="action-button" onclick="toggleSearch()">
+            <i class="fas fa-search"></i>
+            Search Records
+          </button>
+          <button class="action-button" onclick="toggleTrackApplication()">
+            <i class="fas fa-search"></i>
+            Track Application
+          </button>
+          <button class="action-button" onclick="toggleApplicationHistory()">
+            <i class="fas fa-history"></i>
+            Application History
+          </button>
+        </div>
+
+        <!-- Track Application Form -->
+        <div
+          id="trackApplicationForm"
+          class="verification-form"
+          style="display: none"
+        >
+          <div class="form-group">
+            <input
+              type="text"
+              placeholder="Enter Application ID"
+              class="filter-input"
+              id="trackApplicationId"
+            />
+            <button class="filter-button" onclick="trackApplication()">
+              <i class="fas fa-search"></i> Track
+            </button>
+          </div>
+          <div
+            id="trackApplicationResult"
+            class="track-result"
+            style="display: none"
+          >
+            <div class="result-header">
+              <h4>Application Status</h4>
+            </div>
+            <div class="result-content">
+              <div class="status-timeline">
+                <div class="timeline-item completed">
+                  <i class="fas fa-file-alt"></i>
+                  <span>Application Submitted</span>
+                </div>
+                <div class="timeline-item active">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Under Review</span>
+                </div>
+                <div class="timeline-item">
+                  <i class="fas fa-file-signature"></i>
+                  <span>Verification</span>
+                </div>
+                <div class="timeline-item">
+                  <i class="fas fa-check-double"></i>
+                  <span>Completed</span>
+                </div>
+              </div>
+              <div class="status-details">
+                <p>
+                  <strong>Current Status:</strong>
+                  <span class="status-text">Under Review</span>
+                </p>
+                <p>
+                  <strong>Last Updated:</strong>
+                  <span class="last-update">2024-03-20</span>
+                </p>
+                <p>
+                  <strong>Estimated Completion:</strong>
+                  <span class="completion-date">2024-03-25</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Application History Section -->
+        <div
+          id="applicationHistorySection"
+          class="history-section"
+          style="display: none"
+        >
+          <div class="history-filters">
+            <select
+              id="historyStatusFilter"
+              onchange="filterApplicationHistory()"
+            >
+              <option value="all">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <input
+              type="date"
+              id="historyDateFilter"
+              onchange="filterApplicationHistory()"
+            />
+          </div>
+          <div class="history-list">
+            <div class="history-item">
+              <div class="history-header">
+                <span class="application-id">APP001</span>
+                <span class="application-date">2024-03-20</span>
+              </div>
+              <div class="history-content">
+                <p><strong>Type:</strong> Land Registration</p>
+                <p>
+                  <strong>Status:</strong>
+                  <span class="status-badge pending">Pending</span>
+                </p>
+                <p><strong>Last Updated:</strong> 2024-03-20</p>
+              </div>
+            </div>
+            <div class="history-item">
+              <div class="history-header">
+                <span class="application-id">APP002</span>
+                <span class="application-date">2024-03-19</span>
+              </div>
+              <div class="history-content">
+                <p><strong>Type:</strong> Land Registration</p>
+                <p>
+                  <strong>Status:</strong>
+                  <span class="status-badge completed">Completed</span>
+                </p>
+                <p><strong>Last Updated:</strong> 2024-03-19</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search Filters -->
+        <div id="searchFilters" class="search-filters" style="display: none">
+          <div class="filter-group">
+            <input
+              type="text"
+              placeholder="Search by Owner Name"
+              class="filter-input"
+            />
+            <input
+              type="text"
+              placeholder="Search by Survey No."
+              class="filter-input"
+            />
+            <select class="filter-input">
+              <option value="">Select State</option>
+              <option value="AP">Andhra Pradesh</option>
+              <option value="TN">Tamil Nadu</option>
+              <option value="KA">Karnataka</option>
+            </select>
+            <button class="filter-button">
+              <i class="fas fa-search"></i> Search
+            </button>
+            <button class="filter-button clear">
+              <i class="fas fa-times"></i> Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Records Table -->
+        <div class="records-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Survey No.</th>
+                <th>Owner Name</th>
+                <th>Area (sq.ft)</th>
+                <th>Location</th>
+                <th>Registration Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>SUR123</td>
+                <td>John Doe</td>
+                <td>1200</td>
+                <td>Chennai, TN</td>
+                <td>2024-03-15</td>
+                <td>Verified</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-edit" title="Edit"></i>
+                    <i class="fas fa-download" title="Download"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>SUR124</td>
+                <td>Jane Smith</td>
+                <td>2500</td>
+                <td>Bangalore, KA</td>
+                <td>2024-03-10</td>
+                <td>Pending</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-edit" title="Edit"></i>
+                    <i class="fas fa-download" title="Download"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="page-button">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="page-button active">1</button>
+          <button class="page-button">2</button>
+          <button class="page-button">3</button>
+          <button class="page-button">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Applications Section -->
+      <div id="applicationsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-file-alt"></i>
+          <span>Applications</span>
+        </div>
+        <div class="rectangle-notes">
+          Manage and track your land-related applications.
+        </div>
+        <div class="quick-actions">
+          <button class="action-button" onclick="handleNewLandApplication()">
+            <i class="fas fa-plus-circle"></i>
+            New Application
+          </button>
+          <button class="action-button">
+            <i class="fas fa-search"></i>
+            Track Application
+          </button>
+          <button class="action-button">
+            <i class="fas fa-history"></i>
+            Application History
+          </button>
+        </div>
+
+        <!-- New Application Form -->
+        <div
+          id="newApplicationForm"
+          class="form-container"
+          style="display: none"
+        >
+          <form
+            id="landApplicationForm"
+            action="save_application.php"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <div class="form-header">
+              <h3><i class="fas fa-user"></i> Personal Details</h3>
+              <button
+                type="button"
+                class="close-button"
+                onclick="toggleNewApplicationForm()"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Full Name <span class="required">*</span></label>
+                <input type="text" name="fullName" required />
+              </div>
+              <div class="form-group">
+                <label>Email <span class="required">*</span></label>
+                <input type="email" name="email" required />
+              </div>
+              <div class="form-group">
+                <label>Phone Number <span class="required">*</span></label>
+                <input type="tel" name="phone" required />
+              </div>
+              <div class="form-group">
+                <label>Aadhar Number <span class="required">*</span></label>
+                <input type="text" name="aadhar" maxlength="12" required />
+              </div>
+              <div class="form-group">
+                <label
+                  >Date of Registering <span class="required">*</span></label
+                >
+                <input type="date" name="regDate" required />
+              </div>
+            </div>
+
+            <div class="form-header">
+              <h3><i class="fas fa-map-marker-alt"></i> Land Details</h3>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Owner Name <span class="required">*</span></label>
+                <input type="text" name="ownerName" required />
+              </div>
+              <div class="form-group">
+                <label>Survey No. <span class="required">*</span></label>
+                <input type="text" name="surveyNo" required />
+              </div>
+              <div class="form-group">
+                <label>Area (in sq.ft) <span class="required">*</span></label>
+                <input type="number" name="area" required />
+              </div>
+              <div class="form-group">
+                <label>State <span class="required">*</span></label>
+                <select name="state" required>
+                  <option value="">Select State</option>
+                  <option value="AP">Andhra Pradesh</option>
+                  <option value="TN">Tamil Nadu</option>
+                  <option value="KA">Karnataka</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>City/District <span class="required">*</span></label>
+                <input type="text" name="city" required />
+              </div>
+              <div class="form-group">
+                <label>Pincode <span class="required">*</span></label>
+                <input type="text" name="pincode" maxlength="6" required />
+              </div>
+              <div class="form-group full-width">
+                <label>Complete Address <span class="required">*</span></label>
+                <textarea name="address" required rows="3"></textarea>
+              </div>
+            </div>
+
+            <div class="form-header">
+              <h3><i class="fas fa-file-upload"></i> Upload Documents</h3>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <div class="file-upload">
+                  <input
+                    type="file"
+                    name="documents[]"
+                    id="application-docs"
+                    multiple
+                  />
+                  <label for="application-docs">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Drop files here or click to upload</span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group full-width">
+                <button type="submit" class="submit-button" name="submit">
+                  <i class="fas fa-check-circle"></i>
+                  Generate Record
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="records-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Application ID</th>
+                <th>Type</th>
+                <th>Submission Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>APP001</td>
+                <td>Land Registration</td>
+                <td>2024-03-20</td>
+                <td>Pending</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-edit" title="Edit"></i>
+                    <i class="fas fa-trash-alt" title="Delete"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Ownership Transfer Section -->
+      <div id="ownershipSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-exchange-alt"></i>
+          <span>Ownership Transfer</span>
+        </div>
+        <div class="rectangle-notes">
+          Initiate and track ownership transfer requests.
+        </div>
+        <div class="quick-actions">
+          <button class="action-button" onclick="toggleTransferForm()">
+            <i class="fas fa-plus-circle"></i>
+            New Transfer
+          </button>
+          <button class="action-button" onclick="toggleTransferTracking()">
+            <i class="fas fa-search"></i>
+            Track Transfer
+          </button>
+          <button class="action-button" onclick="toggleTransferForms()">
+            <i class="fas fa-file-download"></i>
+            Download Forms
+          </button>
+        </div>
+
+        <!-- Transfer Forms Download Section -->
+        <div
+          id="transferFormsSection"
+          class="download-grid"
+          style="display: none"
+        >
+          <div class="download-card">
+            <i class="fas fa-file-pdf"></i>
+            <h4>Transfer Status Report</h4>
+            <p>View and download your transfer request status</p>
+            <button
+              class="action-button"
+              onclick="downloadForm('transfer_status')"
+            >
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+          <div class="download-card">
+            <i class="fas fa-history"></i>
+            <h4>Transfer History</h4>
+            <p>Download your complete transfer history report</p>
+            <button
+              class="action-button"
+              onclick="downloadForm('transfer_history')"
+            >
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+        </div>
+
+        <!-- Transfer Tracking Form -->
+        <div
+          id="transferTrackingForm"
+          class="verification-form"
+          style="display: none"
+        >
+          <div class="form-group">
+            <input
+              type="text"
+              placeholder="Enter Transfer ID"
+              class="filter-input"
+              id="transferTrackingId"
+            />
+            <button class="filter-button" onclick="trackTransfer()">
+              <i class="fas fa-search"></i> Track
+            </button>
+          </div>
+        </div>
+
+        <!-- New Transfer Form -->
+        <div id="transferForm" class="form-container" style="display: none">
+          <div class="form-header">
+            <h3><i class="fas fa-exchange-alt"></i> New Transfer Request</h3>
+            <button class="close-button" onclick="toggleTransferForm()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Current Owner Name <span class="required">*</span></label>
+              <input type="text" id="currentOwner" required />
+            </div>
+            <div class="form-group">
+              <label>New Owner Name <span class="required">*</span></label>
+              <input type="text" id="newOwner" required />
+            </div>
+            <div class="form-group">
+              <label
+                >Property ID/Survey No. <span class="required">*</span></label
+              >
+              <input type="text" id="propertyId" required />
+            </div>
+            <div class="form-group">
+              <label>Transfer Reason <span class="required">*</span></label>
+              <select id="transferReason" required>
+                <option value="">Select Reason</option>
+                <option value="sale">Sale</option>
+                <option value="inheritance">Inheritance</option>
+                <option value="gift">Gift</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label>Additional Details</label>
+              <textarea id="transferDetails" rows="3"></textarea>
+            </div>
+            <div class="form-group full-width">
+              <div class="file-upload">
+                <input type="file" id="transferDocs" multiple />
+                <label for="transferDocs">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span>Upload supporting documents</span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <button class="submit-button" onclick="submitTransfer()">
+                <i class="fas fa-check-circle"></i> Submit Transfer Request
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Records Table -->
+        <div class="records-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Transfer ID</th>
+                <th>Property Details</th>
+                <th>Current Owner</th>
+                <th>New Owner</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TRF001</td>
+                <td>Plot 123, Chennai</td>
+                <td>John Doe</td>
+                <td>Jane Smith</td>
+                <td>In Progress</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-file-alt" title="Documents"></i>
+                    <i class="fas fa-times-circle" title="Cancel"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Verification Section -->
+      <div id="verificationSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-check-circle"></i>
+          <span>Verification</span>
+        </div>
+        <div class="rectangle-notes">Verify land records and documents.</div>
+        <div class="quick-actions">
+          <button class="action-button">
+            <i class="fas fa-search"></i>
+            Verify Record
+          </button>
+          <button class="action-button">
+            <i class="fas fa-history"></i>
+            Verification History
+          </button>
+          <button class="action-button">
+            <i class="fas fa-question-circle"></i>
+            Help Guide
+          </button>
+        </div>
+        <div class="verification-form">
+          <div class="form-group">
+            <input
+              type="text"
+              placeholder="Enter Record ID or Survey Number"
+              class="filter-input"
+            />
+            <button class="filter-button">
+              <i class="fas fa-search"></i> Verify
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reports Section -->
+      <div id="reportsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-chart-bar"></i>
+          <span>Reports</span>
+        </div>
+        <div class="rectangle-notes">
+          Generate and view various reports related to your land records.
+        </div>
+        <div class="quick-actions">
+          <button class="action-button">
+            <i class="fas fa-file-pdf"></i>
+            Generate Report
+          </button>
+          <button class="action-button">
+            <i class="fas fa-download"></i>
+            Download Report
+          </button>
+          <button class="action-button">
+            <i class="fas fa-print"></i>
+            Print Report
+          </button>
+        </div>
+        <div class="report-types">
+          <div class="report-card">
+            <i class="fas fa-file-alt"></i>
+            <h4>Land Ownership Report</h4>
+            <button class="action-button">Generate</button>
+          </div>
+          <div class="report-card">
+            <i class="fas fa-history"></i>
+            <h4>Transaction History</h4>
+            <button class="action-button">Generate</button>
+          </div>
+          <div class="report-card">
+            <i class="fas fa-map-marked-alt"></i>
+            <h4>Property Details Report</h4>
+            <button class="action-button">Generate</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages Section -->
+      <div id="messagesSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-envelope"></i>
+          <span>Messages</span>
+        </div>
+        <div class="rectangle-notes">View and manage your communications.</div>
+        <div class="quick-actions">
+          <button class="action-button" onclick="toggleComposeForm()">
+            <i class="fas fa-pen"></i>
+            Compose
+          </button>
+          <button class="action-button" onclick="showMessages('inbox')">
+            <i class="fas fa-inbox"></i>
+            Inbox
+          </button>
+          <button class="action-button" onclick="showMessages('sent')">
+            <i class="fas fa-paper-plane"></i>
+            Sent
+          </button>
+        </div>
+
+        <!-- Compose Message Form -->
+        <div id="composeForm" class="compose-form" style="display: none">
+          <div class="form-header">
+            <h3><i class="fas fa-pen"></i> New Message</h3>
+            <button class="close-button" onclick="toggleComposeForm()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>To <span class="required">*</span></label>
+              <input
+                type="email"
+                id="messageRecipient"
+                required
+                placeholder="Enter recipient's email"
+              />
+            </div>
+            <div class="form-group">
+              <label>Subject <span class="required">*</span></label>
+              <input
+                type="text"
+                id="messageSubject"
+                required
+                placeholder="Enter message subject"
+              />
+            </div>
+            <div class="form-group full-width">
+              <label>Message <span class="required">*</span></label>
+              <textarea
+                id="messageContent"
+                rows="5"
+                required
+                placeholder="Type your message here"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <button class="submit-button" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i> Send Message
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message Lists -->
+        <div id="inboxMessages" class="message-list">
+          <div class="message-item unread">
+            <div class="message-sender">Admin</div>
+            <div class="message-subject">Document Verification Complete</div>
+            <div class="message-date">2024-03-20</div>
+            <div class="message-actions">
+              <i
+                class="fas fa-reply"
+                title="Reply"
+                onclick="replyToMessage(this)"
+              ></i>
+              <i
+                class="fas fa-trash-alt"
+                title="Delete"
+                onclick="deleteMessage(this)"
+              ></i>
+            </div>
+          </div>
+          <div class="message-item">
+            <div class="message-sender">System</div>
+            <div class="message-subject">Application Status Update</div>
+            <div class="message-date">2024-03-19</div>
+            <div class="message-actions">
+              <i
+                class="fas fa-reply"
+                title="Reply"
+                onclick="replyToMessage(this)"
+              ></i>
+              <i
+                class="fas fa-trash-alt"
+                title="Delete"
+                onclick="deleteMessage(this)"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <div id="sentMessages" class="message-list" style="display: none">
+          <div class="message-item">
+            <div class="message-sender">To: Support Team</div>
+            <div class="message-subject">Query about Land Registration</div>
+            <div class="message-date">2024-03-18</div>
+            <div class="message-actions">
+              <i
+                class="fas fa-trash-alt"
+                title="Delete"
+                onclick="deleteMessage(this)"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Downloads Section -->
+      <div id="downloadsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-download"></i>
+          <span>Downloads</span>
+        </div>
+        <div class="rectangle-notes">
+          Access and download important documents and forms.
+        </div>
+        <div class="quick-actions">
+          <button class="action-button">
+            <i class="fas fa-file-download"></i>
+            Available for Download
+          </button>
+          <button class="action-button">
+            <i class="fas fa-history"></i>
+            Download History
+          </button>
+        </div>
+        <div class="download-grid">
+          <div class="download-card">
+            <i class="fas fa-file-download"></i>
+            <h4>Land Record Certificate</h4>
+            <p>Download your verified land record certificate</p>
+            <button class="action-button">
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+          <div class="download-card">
+            <i class="fas fa-file-download"></i>
+            <h4>Property Tax Receipt</h4>
+            <p>Download your latest property tax payment receipt</p>
+            <button class="action-button">
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+          <div class="download-card">
+            <i class="fas fa-history"></i>
+            <h4>Recent Downloads</h4>
+            <p>View your download history for the last 30 days</p>
+            <button class="action-button">
+              <i class="fas fa-eye"></i> View History
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Record Form -->
+      <div id="recordForm" class="form-container" style="display: none">
+        <form
+          id="landRegistrationForm"
+          action="save_registration.php"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="form-header">
+            <h3><i class="fas fa-user"></i> Personal Details</h3>
+            <button
+              type="button"
+              class="close-button"
+              onclick="toggleForm('recordForm')"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Full Name <span class="required">*</span></label>
+              <input type="text" name="fullName" required />
+            </div>
+            <div class="form-group">
+              <label>Email <span class="required">*</span></label>
+              <input type="email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label>Phone Number <span class="required">*</span></label>
+              <input type="tel" name="phone" required />
+            </div>
+            <div class="form-group">
+              <label>Aadhar Number <span class="required">*</span></label>
+              <input type="text" name="aadhar" maxlength="12" required />
+            </div>
+            <div class="form-group">
+              <label>Date of Registering <span class="required">*</span></label>
+              <input type="date" name="regDate" required />
+            </div>
+          </div>
+
+          <div class="form-header">
+            <h3><i class="fas fa-map-marker-alt"></i> Land Details</h3>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Owner Name <span class="required">*</span></label>
+              <input type="text" name="ownerName" required />
+            </div>
+            <div class="form-group">
+              <label>Survey No. <span class="required">*</span></label>
+              <input type="text" name="surveyNo" required />
+            </div>
+            <div class="form-group">
+              <label>Area (in sq.ft) <span class="required">*</span></label>
+              <input type="number" name="area" required />
+            </div>
+            <div class="form-group">
+              <label>State <span class="required">*</span></label>
+              <select name="state" required>
+                <option value="">Select State</option>
+                <option value="AP">Andhra Pradesh</option>
+                <option value="TN">Tamil Nadu</option>
+                <option value="KA">Karnataka</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>City/District <span class="required">*</span></label>
+              <input type="text" name="city" required />
+            </div>
+            <div class="form-group">
+              <label>Pincode <span class="required">*</span></label>
+              <input type="text" name="pincode" maxlength="6" required />
+            </div>
+            <div class="form-group full-width">
+              <label>Complete Address <span class="required">*</span></label>
+              <textarea name="address" required rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="form-header">
+            <h3><i class="fas fa-file-upload"></i> Upload Documents</h3>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <div class="file-upload">
+                <input
+                  type="file"
+                  name="documents[]"
+                  id="document-upload"
+                  multiple
+                />
+                <label for="document-upload">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span>Drop files here or click to upload</span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group full-width">
+              <button type="submit" class="submit-button" name="submit">
+                <i class="fas fa-check-circle"></i>
+                Generate Record
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Add file upload preview functionality
+      document
+        .getElementById("document-upload")
+        .addEventListener("change", function (e) {
+          const fileName = e.target.files[0]?.name;
+          if (fileName) {
+            e.target.nextElementSibling.querySelector("span").textContent =
+              fileName;
+          }
+        });
+
+      // Function to format current date
+      function formatDate(date) {
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        return new Date(date).toLocaleDateString("en-US", options);
+      }
+
+      // Function to handle form submission
+      document
+        .getElementById("landRegistrationForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+
+          fetch(this.action, {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === "success") {
+                alert("Record generated successfully!");
+                this.reset();
+                toggleForm("recordForm");
+              } else {
+                alert("Error: " + data.message);
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Error submitting form. Please try again.");
+            });
+        });
+
+      function toggleSearch() {
+        const searchFilters = document.getElementById("searchFilters");
+        searchFilters.style.display =
+          searchFilters.style.display === "none" ? "block" : "none";
+      }
+
+      // Handle menu item clicks
+      document.querySelectorAll(".menu-item").forEach((item) => {
+        item.addEventListener("click", function () {
+          const action = this.querySelector("span").textContent;
+
+          switch (action) {
+            case "Notifications":
+              // Toggle notifications panel
+              toggleNotifications();
+              break;
+            case "Settings":
+              // Toggle settings panel
+              toggleSettings();
+              break;
+            case "Profile":
+              // Toggle profile panel
+              toggleProfile();
+              break;
+            case "Logout":
+              // Handle logout
+              handleLogout();
+              break;
+          }
+        });
+      });
+
+      function toggleNotifications() {
+        // Create notifications panel if it doesn't exist
+        let notificationsPanel = document.getElementById("notificationsPanel");
+        if (!notificationsPanel) {
+          notificationsPanel = document.createElement("div");
+          notificationsPanel.id = "notificationsPanel";
+          notificationsPanel.className = "panel notifications-panel";
+          notificationsPanel.innerHTML = `
+            <div class="panel-header">
+              <h3><i class="fas fa-bell"></i> Notifications</h3>
+              <button class="close-button" onclick="this.parentElement.parentElement.style.display='none'">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="notification-list">
+              <div class="notification-item">
+                <i class="fas fa-file-alt"></i>
+                <div class="notification-content">
+                  <span class="notification-title">New Record Added</span>
+                </div>
+              </div>
+              <div class="notification-item">
+                <i class="fas fa-check-circle"></i>
+                <div class="notification-content">
+                  <span class="notification-title">Record Verified</span>
+                </div>
+              </div>
+            </div>`;
+          document.body.appendChild(notificationsPanel);
+        }
+        notificationsPanel.style.display =
+          notificationsPanel.style.display === "none" ? "block" : "none";
+      }
+
+      function toggleSettings() {
+        let settingsPanel = document.getElementById("settingsPanel");
+        if (!settingsPanel) {
+          settingsPanel = document.createElement("div");
+          settingsPanel.id = "settingsPanel";
+          settingsPanel.className = "panel settings-panel";
+          settingsPanel.innerHTML = `
+            <div class="panel-header">
+              <h3><i class="fas fa-cog"></i> Settings</h3>
+              <button class="close-button" onclick="this.parentElement.parentElement.style.display='none'">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <h4>Account Settings</h4>
+                <div class="setting-item">
+                  <label>Email Notifications</label>
+                  <input type="checkbox" checked>
+                </div>
+                <div class="setting-item">
+                  <label>SMS Alerts</label>
+                  <input type="checkbox">
+                </div>
+              </div>
+              <div class="settings-group">
+                <h4>Display Settings</h4>
+                <div class="setting-item">
+                  <label>Dark Mode</label>
+                  <input type="checkbox">
+                </div>
+              </div>
+            </div>`;
+          document.body.appendChild(settingsPanel);
+        }
+        settingsPanel.style.display =
+          settingsPanel.style.display === "none" ? "block" : "none";
+      }
+
+      function toggleProfile() {
+        let profilePanel = document.getElementById("profilePanel");
+        if (!profilePanel) {
+          profilePanel = document.createElement("div");
+          profilePanel.id = "profilePanel";
+          profilePanel.className = "panel profile-panel";
+          profilePanel.innerHTML = `
+            <div class="panel-header">
+              <h3><i class="fas fa-user"></i> Profile</h3>
+              <button class="close-button" onclick="this.parentElement.parentElement.style.display='none'">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="profile-content">
+              <div class="profile-info">
+                <div class="profile-avatar">?</div>
+                <h4>User Profile</h4>
+                <p>Complete your profile</p>
+              </div>
+              <div class="profile-details">
+                <div class="detail-item">
+                  <label>Full Name</label>
+                  <input type="text" id="profileName" placeholder="Enter your full name">
+                </div>
+                <div class="detail-item">
+                  <label>Email</label>
+                  <input type="email" id="profileEmail" placeholder="Enter your email">
+                </div>
+                <div class="detail-item">
+                  <label>Phone</label>
+                  <input type="tel" id="profilePhone" placeholder="Enter your phone number">
+                </div>
+                <div class="detail-item">
+                  <label>Address</label>
+                  <input type="text" id="profileAddress" placeholder="Enter your address">
+                </div>
+                <button class="edit-profile-button" onclick="toggleEditProfile(this)">
+                  <i class="fas fa-edit"></i> Edit Profile
+                </button>
+                <button class="save-profile-button" style="display: none;" onclick="saveProfile(this)">
+                  <i class="fas fa-save"></i> Save Changes
+                </button>
+              </div>
+            </div>`;
+          document.body.appendChild(profilePanel);
+
+          // Initialize all inputs as readonly
+          const inputs = profilePanel.querySelectorAll(
+            ".profile-details input"
+          );
+          inputs.forEach((input) => (input.readOnly = true));
+        }
+        profilePanel.style.display =
+          profilePanel.style.display === "none" ? "block" : "none";
+      }
+
+      function toggleEditProfile(button) {
+        const profileDetails = button.parentElement;
+        const inputs = profileDetails.querySelectorAll("input");
+        const saveButton = profileDetails.querySelector(".save-profile-button");
+
+        inputs.forEach((input) => {
+          input.readOnly = false;
+          input.classList.add("editable");
+        });
+
+        button.style.display = "none";
+        saveButton.style.display = "block";
+      }
+
+      function saveProfile(button) {
+        const profileDetails = button.parentElement;
+        const inputs = profileDetails.querySelectorAll("input");
+        const editButton = profileDetails.querySelector(".edit-profile-button");
+        const profileName = document.getElementById("profileName").value;
+
+        inputs.forEach((input) => {
+          input.readOnly = true;
+          input.classList.remove("editable");
+        });
+
+        // Update profile avatar and name if provided
+        if (profileName) {
+          const avatar = document.querySelector(".profile-avatar");
+          const profileTitle = document.querySelector(".profile-info h4");
+          avatar.textContent = profileName.charAt(0).toUpperCase();
+          profileTitle.textContent = profileName;
+        }
+
+        button.style.display = "none";
+        editButton.style.display = "block";
+
+        // Show success message
+        alert("Profile updated successfully!");
+      }
+
+      function handleLogout() {
+        if (confirm("Are you sure you want to logout?")) {
+          window.location.href = "index.html";
+        }
+      }
+
+      function toggleComposeForm() {
+        const composeForm = document.getElementById("composeForm");
+        composeForm.style.display =
+          composeForm.style.display === "none" ? "block" : "none";
+
+        if (composeForm.style.display === "block") {
+          document.getElementById("messageRecipient").focus();
+        }
+      }
+
+      function showMessages(type) {
+        const inboxList = document.getElementById("inboxMessages");
+        const sentList = document.getElementById("sentMessages");
+
+        if (type === "inbox") {
+          inboxList.style.display = "block";
+          sentList.style.display = "none";
+        } else {
+          inboxList.style.display = "none";
+          sentList.style.display = "block";
+        }
+      }
+
+      function sendMessage() {
+        const recipient = document.getElementById("messageRecipient").value;
+        const subject = document.getElementById("messageSubject").value;
+        const content = document.getElementById("messageContent").value;
+
+        if (!recipient || !subject || !content) {
+          alert("Please fill in all required fields");
+          return;
+        }
+
+        // Add to sent messages
+        const sentList = document.getElementById("sentMessages");
+        const newMessage = document.createElement("div");
+        newMessage.className = "message-item";
+        newMessage.innerHTML = `
+          <div class="message-sender">To: ${recipient}</div>
+          <div class="message-subject">${subject}</div>
+          <div class="message-date">${new Date().toLocaleDateString()}</div>
+          <div class="message-actions">
+            <i class="fas fa-trash-alt" title="Delete" onclick="deleteMessage(this)"></i>
+          </div>
+        `;
+        sentList.insertBefore(newMessage, sentList.firstChild);
+
+        // Clear form and hide it
+        document.getElementById("messageRecipient").value = "";
+        document.getElementById("messageSubject").value = "";
+        document.getElementById("messageContent").value = "";
+        toggleComposeForm();
+
+        // Show sent messages
+        showMessages("sent");
+
+        alert("Message sent successfully!");
+      }
+
+      function replyToMessage(element) {
+        const messageItem = element.closest(".message-item");
+        const sender = messageItem.querySelector(".message-sender").textContent;
+        const subject =
+          messageItem.querySelector(".message-subject").textContent;
+
+        // Open compose form
+        toggleComposeForm();
+
+        // Pre-fill the form
+        document.getElementById("messageRecipient").value = sender;
+        document.getElementById("messageSubject").value = `Re: ${subject}`;
+        document.getElementById("messageContent").focus();
+      }
+
+      function deleteMessage(element) {
+        if (confirm("Are you sure you want to delete this message?")) {
+          element.closest(".message-item").remove();
+        }
+      }
+
+      function toggleTransferForm() {
+        const form = document.getElementById("transferForm");
+        form.style.display = form.style.display === "none" ? "block" : "none";
+
+        if (form.style.display === "block") {
+          document.getElementById("transferFormsSection").style.display =
+            "none";
+          document.getElementById("transferTrackingForm").style.display =
+            "none";
+        }
+      }
+
+      function toggleTransferTracking() {
+        const trackingForm = document.getElementById("transferTrackingForm");
+        trackingForm.style.display =
+          trackingForm.style.display === "none" ? "block" : "none";
+
+        if (trackingForm.style.display === "block") {
+          document.getElementById("transferFormsSection").style.display =
+            "none";
+          document.getElementById("transferForm").style.display = "none";
+        }
+      }
+
+      function toggleTransferForms() {
+        const formsSection = document.getElementById("transferFormsSection");
+        formsSection.style.display =
+          formsSection.style.display === "none" ? "block" : "none";
+
+        if (formsSection.style.display === "block") {
+          document.getElementById("transferForm").style.display = "none";
+          document.getElementById("transferTrackingForm").style.display =
+            "none";
+        }
+      }
+
+      function downloadForm(formType) {
+        // In a real application, this would trigger the download of the actual form
+        alert(`Downloading ${formType.replace("_", " ")} form...`);
+      }
+
+      function trackTransfer() {
+        const trackingId = document.getElementById("transferTrackingId").value;
+        if (!trackingId) {
+          alert("Please enter a Transfer ID");
+          return;
+        }
+        // In a real application, this would fetch the transfer status from the server
+        alert(`Tracking transfer with ID: ${trackingId}`);
+      }
+
+      function submitTransfer() {
+        const currentOwner = document.getElementById("currentOwner").value;
+        const newOwner = document.getElementById("newOwner").value;
+        const propertyId = document.getElementById("propertyId").value;
+        const reason = document.getElementById("transferReason").value;
+
+        if (!currentOwner || !newOwner || !propertyId || !reason) {
+          alert("Please fill in all required fields");
+          return;
+        }
+
+        // In a real application, this would submit the form data to the server
+        alert("Transfer request submitted successfully!");
+        toggleTransferForm();
+
+        // Add the new transfer to the table
+        const table = document.querySelector(
+          "#ownershipSection .records-table tbody"
+        );
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+          <td>TRF${Math.floor(Math.random() * 1000)}</td>
+          <td>${propertyId}</td>
+          <td>${currentOwner}</td>
+          <td>${newOwner}</td>
+          <td>Pending</td>
+          <td>
+            <div class="action-icons">
+              <i class="fas fa-eye" title="View"></i>
+              <i class="fas fa-file-alt" title="Documents"></i>
+              <i class="fas fa-times-circle" title="Cancel"></i>
+            </div>
+          </td>
+        `;
+        table.insertBefore(newRow, table.firstChild);
+      }
+
+      function toggleTrackApplication() {
+        const trackForm = document.getElementById("trackApplicationForm");
+        const historySection = document.getElementById(
+          "applicationHistorySection"
+        );
+
+        trackForm.style.display =
+          trackForm.style.display === "none" ? "block" : "none";
+        historySection.style.display = "none";
+
+        if (trackForm.style.display === "block") {
+          document.getElementById("trackApplicationId").focus();
+        }
+      }
+
+      function toggleApplicationHistory() {
+        const historySection = document.getElementById(
+          "applicationHistorySection"
+        );
+        const trackForm = document.getElementById("trackApplicationForm");
+
+        historySection.style.display =
+          historySection.style.display === "none" ? "block" : "none";
+        trackForm.style.display = "none";
+      }
+
+      function trackApplication() {
+        const applicationId =
+          document.getElementById("trackApplicationId").value;
+        if (!applicationId) {
+          alert("Please enter an Application ID");
+          return;
+        }
+
+        // Show the result section
+        const resultSection = document.getElementById("trackApplicationResult");
+        resultSection.style.display = "block";
+
+        // Get all timeline items
+        const timelineItems = resultSection.querySelectorAll(".timeline-item");
+
+        // Reset all items
+        timelineItems.forEach((item) => {
+          item.classList.remove("completed", "active");
+        });
+
+        // In a real application, this would fetch the status from the server
+        // For now, we'll simulate different statuses based on the application ID
+        let currentStatus;
+        if (applicationId.includes("APP001")) {
+          currentStatus = "Under Review";
+          timelineItems[0].classList.add("completed");
+          timelineItems[1].classList.add("active");
+        } else if (applicationId.includes("APP002")) {
+          currentStatus = "Verification";
+          timelineItems[0].classList.add("completed");
+          timelineItems[1].classList.add("completed");
+          timelineItems[2].classList.add("active");
+        } else if (applicationId.includes("APP003")) {
+          currentStatus = "Completed";
+          timelineItems.forEach((item) => item.classList.add("completed"));
+        } else {
+          currentStatus = "Application Submitted";
+          timelineItems[0].classList.add("active");
+        }
+
+        // Update status details
+        const statusText = resultSection.querySelector(".status-text");
+        const lastUpdate = resultSection.querySelector(".last-update");
+        const completionDate = resultSection.querySelector(".completion-date");
+
+        statusText.textContent = currentStatus;
+        lastUpdate.textContent = new Date().toLocaleDateString();
+
+        // Set estimated completion date based on current status
+        let daysToComplete;
+        switch (currentStatus) {
+          case "Application Submitted":
+            daysToComplete = 7;
+            break;
+          case "Under Review":
+            daysToComplete = 5;
+            break;
+          case "Verification":
+            daysToComplete = 3;
+            break;
+          case "Completed":
+            daysToComplete = 0;
+            break;
+          default:
+            daysToComplete = 7;
+        }
+
+        completionDate.textContent = new Date(
+          Date.now() + daysToComplete * 24 * 60 * 60 * 1000
+        ).toLocaleDateString();
+      }
+
+      function filterApplicationHistory() {
+        const statusFilter = document.getElementById(
+          "historyStatusFilter"
+        ).value;
+        const dateFilter = document.getElementById("historyDateFilter").value;
+        const historyItems = document.querySelectorAll(".history-item");
+
+        historyItems.forEach((item) => {
+          const status = item
+            .querySelector(".status-badge")
+            .textContent.toLowerCase();
+          const date = item.querySelector(".application-date").textContent;
+
+          // Convert status to match filter values
+          let statusMatch = false;
+          switch (status) {
+            case "pending":
+              statusMatch = statusFilter === "pending";
+              break;
+            case "in progress":
+              statusMatch = statusFilter === "in_progress";
+              break;
+            case "completed":
+              statusMatch = statusFilter === "completed";
+              break;
+            case "rejected":
+              statusMatch = statusFilter === "rejected";
+              break;
+            default:
+              statusMatch = statusFilter === "all";
+          }
+
+          const matchesDate = !dateFilter || date === dateFilter;
+          item.style.display =
+            (statusFilter === "all" || statusMatch) && matchesDate
+              ? "block"
+              : "none";
+        });
+      }
+
+      // Add event listener for application ID input
+      document
+        .getElementById("trackApplicationId")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            trackApplication();
+          }
+        });
+    </script>
+  </body>
+</html>

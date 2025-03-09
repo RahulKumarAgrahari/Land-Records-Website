@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Land Records - MRO Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script>
+      function showDashboardSection(sectionId) {
+        // Hide all sections first
+        const sections = document.querySelectorAll(".content > div");
+        sections.forEach((section) => {
+          section.style.display = "none";
+        });
+
+        // Show the selected section
+        switch (sectionId) {
+          case "overview":
+            document.getElementById("overviewSection").style.display = "block";
+            break;
+          case "landRecords":
+            document.getElementById("landRecordsSection").style.display =
+              "block";
+            break;
+          case "applications":
+            document.getElementById("applicationsSection").style.display =
+              "block";
+            break;
+          case "revenue":
+            document.getElementById("revenueSection").style.display = "block";
+            break;
+          case "reports":
+            document.getElementById("reportsSection").style.display = "block";
+            break;
+          case "communications":
+            document.getElementById("communicationsSection").style.display =
+              "block";
+            break;
+          case "settings":
+            document.getElementById("settingsSection").style.display = "block";
+            break;
+        }
+      }
+
+      function showNotifications() {
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2><i class="fas fa-bell"></i> Notifications</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="notifications-panel">
+                <div class="notification-list">
+                  <div class="notification-item">
+                    <i class="fas fa-file-alt"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">New Land Record Application</div>
+                      <div class="notification-time">5 minutes ago</div>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">Revenue Collection Due</div>
+                      <div class="notification-time">1 hour ago</div>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">Document Verification Required</div>
+                      <div class="notification-time">2 hours ago</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      }
+
+      function showProfile() {
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2><i class="fas fa-user"></i> Profile</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="profile-panel">
+                <div class="profile-content">
+                  <div class="profile-info">
+                    <div class="profile-avatar">
+                      <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4>MRO Name</h4>
+                    <p>Mandal Revenue Office</p>
+                  </div>
+                  <div class="profile-details">
+                    <div class="detail-item">
+                      <label>Employee ID</label>
+                      <input type="text" value="MRO001" readonly>
+                    </div>
+                    <div class="detail-item">
+                      <label>Email</label>
+                      <input type="email" value="mro@mandal.gov.in" class="editable">
+                    </div>
+                    <div class="detail-item">
+                      <label>Phone</label>
+                      <input type="tel" value="+91 9876543210" class="editable">
+                    </div>
+                    <div class="detail-item">
+                      <label>Department</label>
+                      <input type="text" value="Revenue Department" readonly>
+                    </div>
+                  </div>
+                  <button class="edit-profile-button">
+                    <i class="fas fa-edit"></i> Edit Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Add event listener for edit profile button
+        const editButton = modal.querySelector(".edit-profile-button");
+        const editableInputs = modal.querySelectorAll(".editable");
+        editButton.addEventListener("click", function () {
+          if (this.textContent.includes("Edit")) {
+            editableInputs.forEach((input) =>
+              input.removeAttribute("readonly")
+            );
+            this.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+          } else {
+            editableInputs.forEach((input) =>
+              input.setAttribute("readonly", true)
+            );
+            this.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+            alert("Profile changes saved successfully!");
+          }
+        });
+      }
+
+      function handleLogout() {
+        if (confirm("Are you sure you want to logout?")) {
+          window.location.href = "index.html";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="blue-line">
+      <div class="logo-container">
+        <img src="earth.png" alt="Logo" />
+        <span class="title">E-Land Records</span>
+      </div>
+      <span class="header-title">Mandal Revenue Office - MRO Dashboard</span>
+    </div>
+
+    <div class="second-bar">
+      <div class="menu-item" onclick="showNotifications()">
+        <i class="fas fa-bell"></i>
+        <span>Notifications</span>
+      </div>
+      <div class="menu-item">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </div>
+      <div class="menu-item" onclick="showProfile()">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </div>
+      <div class="menu-item" onclick="handleLogout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="user-logo"><i class="fas fa-user-tie"></i></div>
+      <div class="user-name">MRO Dashboard</div>
+      <ul>
+        <li>
+          <a href="#" class="active" onclick="showDashboardSection('overview')">
+            <i class="fas fa-home"></i>
+            <span>Overview</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('landRecords')">
+            <i class="fas fa-file-alt"></i>
+            <span>Land Records</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('applications')">
+            <i class="fas fa-clipboard-list"></i>
+            <span>Applications</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('revenue')">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>Revenue</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('reports')">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reports</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('communications')">
+            <i class="fas fa-comments"></i>
+            <span>Communications</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('settings')">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <!-- Overview Section -->
+      <div id="overviewSection" class="rectangle">
+        <div class="rectangle-title">
+          <i class="fas fa-chart-line"></i>
+          <span>Overview</span>
+        </div>
+        <div class="overview-grid">
+          <div class="overview-card">
+            <i class="fas fa-file-alt"></i>
+            <div class="overview-content">
+              <h3>Pending Applications</h3>
+              <p>12</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-check-circle"></i>
+            <div class="overview-content">
+              <h3>Completed Today</h3>
+              <p>5</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-money-bill-wave"></i>
+            <div class="overview-content">
+              <h3>Revenue Collection</h3>
+              <p>₹1.2 Cr</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-clock"></i>
+            <div class="overview-content">
+              <h3>Processing Time</h3>
+              <p>2.5 days</p>
+            </div>
+          </div>
+        </div>
+        <div class="recent-activities">
+          <h3>Recent Activities</h3>
+          <div class="activity-list">
+            <div class="activity-item">
+              <i class="fas fa-file-alt"></i>
+              <div class="activity-details">
+                <span class="activity-title">New Land Record Application</span>
+                <span class="activity-time">2 hours ago</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <i class="fas fa-check-circle"></i>
+              <div class="activity-details">
+                <span class="activity-title"
+                  >Document Verification Completed</span
+                >
+                <span class="activity-time">3 hours ago</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <i class="fas fa-exclamation-circle"></i>
+              <div class="activity-details">
+                <span class="activity-title"
+                  >Revenue Collection Target Achieved</span
+                >
+                <span class="activity-time">5 hours ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Land Records Section -->
+      <div id="landRecordsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-file-alt"></i>
+          <span>Land Records</span>
+        </div>
+        <div class="record-actions">
+          <button class="action-button">
+            <i class="fas fa-plus-circle"></i>
+            New Record
+          </button>
+          <button class="action-button">
+            <i class="fas fa-file-export"></i>
+            Export Records
+          </button>
+        </div>
+        <div class="record-filters">
+          <select>
+            <option value="all">All Records</option>
+            <option value="pending">Pending Verification</option>
+            <option value="verified">Verified</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <input type="text" placeholder="Search by ID or Name" />
+        </div>
+        <div class="record-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Record ID</th>
+                <th>Land Owner</th>
+                <th>Survey No.</th>
+                <th>Area (Acres)</th>
+                <th>Status</th>
+                <th>Last Updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>LR001</td>
+                <td>John Doe</td>
+                <td>123/45</td>
+                <td>2.5</td>
+                <td><span class="status pending">Pending</span></td>
+                <td>2024-03-04</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-edit" title="Edit"></i>
+                    <i class="fas fa-check" title="Verify"></i>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add more record rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Applications Section -->
+      <div id="applicationsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-clipboard-list"></i>
+          <span>Applications</span>
+        </div>
+        <div class="application-filters">
+          <select>
+            <option value="all">All Applications</option>
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="completed">Completed</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <input type="text" placeholder="Search by ID or Name" />
+        </div>
+        <div class="application-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Application ID</th>
+                <th>Applicant Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Submitted Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>APP001</td>
+                <td>John Doe</td>
+                <td>Land Transfer</td>
+                <td><span class="status pending">Pending</span></td>
+                <td>2024-03-04</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-check" title="Approve"></i>
+                    <i class="fas fa-times" title="Reject"></i>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add more application rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Revenue Section -->
+      <div id="revenueSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-money-bill-wave"></i>
+          <span>Revenue Management</span>
+        </div>
+        <div class="revenue-filters">
+          <select>
+            <option value="all">All Collections</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+            <option value="overdue">Overdue</option>
+          </select>
+          <input type="text" placeholder="Search by ID or Name" />
+        </div>
+        <div class="revenue-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Collection ID</th>
+                <th>Land Owner</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>COL001</td>
+                <td>John Doe</td>
+                <td>₹25,000</td>
+                <td>Land Tax</td>
+                <td><span class="status pending">Pending</span></td>
+                <td>2024-03-15</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-money-bill-wave" title="Collect"></i>
+                    <i class="fas fa-file-invoice" title="Generate Receipt"></i>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add more collection rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Reports Section -->
+      <div id="reportsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-chart-bar"></i>
+          <span>Reports</span>
+        </div>
+        <div class="reports-grid">
+          <div class="report-card">
+            <i class="fas fa-file-alt"></i>
+            <h3>Land Records Report</h3>
+            <p>View land record statistics and status</p>
+            <button class="action-button">Generate Report</button>
+          </div>
+          <div class="report-card">
+            <i class="fas fa-clipboard-list"></i>
+            <h3>Application Report</h3>
+            <p>Track application processing status</p>
+            <button class="action-button">Generate Report</button>
+          </div>
+          <div class="report-card">
+            <i class="fas fa-money-bill-wave"></i>
+            <h3>Revenue Report</h3>
+            <p>View revenue collection statistics</p>
+            <button class="action-button">Generate Report</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Communications Section -->
+      <div id="communicationsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-comments"></i>
+          <span>Communications</span>
+        </div>
+        <div class="communications-grid">
+          <div class="message-list">
+            <div class="message-item">
+              <div class="message-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">John Doe</span>
+                  <span class="message-time">2 hours ago</span>
+                </div>
+                <div class="message-text">
+                  Requesting update on land record application
+                </div>
+              </div>
+            </div>
+            <!-- Add more message items as needed -->
+          </div>
+          <div class="message-compose">
+            <h3>New Message</h3>
+            <form>
+              <div class="form-group">
+                <label>To:</label>
+                <select>
+                  <option value="">Select Recipient</option>
+                  <option value="all">All Citizens</option>
+                  <option value="pending">Pending Applications</option>
+                  <option value="staff">Office Staff</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Subject:</label>
+                <input type="text" placeholder="Enter subject" />
+              </div>
+              <div class="form-group">
+                <label>Message:</label>
+                <textarea placeholder="Type your message here"></textarea>
+              </div>
+              <button type="submit" class="action-button">
+                <i class="fas fa-paper-plane"></i> Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Section -->
+      <div id="settingsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </div>
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3>System Settings</h3>
+            <form>
+              <div class="form-group">
+                <label>Notification Preferences</label>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="emailNotif" checked />
+                  <label for="emailNotif">Email Notifications</label>
+                  <input type="checkbox" id="smsNotif" checked />
+                  <label for="smsNotif">SMS Notifications</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Default View</label>
+                <select>
+                  <option value="overview">Overview</option>
+                  <option value="records">Land Records</option>
+                  <option value="applications">Applications</option>
+                  <option value="revenue">Revenue</option>
+                </select>
+              </div>
+              <button type="submit" class="action-button">Save Settings</button>
+            </form>
+          </div>
+          <div class="settings-card">
+            <h3>Security Settings</h3>
+            <form>
+              <div class="form-group">
+                <label>Change Password</label>
+                <input type="password" placeholder="Current Password" />
+                <input type="password" placeholder="New Password" />
+                <input type="password" placeholder="Confirm New Password" />
+              </div>
+              <div class="form-group">
+                <label>Two-Factor Authentication</label>
+                <div class="toggle-switch">
+                  <input type="checkbox" id="2fa" />
+                  <label for="2fa">Enable 2FA</label>
+                </div>
+              </div>
+              <button type="submit" class="action-button">
+                Update Security
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Land Records - District Collector Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script>
+      function showDashboardSection(sectionId) {
+        // Hide all sections first
+        const sections = document.querySelectorAll(".content > div");
+        sections.forEach((section) => {
+          section.style.display = "none";
+        });
+
+        // Show the selected section
+        switch (sectionId) {
+          case "overview":
+            document.getElementById("overviewSection").style.display = "block";
+            break;
+          case "revenue":
+            document.getElementById("revenueSection").style.display = "block";
+            break;
+          case "land":
+            document.getElementById("landSection").style.display = "block";
+            break;
+          case "projects":
+            document.getElementById("projectsSection").style.display = "block";
+            break;
+          case "reports":
+            document.getElementById("reportsSection").style.display = "block";
+            break;
+          case "communications":
+            document.getElementById("communicationsSection").style.display =
+              "block";
+            break;
+          case "settings":
+            document.getElementById("settingsSection").style.display = "block";
+            break;
+        }
+      }
+
+      function showNotifications() {
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2><i class="fas fa-bell"></i> Notifications</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="notifications-panel">
+                <div class="notification-list">
+                  <div class="notification-item">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">District Revenue Report</div>
+                      <div class="notification-time">5 minutes ago</div>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">Land Acquisition Proposal</div>
+                      <div class="notification-time">1 hour ago</div>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">Project Approval Required</div>
+                      <div class="notification-time">2 hours ago</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      }
+
+      function showProfile() {
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2><i class="fas fa-user"></i> Profile</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="profile-panel">
+                <div class="profile-content">
+                  <div class="profile-info">
+                    <div class="profile-avatar">
+                      <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4>District Collector Name</h4>
+                    <p>Collectorate Office</p>
+                  </div>
+                  <div class="profile-details">
+                    <div class="detail-item">
+                      <label>Employee ID</label>
+                      <input type="text" value="DC001" readonly>
+                    </div>
+                    <div class="detail-item">
+                      <label>Email</label>
+                      <input type="email" value="district.collector@land.gov.in" class="editable">
+                    </div>
+                    <div class="detail-item">
+                      <label>Phone</label>
+                      <input type="tel" value="+91 9876543210" class="editable">
+                    </div>
+                    <div class="detail-item">
+                      <label>Department</label>
+                      <input type="text" value="Collectorate Office" readonly>
+                    </div>
+                  </div>
+                  <button class="edit-profile-button">
+                    <i class="fas fa-edit"></i> Edit Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Add event listener for edit profile button
+        const editButton = modal.querySelector(".edit-profile-button");
+        const editableInputs = modal.querySelectorAll(".editable");
+        editButton.addEventListener("click", function () {
+          if (this.textContent.includes("Edit")) {
+            editableInputs.forEach((input) =>
+              input.removeAttribute("readonly")
+            );
+            this.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+          } else {
+            editableInputs.forEach((input) =>
+              input.setAttribute("readonly", true)
+            );
+            this.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+            alert("Profile changes saved successfully!");
+          }
+        });
+      }
+
+      function handleLogout() {
+        if (confirm("Are you sure you want to logout?")) {
+          window.location.href = "index.html";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="blue-line">
+      <div class="logo-container">
+        <img src="earth.png" alt="Logo" />
+        <span class="title">E-Land Records</span>
+      </div>
+      <span class="header-title"
+        >Collectorate Office - District Collector Dashboard</span
+      >
+    </div>
+
+    <div class="second-bar">
+      <div class="menu-item" onclick="showNotifications()">
+        <i class="fas fa-bell"></i>
+        <span>Notifications</span>
+      </div>
+      <div class="menu-item">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </div>
+      <div class="menu-item" onclick="showProfile()">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </div>
+      <div class="menu-item" onclick="handleLogout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="user-logo"><i class="fas fa-building-government"></i></div>
+      <div class="user-name">District Collector Dashboard</div>
+      <ul>
+        <li>
+          <a href="#" class="active" onclick="showDashboardSection('overview')">
+            <i class="fas fa-home"></i>
+            <span>Overview</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('revenue')">
+            <i class="fas fa-chart-line"></i>
+            <span>Revenue Management</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('land')">
+            <i class="fas fa-map-marked-alt"></i>
+            <span>Land Management</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('projects')">
+            <i class="fas fa-project-diagram"></i>
+            <span>Projects</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('reports')">
+            <i class="fas fa-file-alt"></i>
+            <span>Reports</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('communications')">
+            <i class="fas fa-comments"></i>
+            <span>Communications</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('settings')">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <!-- Overview Section -->
+      <div id="overviewSection" class="rectangle">
+        <div class="rectangle-title">
+          <i class="fas fa-chart-line"></i>
+          <span>Overview</span>
+        </div>
+        <div class="overview-grid">
+          <div class="overview-card">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <div class="overview-content">
+              <h3>Total District Revenue</h3>
+              <p>₹250.5 Cr</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-map-marked-alt"></i>
+            <div class="overview-content">
+              <h3>Land Records</h3>
+              <p>45,234</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-project-diagram"></i>
+            <div class="overview-content">
+              <h3>Active Projects</h3>
+              <p>25</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-tasks"></i>
+            <div class="overview-content">
+              <h3>Pending Approvals</h3>
+              <p>15</p>
+            </div>
+          </div>
+        </div>
+        <div class="recent-activities">
+          <h3>Recent Activities</h3>
+          <div class="activity-list">
+            <div class="activity-item">
+              <i class="fas fa-file-invoice-dollar"></i>
+              <div class="activity-details">
+                <span class="activity-title"
+                  >District Revenue Report Generated</span
+                >
+                <span class="activity-time">2 hours ago</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <i class="fas fa-map-marked-alt"></i>
+              <div class="activity-details">
+                <span class="activity-title"
+                  >Land Acquisition Proposal Received</span
+                >
+                <span class="activity-time">3 hours ago</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <i class="fas fa-project-diagram"></i>
+              <div class="activity-details">
+                <span class="activity-title">Project Approval Required</span>
+                <span class="activity-time">5 hours ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revenue Management Section -->
+      <div id="revenueSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-chart-line"></i>
+          <span>Revenue Management</span>
+        </div>
+        <div class="revenue-actions">
+          <button class="action-button">
+            <i class="fas fa-plus-circle"></i>
+            New Revenue Entry
+          </button>
+          <button class="action-button">
+            <i class="fas fa-file-export"></i>
+            Export Data
+          </button>
+        </div>
+        <div class="revenue-filters">
+          <select>
+            <option value="all">All Revenue</option>
+            <option value="tax">Tax Revenue</option>
+            <option value="fees">Fees</option>
+            <option value="penalties">Penalties</option>
+          </select>
+          <input type="text" placeholder="Search by ID or Description" />
+        </div>
+        <div class="revenue-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Revenue ID</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>REV001</td>
+                <td>District Property Tax</td>
+                <td>Tax Revenue</td>
+                <td>₹50,000</td>
+                <td><span class="status active">Active</span></td>
+                <td>2024-03-04</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-edit" title="Edit"></i>
+                    <i class="fas fa-history" title="History"></i>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add more revenue rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Land Management Section -->
+      <div id="landSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-map-marked-alt"></i>
+          <span>Land Management</span>
+        </div>
+        <div class="land-actions">
+          <button class="action-button">
+            <i class="fas fa-plus-circle"></i>
+            New Land Record
+          </button>
+          <button class="action-button">
+            <i class="fas fa-file-export"></i>
+            Export Data
+          </button>
+        </div>
+        <div class="land-filters">
+          <select>
+            <option value="all">All Records</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <input type="text" placeholder="Search by ID or Location" />
+        </div>
+        <div class="land-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Land ID</th>
+                <th>Location</th>
+                <th>Area</th>
+                <th>Owner</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>LAND001</td>
+                <td>District A, Block B</td>
+                <td>5.5 Acres</td>
+                <td>John Doe</td>
+                <td><span class="status pending">Pending</span></td>
+                <td>2024-03-04</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-edit" title="Edit"></i>
+                    <i class="fas fa-check" title="Approve"></i>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add more land rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Projects Section -->
+      <div id="projectsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-project-diagram"></i>
+          <span>Projects</span>
+        </div>
+        <div class="project-actions">
+          <button class="action-button">
+            <i class="fas fa-plus-circle"></i>
+            New Project
+          </button>
+          <button class="action-button">
+            <i class="fas fa-file-export"></i>
+            Export Data
+          </button>
+        </div>
+        <div class="project-filters">
+          <select>
+            <option value="all">All Projects</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+            <option value="pending">Pending</option>
+          </select>
+          <input type="text" placeholder="Search by Project Name" />
+        </div>
+        <div class="project-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Project ID</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Progress</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PRJ001</td>
+                <td>District Development Project</td>
+                <td><span class="status active">Active</span></td>
+                <td>75%</td>
+                <td>2024-01-01</td>
+                <td>2024-06-30</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-edit" title="Edit"></i>
+                    <i class="fas fa-chart-line" title="Progress"></i>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add more project rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Reports Section -->
+      <div id="reportsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-file-alt"></i>
+          <span>Reports</span>
+        </div>
+        <div class="reports-grid">
+          <div class="report-card">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <h3>District Revenue Reports</h3>
+            <p>View district revenue statistics and trends</p>
+            <button class="action-button">Generate Report</button>
+          </div>
+          <div class="report-card">
+            <i class="fas fa-map-marked-alt"></i>
+            <h3>Land Reports</h3>
+            <p>Track district land records and acquisitions</p>
+            <button class="action-button">Generate Report</button>
+          </div>
+          <div class="report-card">
+            <i class="fas fa-project-diagram"></i>
+            <h3>Project Reports</h3>
+            <p>Monitor district project progress and status</p>
+            <button class="action-button">Generate Report</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Communications Section -->
+      <div id="communicationsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-comments"></i>
+          <span>Communications</span>
+        </div>
+        <div class="communications-grid">
+          <div class="message-list">
+            <div class="message-item">
+              <div class="message-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">Joint Collector</span>
+                  <span class="message-time">2 hours ago</span>
+                </div>
+                <div class="message-text">
+                  Requesting approval for district land acquisition
+                </div>
+              </div>
+            </div>
+            <!-- Add more message items as needed -->
+          </div>
+          <div class="message-compose">
+            <h3>New Message</h3>
+            <form>
+              <div class="form-group">
+                <label>To:</label>
+                <select>
+                  <option value="">Select Recipient</option>
+                  <option value="all">All Officials</option>
+                  <option value="jointcollector">Joint Collector</option>
+                  <option value="revenue">Revenue Department</option>
+                  <option value="land">Land Department</option>
+                  <option value="projects">Project Team</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Subject:</label>
+                <input type="text" placeholder="Enter subject" />
+              </div>
+              <div class="form-group">
+                <label>Message:</label>
+                <textarea placeholder="Type your message here"></textarea>
+              </div>
+              <button type="submit" class="action-button">
+                <i class="fas fa-paper-plane"></i> Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Section -->
+      <div id="settingsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </div>
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3>System Settings</h3>
+            <form>
+              <div class="form-group">
+                <label>Notification Preferences</label>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="emailNotif" checked />
+                  <label for="emailNotif">Email Notifications</label>
+                  <input type="checkbox" id="smsNotif" checked />
+                  <label for="smsNotif">SMS Notifications</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Default View</label>
+                <select>
+                  <option value="overview">Overview</option>
+                  <option value="revenue">Revenue</option>
+                  <option value="land">Land</option>
+                  <option value="projects">Projects</option>
+                </select>
+              </div>
+              <button type="submit" class="action-button">Save Settings</button>
+            </form>
+          </div>
+          <div class="settings-card">
+            <h3>Security Settings</h3>
+            <form>
+              <div class="form-group">
+                <label>Change Password</label>
+                <input type="password" placeholder="Current Password" />
+                <input type="password" placeholder="New Password" />
+                <input type="password" placeholder="Confirm New Password" />
+              </div>
+              <div class="form-group">
+                <label>Two-Factor Authentication</label>
+                <div class="toggle-switch">
+                  <input type="checkbox" id="2fa" />
+                  <label for="2fa">Enable 2FA</label>
+                </div>
+              </div>
+              <button type="submit" class="action-button">
+                Update Security
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

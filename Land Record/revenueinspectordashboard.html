@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Land Records - Revenue Inspector Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script>
+      function showDashboardSection(sectionId) {
+        // Hide all sections first
+        const sections = document.querySelectorAll(".content > div");
+        sections.forEach((section) => {
+          section.style.display = "none";
+        });
+
+        // Show the selected section
+        switch (sectionId) {
+          case "overview":
+            document.getElementById("overviewSection").style.display = "block";
+            break;
+          case "assessments":
+            document.getElementById("assessmentsSection").style.display =
+              "block";
+            break;
+          case "collections":
+            document.getElementById("collectionsSection").style.display =
+              "block";
+            break;
+          case "arrears":
+            document.getElementById("arrearsSection").style.display = "block";
+            break;
+          case "reports":
+            document.getElementById("reportsSection").style.display = "block";
+            break;
+          case "communications":
+            document.getElementById("communicationsSection").style.display =
+              "block";
+            break;
+          case "settings":
+            document.getElementById("settingsSection").style.display = "block";
+            break;
+        }
+      }
+
+      function showNotifications() {
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2><i class="fas fa-bell"></i> Notifications</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="notifications-panel">
+                <div class="notification-list">
+                  <div class="notification-item">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">New Assessment Request</div>
+                      <div class="notification-time">5 minutes ago</div>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">Collection Target Update</div>
+                      <div class="notification-time">1 hour ago</div>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="notification-content">
+                      <div class="notification-title">Arrears Alert</div>
+                      <div class="notification-time">2 hours ago</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      }
+
+      function showProfile() {
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2><i class="fas fa-user"></i> Profile</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="profile-panel">
+                <div class="profile-content">
+                  <div class="profile-info">
+                    <div class="profile-avatar">
+                      <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4>Revenue Inspector Name</h4>
+                    <p>Revenue Department</p>
+                  </div>
+                  <div class="profile-details">
+                    <div class="detail-item">
+                      <label>Employee ID</label>
+                      <input type="text" value="RI001" readonly>
+                    </div>
+                    <div class="detail-item">
+                      <label>Email</label>
+                      <input type="email" value="revenue.inspector@land.gov.in" class="editable">
+                    </div>
+                    <div class="detail-item">
+                      <label>Phone</label>
+                      <input type="tel" value="+91 9876543210" class="editable">
+                    </div>
+                    <div class="detail-item">
+                      <label>Department</label>
+                      <input type="text" value="Revenue Department" readonly>
+                    </div>
+                  </div>
+                  <button class="edit-profile-button">
+                    <i class="fas fa-edit"></i> Edit Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Add event listener for edit profile button
+        const editButton = modal.querySelector(".edit-profile-button");
+        const editableInputs = modal.querySelectorAll(".editable");
+        editButton.addEventListener("click", function () {
+          if (this.textContent.includes("Edit")) {
+            editableInputs.forEach((input) =>
+              input.removeAttribute("readonly")
+            );
+            this.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+          } else {
+            editableInputs.forEach((input) =>
+              input.setAttribute("readonly", true)
+            );
+            this.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+            alert("Profile changes saved successfully!");
+          }
+        });
+      }
+
+      function handleLogout() {
+        if (confirm("Are you sure you want to logout?")) {
+          window.location.href = "index.html";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="blue-line">
+      <div class="logo-container">
+        <img src="earth.png" alt="Logo" />
+        <span class="title">E-Land Records</span>
+      </div>
+      <span class="header-title"
+        >Revenue Department - Revenue Inspector Dashboard</span
+      >
+    </div>
+
+    <div class="second-bar">
+      <div class="menu-item" onclick="showNotifications()">
+        <i class="fas fa-bell"></i>
+        <span>Notifications</span>
+      </div>
+      <div class="menu-item">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </div>
+      <div class="menu-item" onclick="showProfile()">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </div>
+      <div class="menu-item" onclick="handleLogout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="user-logo"><i class="fas fa-file-invoice-dollar"></i></div>
+      <div class="user-name">Revenue Inspector Dashboard</div>
+      <ul>
+        <li>
+          <a href="#" class="active" onclick="showDashboardSection('overview')">
+            <i class="fas fa-home"></i>
+            <span>Overview</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('assessments')">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Assessments</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('collections')">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>Collections</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('arrears')">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Arrears</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('reports')">
+            <i class="fas fa-file-alt"></i>
+            <span>Reports</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('communications')">
+            <i class="fas fa-comments"></i>
+            <span>Communications</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('settings')">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <!-- Overview Section -->
+      <div id="overviewSection" class="rectangle">
+        <div class="rectangle-title">
+          <i class="fas fa-chart-line"></i>
+          <span>Overview</span>
+        </div>
+        <div class="overview-grid">
+          <div class="overview-card">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <div class="overview-content">
+              <h3>Pending Assessments</h3>
+              <p>15</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-money-bill-wave"></i>
+            <div class="overview-content">
+              <h3>Today's Collection</h3>
+              <p>₹2.5 Cr</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-exclamation-circle"></i>
+            <div class="overview-content">
+              <h3>Total Arrears</h3>
+              <p>₹5.8 Cr</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <i class="fas fa-chart-pie"></i>
+            <div class="overview-content">
+              <h3>Collection Rate</h3>
+              <p>85%</p>
+            </div>
+          </div>
+        </div>
+        <div class="recent-activities">
+          <h3>Recent Activities</h3>
+          <div class="activity-list">
+            <div class="activity-item">
+              <i class="fas fa-file-invoice-dollar"></i>
+              <div class="activity-details">
+                <span class="activity-title">New Assessment Created</span>
+                <span class="activity-time">2 hours ago</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <i class="fas fa-money-bill-wave"></i>
+              <div class="activity-details">
+                <span class="activity-title">Collection Received</span>
+                <span class="activity-time">3 hours ago</span>
+              </div>
+            </div>
+            <div class="activity-item">
+              <i class="fas fa-exclamation-circle"></i>
+              <div class="activity-details">
+                <span class="activity-title">Arrears Notice Sent</span>
+                <span class="activity-time">5 hours ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assessments Section -->
+      <div id="assessmentsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-file-invoice-dollar"></i>
+          <span>Assessments</span>
+        </div>
+        <div class="assessment-actions">
+          <button class="action-button">
+            <i class="fas fa-plus-circle"></i>
+            New Assessment
+          </button>
+          <button class="action-button">
+            <i class="fas fa-file-export"></i>
+            Export Data
+          </button>
+        </div>
+        <div class="assessment-filters">
+          <select>
+            <option value="all">All Assessments</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <input type="text" placeholder="Search by ID or Name" />
+        </div>
+        <div class="assessment-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Assessment ID</th>
+                <th>Property Owner</th>
+                <th>Property Type</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ASS001</td>
+                <td>John Doe</td>
+                <td>Residential</td>
+                <td>₹25,000</td>
+                <td><span class="status pending">Pending</span></td>
+                <td>2024-03-04</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-edit" title="Edit"></i>
+                    <i class="fas fa-check" title="Approve"></i>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add more assessment rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Collections Section -->
+      <div id="collectionsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-money-bill-wave"></i>
+          <span>Collections</span>
+        </div>
+        <div class="collection-filters">
+          <select>
+            <option value="all">All Collections</option>
+            <option value="today">Today's Collections</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+          </select>
+          <input type="text" placeholder="Search by ID or Name" />
+        </div>
+        <div class="collection-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Collection ID</th>
+                <th>Property Owner</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>COL001</td>
+                <td>John Doe</td>
+                <td>₹25,000</td>
+                <td>Property Tax</td>
+                <td><span class="status pending">Pending</span></td>
+                <td>2024-03-04</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-money-bill-wave" title="Collect"></i>
+                    <i class="fas fa-file-invoice" title="Generate Receipt"></i>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add more collection rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Arrears Section -->
+      <div id="arrearsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>Arrears Management</span>
+        </div>
+        <div class="arrears-filters">
+          <select>
+            <option value="all">All Arrears</option>
+            <option value="overdue">Overdue</option>
+            <option value="pending">Pending</option>
+            <option value="recovered">Recovered</option>
+          </select>
+          <input type="text" placeholder="Search by ID or Name" />
+        </div>
+        <div class="arrears-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Arrears ID</th>
+                <th>Property Owner</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ARR001</td>
+                <td>John Doe</td>
+                <td>₹15,000</td>
+                <td>2024-02-28</td>
+                <td><span class="status pending">Overdue</span></td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-envelope" title="Send Notice"></i>
+                    <i class="fas fa-hand-holding-usd" title="Recover"></i>
+                  </div>
+                </td>
+              </tr>
+              <!-- Add more arrears rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Reports Section -->
+      <div id="reportsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-file-alt"></i>
+          <span>Reports</span>
+        </div>
+        <div class="reports-grid">
+          <div class="report-card">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <h3>Assessment Reports</h3>
+            <p>View assessment statistics and trends</p>
+            <button class="action-button">Generate Report</button>
+          </div>
+          <div class="report-card">
+            <i class="fas fa-money-bill-wave"></i>
+            <h3>Collection Reports</h3>
+            <p>Track collection performance</p>
+            <button class="action-button">Generate Report</button>
+          </div>
+          <div class="report-card">
+            <i class="fas fa-exclamation-circle"></i>
+            <h3>Arrears Reports</h3>
+            <p>Monitor arrears and recovery status</p>
+            <button class="action-button">Generate Report</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Communications Section -->
+      <div id="communicationsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-comments"></i>
+          <span>Communications</span>
+        </div>
+        <div class="communications-grid">
+          <div class="message-list">
+            <div class="message-item">
+              <div class="message-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="message-content">
+                <div class="message-header">
+                  <span class="message-sender">John Doe</span>
+                  <span class="message-time">2 hours ago</span>
+                </div>
+                <div class="message-text">
+                  Requesting clarification on assessment
+                </div>
+              </div>
+            </div>
+            <!-- Add more message items as needed -->
+          </div>
+          <div class="message-compose">
+            <h3>New Message</h3>
+            <form>
+              <div class="form-group">
+                <label>To:</label>
+                <select>
+                  <option value="">Select Recipient</option>
+                  <option value="all">All Property Owners</option>
+                  <option value="arrears">Arrears Cases</option>
+                  <option value="staff">Office Staff</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Subject:</label>
+                <input type="text" placeholder="Enter subject" />
+              </div>
+              <div class="form-group">
+                <label>Message:</label>
+                <textarea placeholder="Type your message here"></textarea>
+              </div>
+              <button type="submit" class="action-button">
+                <i class="fas fa-paper-plane"></i> Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Section -->
+      <div id="settingsSection" class="rectangle" style="display: none">
+        <div class="rectangle-title">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </div>
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3>System Settings</h3>
+            <form>
+              <div class="form-group">
+                <label>Notification Preferences</label>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="emailNotif" checked />
+                  <label for="emailNotif">Email Notifications</label>
+                  <input type="checkbox" id="smsNotif" checked />
+                  <label for="smsNotif">SMS Notifications</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Default View</label>
+                <select>
+                  <option value="overview">Overview</option>
+                  <option value="assessments">Assessments</option>
+                  <option value="collections">Collections</option>
+                  <option value="arrears">Arrears</option>
+                </select>
+              </div>
+              <button type="submit" class="action-button">Save Settings</button>
+            </form>
+          </div>
+          <div class="settings-card">
+            <h3>Security Settings</h3>
+            <form>
+              <div class="form-group">
+                <label>Change Password</label>
+                <input type="password" placeholder="Current Password" />
+                <input type="password" placeholder="New Password" />
+                <input type="password" placeholder="Confirm New Password" />
+              </div>
+              <div class="form-group">
+                <label>Two-Factor Authentication</label>
+                <div class="toggle-switch">
+                  <input type="checkbox" id="2fa" />
+                  <label for="2fa">Enable 2FA</label>
+                </div>
+              </div>
+              <button type="submit" class="action-button">
+                Update Security
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
