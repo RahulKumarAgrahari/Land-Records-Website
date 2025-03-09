@@ -12,7 +12,7 @@ app.use((req, res, next) => {
     next();
 })
 try {
-    await mongoose.connect('mongodb+srv://Abhishek:asdfghjkl@dev.d2zyd.mongodb.net/')
+    await mongoose.connect('mongodb+srv://67rahulrbgj:u58FZci4ikDRFTrr@cluster0.bv4fp.mongodb.net/')
     console.log("connection successfull")
     app.get('/', function (req, res) {
         res.send('Hello World')

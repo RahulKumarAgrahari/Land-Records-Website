@@ -51,9 +51,9 @@
               <label for="gender">Gender <span class="required">*</span></label>
               <select id="gender" required value="">
                 <!-- <option value="">Select Gender</option> -->
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
               </select>
               <span id="error-gender"></span>
             </div>
@@ -155,17 +155,36 @@
     const validationRegex = {
       first_name: [{
         regex: /^[a-zA-Z]{3,20}$/,
-        errorMsg: "please input valid name"
+        errorMsg: "Enter Valid Name"
+      }],
+      last_name: [{
+        regex: /^[a-zA-Z]{3,20}$/,
+        errorMsg: "Enter Valid Name"
       }],
       username: [{
         regex: /^[a-zA-Z0-9_]{3,20}$/,
-        errorMsg: 'username should contain 3 to 20 char'
+        errorMsg: 'Enter a Valid Username that should contain 3 to 20 chachters'
       }],  // Alphanumeric, 3-20 characters
-      // phone: /^[6-9]\d{9}$/,            // Indian phone number (10 digits)
-      // email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,  // Standard email format
-      // aadhaar: /^\d{12}$/,              // Aadhaar number (12 digits)
-      // address: /^[a-zA-Z0-9\s,.'-]{10,}$/, // Allows letters, numbers, spaces, and symbols (min 10 chars)
-      // password: /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/  // Strong password
+      phone: [{
+        regex: /^[6-9]\d{9}$/,
+        errorMsg: 'Enter Valid 10 digit Indian phone number'
+      }],
+      email: [{
+        regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        errorMsg: 'Enter Valid Email Address'
+      }],
+      aadhar: [{
+        regex: /^\d{12}$/,
+        errorMsg: 'Enter Valid 12 digit Aadhar Number'
+      }],      
+      address: [{
+        regex: /^[a-zA-Z0-9\s,.'-]{10,}$/,
+        errorMsg: 'Enter a Valid address'
+      }]
+      // password: [{
+      //   regex: /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{6,}$/,
+      //   errorMsg: 'Enter a Strong Password'
+      // }]
     };
 
     async function validateForm() {
@@ -179,41 +198,51 @@
           errors: [],
           value: ""
         },
+        middle_name: {
+          id: "middle-name",
+          errors: [],
+          value: ""
+        },
         last_name: {
           id: "last-name",
           errors: [],
           value: ""
         },
-        // dob: {
-        //   id: "dob",
-        //   errors: [],
-        //   value: ""
-        // },
-        // phone: {
-        //   id: "phone",
-        //   errors: [],
-        //   value: ""
-        // },
-        // address: {
-        //   id: "address",
-        //   errors: [],
-        //   value: ""
-        // },
+        dob: {
+          id: "dob",
+          errors: [],
+          value: ""
+        },
+        gender: {
+          id: "gender",
+          errors: [],
+          value: ""
+        },
+        phone: {
+          id: "phone",
+          errors: [],
+          value: ""
+        },
         email: {
           id: "email",
           errors: [],
           value: ""
         },
-        // aadhaar: {
-        //   id: "aadhaar",
-        //   errors: [],
-        //   value: ""
-        // },
-        // username: {
-        //   id: "username",
-        //   errors: [],
-        //   value: ""
-        // },
+        aadhar: {
+          id: "aadhar",
+          errors: [],
+          value: ""
+        },
+        address: {
+          id: "address",
+          errors: [],
+          value: ""
+        },                
+        username: {
+          id: "username",
+          errors: [],
+          value: ""
+        },
         password: {
           id: "password",
           errors: [],
