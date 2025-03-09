@@ -44,13 +44,13 @@
             </div>
             <div class="form-group">
               <label for="dob">Date of Birth <span class="required">*</span></label>
-              <input type="date" id="dob" required />
+              <input type="date" id="dob" required min="1900-01-01" max="2010-12-31" />
               <span id="error-dob" ></span>
             </div>
             <div class="form-group">
               <label for="gender">Gender <span class="required">*</span></label>
-              <select id="gender" required>
-                <option value="">Select Gender</option>
+              <select id="gender" required value="">
+                <!-- <option value="">Select Gender</option> -->
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
@@ -65,18 +65,22 @@
             <div class="form-group">
               <label for="phone">Phone Number <span class="required">*</span></label>
               <input type="tel" id="phone" required />
+              <span id="error-phone" ></span>
             </div>
             <div class="form-group">
               <label for="email">Email Address <span class="required">*</span></label>
               <input type="email" id="email" required />
+              <span id="error-email" ></span>
             </div>
             <div class="form-group">
               <label for="aadhar">Aadhar Number <span class="required">*</span></label>
               <input type="text" id="aadhar" required maxlength="12" />
+              <span id="error-aadhar" ></span>
             </div>
             <div class="form-group">
               <label for="address">Residential Address <span class="required">*</span></label>
               <textarea id="address" required></textarea>
+              <span id="error-address" ></span>
             </div>
           </div>
 
@@ -86,14 +90,17 @@
             <div class="form-group">
               <label for="username">Username <span class="required">*</span></label>
               <input type="text" id="username" required />
+              <span id="error-username" ></span>
             </div>
             <div class="form-group">
               <label for="password">Password <span class="required">*</span></label>
               <input type="password" id="password" required />
+              <span id="error-password" ></span>
             </div>
             <div class="form-group">
               <label for="confirm-password">Confirm Password <span class="required">*</span></label>
               <input type="password" id="confirm-password" required />
+              <span id="error-confirm-password" >YO</span>
             </div>
           </div>
 
@@ -215,7 +222,7 @@
         }
       }
 
-      // get all fiels value
+      // get all fields value
       
       Object.keys(formData).forEach(e => {
         const val = document.getElementById(formData[e].id).value
@@ -230,6 +237,17 @@
         formData.confirmPassword.errors.push("Passwords do not match!")
         return false;
       }
+
+      // Insert Error   
+      Object.keys(formData).forEach(e => {
+        const error = document.getElementById(`error-${formData[e].id}`)
+        if (formData[e].errors.length)
+        {
+          console.log(error)
+          error.innerHTML = formData[e].errors[0]
+        }
+      })
+      
 
       // const aadhar = document.getElementById("aadhar").value;
       // if (aadhar.length !== 12 || isNaN(aadhar)) {
