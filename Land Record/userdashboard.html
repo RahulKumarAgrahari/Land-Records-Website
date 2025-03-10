@@ -61,13 +61,11 @@
     }
 
     function handleNewApplication() {
-      const newApplicationForm =
-        document.getElementById("newApplicationForm");
-        console.log(newApplicationForm)
-        console.log("newApplicationForm")
-      newApplicationForm.style.display = "block";
-      newApplicationForm.scrollIntoView({ behavior: "smooth" });
-      
+      // const newApplicationForm = document.getElementById("newApplicationForm");
+      const applicationsSection = document.getElementById("applicationsSection");
+      applicationsSection.style.display = "block";
+      applicationsSection.scrollIntoView({ behavior: "smooth" });
+
     }
     function registerLand(event) {
       event.preventDefault(); // Prevent form submission
@@ -76,13 +74,13 @@
     }
     function handleNewLandApplication() {
       // Hide any other open forms or sections first
-      
+
 
       // Show the new application form
       const newApplicationForm =
         document.getElementById("newApplicationForm");
-        console.log(newApplicationForm)
-        console.log("newApplicationForm")
+      console.log(newApplicationForm)
+      console.log("newApplicationForm")
       newApplicationForm.style.display = "block";
       newApplicationForm.scrollIntoView({ behavior: "smooth" });
 
@@ -427,31 +425,10 @@
       </div>
 
       <!-- Applications Section -->
-      <div id="applicationsSection" class="rectangle" >
-        <div class="rectangle-title">
-          <i class="fas fa-file-alt"></i>
-          <span>Applications</span>
-        </div>
-        <div class="rectangle-notes">
-          Manage and track your land-related applications.
-        </div>
-        <div class="quick-actions">
-          <button class="action-button" onclick="handleNewLandApplication()">
-            <i class="fas fa-plus-circle"></i>
-            New Application
-          </button>
-          <button class="action-button">
-            <i class="fas fa-search"></i>
-            Track Application
-          </button>
-          <button class="action-button">
-            <i class="fas fa-history"></i>
-            Application History
-          </button>
-        </div>
+      <div id="applicationsSection" class="rectangle" style="display: none">
 
         <!-- New Application Form -->
-        <div id="newApplicationForm" class="form-container" style="display: none">
+        <div id="newApplicationForm" class="form-container">
           <form id="landApplicationForm" onsubmit="return registerLand(event)">
             <div class="form-header">
               <h3><i class="fas fa-user"></i> Personal Details</h3>
@@ -558,35 +535,6 @@
               </div>
             </div>
           </form>
-        </div>
-
-        <div class="records-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Application ID</th>
-                <th>Type</th>
-                <th>Submission Date</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>APP001</td>
-                <td>Land Registration</td>
-                <td>2024-03-20</td>
-                <td>Pending</td>
-                <td>
-                  <div class="action-icons">
-                    <i class="fas fa-eye" title="View"></i>
-                    <i class="fas fa-edit" title="Edit"></i>
-                    <i class="fas fa-trash-alt" title="Delete"></i>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
 
