@@ -8,21 +8,18 @@ const landSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
+        required: true,        
         trim: true,
         lowercase: true,
     },
     phone: {
         type: String,
-        required: true,
-        unique: true, // Ensures phone number is unique
+        required: true,        
         match: [/^\d{10}$/, "Phone number must be 10 digits"] // Validates 10-digit numbers
     },
     aadhar: {
         type: String,
-        required: true,
-        unique: true, // Ensures no duplicate Aadhar numbers
+        required: true,        
         match: [/^\d{12}$/, "Aadhar number must be exactly 12 digits"] // Validates 12-digit format
     },
     dor: {
@@ -33,14 +30,14 @@ const landSchema = new mongoose.Schema({
     },
     owner_name: {
         type: String,
-        required: true,
-        unique: true, // Ensures username is unique
+        required: true,        
         minlength: 3, // Minimum length of 3 characters
         maxlength: 20, // Maximum length of 20 characters
         match: [/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"]
     },
     survey_no: {
         type: String,
+        unique: true,
         required: true,
     },
     area: {
