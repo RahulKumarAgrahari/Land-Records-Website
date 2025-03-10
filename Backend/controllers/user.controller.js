@@ -1,15 +1,34 @@
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/user.model.js";
 
 const loginUser = async (req, res) => {
-    console.log(req)
     const body = req.body
-    console.log("here")
     try {
-        console.log("body",body)
-        // const userData = await Official.create(body)
-        res.send({
-            message: "Official Created Successfuly",
-            status: true
-        })
+        const userData = await User.findOne({ email: body.email })
+        if (userData && userData.password == body.password) {
+            delete userData.password
+            delete userData.id
+            const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            res.send({
+                message: "Login successfull",
+                status: true,
+                data: {
+                    id: userData._id,
+                    username: userData.username,
+                    first_name: userData.first_name,
+                    last_name: userData.last_name,
+                    email: userData.email,
+                    token
+                }
+            })
+            return
+        } else {
+            res.status(401).json({
+                message: 'Invalid credential',
+                status: false
+            });
+        }
     } catch (err) {
 
         if (err.name === 'ValidationError') {
