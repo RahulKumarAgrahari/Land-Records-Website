@@ -437,10 +437,15 @@
         },
         body: JSON.stringify({ username, password })
       });
+      const res = await response.json()
       if (!response.ok) {
-        alert(response.message)
+        alert(res.message)
       } else {
+        console.log(res)
         // Redirect to user dashboard
+        document.cookie = `token=${res.data.token}`;
+        // document.cookie = `token=${res.data.token}; HttpOnly; Secure`;
+
         window.location.href = "userdashboard.html";
       }
 
