@@ -7,8 +7,7 @@ const loginUser = async (req, res) => {
     try {
         const userData = await User.findOne({ email: body.email })
         if (userData && userData.password == body.password) {
-            delete userData.password
-            delete userData.id
+
             const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
             res.send({
                 message: "Login successfull",

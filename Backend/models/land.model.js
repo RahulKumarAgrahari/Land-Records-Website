@@ -51,7 +51,7 @@ const landSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    district: {
+    city: {
         type: String,
         required: true,
     },
