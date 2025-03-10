@@ -21,18 +21,19 @@
     const getLandList = async () => {
       try {
         const response = await fetch("http://localhost:8080/api/land/list", {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
             mode: 'no-cors',
             authrization: document.cookie.split("token=")[1]
-          }
+          },
+          body:JSON.stringify({
+            page:1,
+            limit:10
+          })
         });
-        console.log(response)
         const res = await response.json()
-        console.log("iiiiiiiiiiiiiiiiii",res)
-        console.log(res)
         if (res.status){
           const tbody = document.getElementById('land-list')
           tbody.innerHTML = ''
@@ -44,7 +45,7 @@
                 <td>${rowData.area}</td>
                 <td>${rowData.address}</td>
                 <td>${new Date(rowData.createdAt).toLocaleDateString()}</td>
-                <td>${rowData.status}</td>
+                <td class="status-pill-${rowData.status}" >${rowData.status}</td>
                 <td>
                   <div class="action-icons">
                     <i class="fas fa-eye" title="View"></i>
@@ -55,7 +56,6 @@
               </tr>`
               row.innerHTML = rowD
               tbody.appendChild(row)
-              console.log("tbody")
           })
           
         }
@@ -132,6 +132,7 @@
         const res = await response.json()
         if (response.ok) {
           alert(res.message);
+          getLandList()
           // document.getElementById("myForm").reset();
         } else {
           alert("Failed to create user. Please try again.");

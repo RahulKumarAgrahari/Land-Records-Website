@@ -77,13 +77,19 @@ const getLandRecord = async(req, res) => {
     try {
         const token=req.headers.authrization
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const landData = await Land.find({createdBy:decoded.id})
+        const landData = await Land.find({createdBy:decoded.id}).skip(body.skip).limit(body.limit);
+        const totalRecords = await Land.countDocuments({ createdBy: decoded.id });
         console.log(landData)
         if (landData) {
             res.send({
                 message: "land register application submitted sucessfully",
                 status: true,
-                data:landData
+                data:landData,
+                pagination: {
+                    currentPage: body.page,
+                    totalPages: Math.ceil(totalRecords / body.limit),
+                    total: totalRecords 
+                }
             })
         } else {
             res.status(500).json({

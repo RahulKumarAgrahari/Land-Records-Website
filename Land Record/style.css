@@ -3526,3 +3526,12 @@ nav ul li a:hover {
 .error {
     color: red
 }
+.status-pill-pending {
+    color: yellow;
+}
+.status-pill-approved {
+    color: yellow;
+}
+.status-pill-rejected {
+    color: yellow;
+}
