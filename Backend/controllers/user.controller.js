@@ -60,7 +60,7 @@ const createUser = async (req, res) => {
         console.log(body)
         const userData = await User.create(body)
         res.send({
-            message: "user created successfuly",
+            message: "User Created Successfuly",
             status: true
         })
     } catch (err) {

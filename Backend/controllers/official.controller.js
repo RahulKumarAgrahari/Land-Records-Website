@@ -1,13 +1,63 @@
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import Official from "../models/official.model.js";
 
-export const createOfficial = async (req, res) => {
-    //   try {
-    //     const newOfficial = await Official.create(req.body);
-    //     res.json({ message: "Official created successfully", status: true, data: newOfficial });
-    //   } catch (error) {
-    //     res.status(500).json({ message: "Error creating official", error: error.message });
-    //   }
 
+const loginOfficial = async (req, res) => {
+    const body = req.body
+    try {
+        const userData = await Official.findOne({ username: body.username })
+        if (userData && userData.password == body.password) {
+
+            const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            res.send({
+                message: "Login successfull",
+                status: true,
+                data: {
+                    id: userData._id,
+                    username: userData.username,
+                    first_name: userData.first_name,
+                    last_name: userData.last_name,
+                    email: userData.email,
+                    token
+                }
+            })
+            return
+        } else {
+            res.status(401).json({
+                message: 'Invalid credential',
+                status: false
+            });
+        }
+    } catch (err) {
+
+        if (err.name === 'ValidationError') {
+            // Collect all validation errors
+            const errorMessages = [];
+            for (let field in err.errors) {
+                errorMessages.push(err.errors[field].message); // Store the error messages
+            }
+
+            // Return the errors to the client
+            res.status(400).json({
+                message: 'Validation errors',
+                errors: errorMessages
+            });
+            return
+        }
+
+        // For other errors (e.g., database issues)
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: err.message
+        });
+    }
+};
+
+
+const createOfficial = async (req, res) => {
+
+    res.header("Access-Control-Allow-Origin", "*");
     const body = req.body
     try {
         console.log(body)
@@ -40,3 +90,8 @@ export const createOfficial = async (req, res) => {
         });
     }
 };
+
+export {
+    createOfficial,
+    loginOfficial
+}
