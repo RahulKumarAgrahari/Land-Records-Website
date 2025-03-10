@@ -18,7 +18,52 @@
         form.style.display = "none";
       }
     }
+    const getLandList = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/land/list", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            mode: 'no-cors',
+            authrization: document.cookie.split("token=")[1]
+          }
+        });
+        console.log(response)
+        const res = await response.json()
+        console.log("iiiiiiiiiiiiiiiiii",res)
+        console.log(res)
+        if (res.status){
+          const tbody = document.getElementById('land-list')
+          tbody.innerHTML = ''
+          res.data.forEach((rowData) => {
+            const row = document.createElement('tr')
+            const rowD = `<tr>
+                <td>${rowData.survey_no}</td>
+                <td>${rowData.owner_name}</td>
+                <td>${rowData.area}</td>
+                <td>${rowData.address}</td>
+                <td>${new Date(rowData.createdAt).toLocaleDateString()}</td>
+                <td>${rowData.status}</td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-edit" title="Edit"></i>
+                    <i class="fas fa-download" title="Download"></i>
+                  </div>
+                </td>
+              </tr>`
+              row.innerHTML = rowD
+              tbody.appendChild(row)
+              console.log("tbody")
+          })
+          
+        }
+      } catch {
 
+      }
+    }
+    getLandList()
     function showDashboardSection(sectionId) {
       // Hide all sections first
       const sections = document.querySelectorAll(".content > div");
@@ -152,15 +197,15 @@
     }
 
     // Add file upload preview for application documents
-    document
-      .getElementById("application-docs")
-      .addEventListener("change", function (e) {
-        const fileName = e.target.files[0]?.name;
-        if (fileName) {
-          e.target.nextElementSibling.querySelector("span").textContent =
-            fileName;
-        }
-      });
+    // document
+    //   .getElementById("application-docs")
+    //   .addEventListener("change", function (e) {
+    //     const fileName = e.target.files[0]?.name;
+    //     if (fileName) {
+    //       e.target.nextElementSibling.querySelector("span").textContent =
+    //         fileName;
+    //     }
+    //   });
   </script>
 </head>
 
@@ -398,37 +443,7 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>SUR123</td>
-                <td>John Doe</td>
-                <td>1200</td>
-                <td>Chennai, TN</td>
-                <td>2024-03-15</td>
-                <td>Verified</td>
-                <td>
-                  <div class="action-icons">
-                    <i class="fas fa-eye" title="View"></i>
-                    <i class="fas fa-edit" title="Edit"></i>
-                    <i class="fas fa-download" title="Download"></i>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>SUR124</td>
-                <td>Jane Smith</td>
-                <td>2500</td>
-                <td>Bangalore, KA</td>
-                <td>2024-03-10</td>
-                <td>Pending</td>
-                <td>
-                  <div class="action-icons">
-                    <i class="fas fa-eye" title="View"></i>
-                    <i class="fas fa-edit" title="Edit"></i>
-                    <i class="fas fa-download" title="Download"></i>
-                  </div>
-                </td>
-              </tr>
+            <tbody id="land-list">
             </tbody>
           </table>
         </div>
@@ -1006,15 +1021,15 @@
 
   <script>
     // Add file upload preview functionality
-    document
-      .getElementById("document-upload")
-      .addEventListener("change", function (e) {
-        const fileName = e.target.files[0]?.name;
-        if (fileName) {
-          e.target.nextElementSibling.querySelector("span").textContent =
-            fileName;
-        }
-      });
+    // document
+    //   .getElementById("document-upload")
+    //   .addEventListener("change", function (e) {
+    //     const fileName = e.target.files[0]?.name;
+    //     if (fileName) {
+    //       e.target.nextElementSibling.querySelector("span").textContent =
+    //         fileName;
+    //     }
+    //   });
 
     // Function to format current date
     function formatDate(date) {
