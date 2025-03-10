@@ -10,7 +10,7 @@ import userRoutes from './routes/user.routes.js'
 import landRoutes from './routes/land.routes.js'
 const PORT = 8080
 app.use(express.json())
-app.use(cors())
+app.use(cors({credentials: true }))
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     next();
@@ -18,6 +18,7 @@ app.use((req, res, next) => {
 
 app.use("/api/official", officialRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/land", landRoutes);
 
 try {
     app.listen(PORT)

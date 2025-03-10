@@ -1,8 +1,9 @@
 import express from "express";
-import { registerLand } from "../controllers/land.controller.js";
+import { getLandRecord, registerLand } from "../controllers/land.controller.js";
 
 const router = express.Router();
 
-router.post("/create", registerLand);
+router.post("/register", registerLand);
+router.get("/list", getLandRecord);
 
 export default router;

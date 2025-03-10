@@ -63,13 +63,23 @@ const landSchema = new mongoose.Schema({
     },
     document: {
         type: String,
-    }
+    },
+    status:{
+        type:String,
+        enum:['pending','approved','rejected'],
+        default:'pending'
+    },
+    reviewedBy:{
+        type:String,
+        default:''
+    },
+    createdBy:{ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 },
     {
         timestamps: true
     });
 
-const Land = mongoose.model('User', landSchema);
+const Land = mongoose.model('land', landSchema);
 const landHistorySchema = new mongoose.Schema({
     landId: { type: mongoose.Schema.Types.ObjectId, ref: "Land", required: true },
     action: { type: String, enum: ["Created", "Updated", "Transferred", "Approved", "Rejected"], required: true },

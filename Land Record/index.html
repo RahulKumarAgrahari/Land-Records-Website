@@ -441,10 +441,9 @@
       if (!response.ok) {
         alert(res.message)
       } else {
-        console.log(res)
         // Redirect to user dashboard
-        document.cookie = `token=${res.data.token}`;
-        // document.cookie = `token=${res.data.token}; HttpOnly; Secure`;
+        // document.cookie = `token=${res.data.token}`;
+        document.cookie = `token=${res.data.token}; HttpOnly; Secure`;
 
         window.location.href = "userdashboard.html";
       }
