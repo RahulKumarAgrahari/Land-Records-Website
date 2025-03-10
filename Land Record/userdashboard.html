@@ -61,23 +61,13 @@
     }
 
     function handleNewApplication() {
-      // Hide any other open forms or sections first
-      const forms = document.querySelectorAll(".form-container");
-      forms.forEach((form) => {
-        form.style.display = "none";
-      });
-
-      // Show the record form
-      const recordForm = document.getElementById("recordForm");
-      recordForm.style.display = "block";
-      recordForm.scrollIntoView({ behavior: "smooth" });
-
-      // Reset the form if it has any existing data
-      document.getElementById("landRegistrationForm").reset();
-
-      // Set current date as default for registration date
-      const today = new Date().toISOString().split("T")[0];
-      document.querySelector('input[name="regDate"]').value = today;
+      const newApplicationForm =
+        document.getElementById("newApplicationForm");
+        console.log(newApplicationForm)
+        console.log("newApplicationForm")
+      newApplicationForm.style.display = "block";
+      newApplicationForm.scrollIntoView({ behavior: "smooth" });
+      
     }
     function registerLand(event) {
       event.preventDefault(); // Prevent form submission
@@ -86,14 +76,13 @@
     }
     function handleNewLandApplication() {
       // Hide any other open forms or sections first
-      const forms = document.querySelectorAll(".form-container");
-      forms.forEach((form) => {
-        form.style.display = "none";
-      });
+      
 
       // Show the new application form
       const newApplicationForm =
         document.getElementById("newApplicationForm");
+        console.log(newApplicationForm)
+        console.log("newApplicationForm")
       newApplicationForm.style.display = "block";
       newApplicationForm.scrollIntoView({ behavior: "smooth" });
 
@@ -438,7 +427,7 @@
       </div>
 
       <!-- Applications Section -->
-      <div id="applicationsSection" class="rectangle" style="display: none">
+      <div id="applicationsSection" class="rectangle" >
         <div class="rectangle-title">
           <i class="fas fa-file-alt"></i>
           <span>Applications</span>
@@ -463,7 +452,7 @@
 
         <!-- New Application Form -->
         <div id="newApplicationForm" class="form-container" style="display: none">
-          <form id="landApplicationForm" onsubmit="return registerLand()">
+          <form id="landApplicationForm" onsubmit="return registerLand(event)">
             <div class="form-header">
               <h3><i class="fas fa-user"></i> Personal Details</h3>
               <button type="button" class="close-button" onclick="toggleNewApplicationForm()">
@@ -474,23 +463,28 @@
             <div class="form-grid">
               <div class="form-group">
                 <label>Full Name <span class="required">*</span></label>
-                <input type="text" name="fullName" required />
+                <input type="text" name="full_name" required />
+                <span name="error-full_name"></span>
               </div>
               <div class="form-group">
                 <label>Email <span class="required">*</span></label>
                 <input type="email" name="email" required />
+                <span name="error-email"></span>
               </div>
               <div class="form-group">
                 <label>Phone Number <span class="required">*</span></label>
                 <input type="tel" name="phone" required />
+                <span name="error-phone"></span>
               </div>
               <div class="form-group">
                 <label>Aadhar Number <span class="required">*</span></label>
                 <input type="text" name="aadhar" maxlength="12" required />
+                <span name="error-aadhar"></span>
               </div>
               <div class="form-group">
                 <label>Date of Registering <span class="required">*</span></label>
-                <input type="date" name="regDate" required />
+                <input type="date" name="dor" required />
+                <span name="error-dor"></span>
               </div>
             </div>
 
@@ -501,15 +495,18 @@
             <div class="form-grid">
               <div class="form-group">
                 <label>Owner Name <span class="required">*</span></label>
-                <input type="text" name="ownerName" required />
+                <input type="text" name="owner_name" required />
+                <span name="error-owner_name"></span>
               </div>
               <div class="form-group">
                 <label>Survey No. <span class="required">*</span></label>
-                <input type="text" name="surveyNo" required />
+                <input type="text" name="survey_no" required />
+                <span name="error-survey_no"></span>
               </div>
               <div class="form-group">
                 <label>Area (in sq.ft) <span class="required">*</span></label>
                 <input type="number" name="area" required />
+                <span name="error-area"></span>
               </div>
               <div class="form-group">
                 <label>State <span class="required">*</span></label>
@@ -519,18 +516,22 @@
                   <option value="TN">Tamil Nadu</option>
                   <option value="KA">Karnataka</option>
                 </select>
+                <span name="error-state"></span>
               </div>
               <div class="form-group">
                 <label>City/District <span class="required">*</span></label>
                 <input type="text" name="city" required />
+                <span name="error-city"></span>
               </div>
               <div class="form-group">
                 <label>Pincode <span class="required">*</span></label>
-                <input type="text" name="pincode" maxlength="6" required />
+                <input type="text" name="pincode" length="6" required />
+                <span name="error-pincode"></span>
               </div>
               <div class="form-group full-width">
                 <label>Complete Address <span class="required">*</span></label>
                 <textarea name="address" required rows="3"></textarea>
+                <span name="error-address"></span>
               </div>
             </div>
 
@@ -542,6 +543,7 @@
               <div class="form-group full-width">
                 <div class="file-upload">
                   <input type="file" name="documents[]" id="application-docs" multiple />
+                  <span name="error-document"></span>
                   <label for="application-docs">
                     <i class="fas fa-cloud-upload-alt"></i>
                     <span>Drop files here or click to upload</span>
@@ -932,7 +934,7 @@
         </div>
       </div>
 
-      <!-- Record Form -->
+      <!-- Record Form
       <div id="recordForm" class="form-container" style="display: none">
         <form id="landRegistragvhjhtionForm" onsubmit="registerLand(event)">
           <div class="form-header">
@@ -1027,7 +1029,7 @@
             </div>
           </div>
         </form>
-      </div>
+      </div> -->
     </div>
   </div>
 
