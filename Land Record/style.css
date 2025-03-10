@@ -3535,3 +3535,6 @@ nav ul li a:hover {
 .status-pill-rejected {
     color: yellow;
 }
+ul {
+    list-style-type: none; /* Options: disc, circle, square, none */
+}

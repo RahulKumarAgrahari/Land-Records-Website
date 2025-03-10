@@ -28,13 +28,13 @@
             mode: 'no-cors',
             authrization: document.cookie.split("token=")[1]
           },
-          body:JSON.stringify({
-            page:1,
-            limit:10
+          body: JSON.stringify({
+            page: 1,
+            limit: 10
           })
         });
         const res = await response.json()
-        if (res.status){
+        if (res.status) {
           const tbody = document.getElementById('land-list')
           tbody.innerHTML = ''
           res.data.forEach((rowData) => {
@@ -54,10 +54,19 @@
                   </div>
                 </td>
               </tr>`
-              row.innerHTML = rowD
-              tbody.appendChild(row)
+            row.innerHTML = rowD
+            tbody.appendChild(row)
           })
-          
+          const landListPagination = res.pagination.totalPages
+          const pagination = document.getElementById('land-list-pagination').querySelector('.pagination-btn')
+          pagination.innerHTML = ''
+          for(let i = 0; i < landListPagination; i++) {
+            const button = document.createElement('button')
+            button.setAttribute('class','page-button active')
+            button.innerHTML = `<button class="page-button ${i == 0 ? 'active':''}">1</button>`
+            pagination.appendChild(button)
+          }
+
         }
       } catch {
 
@@ -450,13 +459,15 @@
         </div>
 
         <!-- Pagination -->
-        <div class="pagination">
+        <div id="land-list-pagination" class="pagination">
           <button class="page-button">
             <i class="fas fa-chevron-left"></i>
           </button>
-          <button class="page-button active">1</button>
-          <button class="page-button">2</button>
-          <button class="page-button">3</button>
+          <div class="pagination-btn" style="display: flex; gap:3px;" >
+            <button class="page-button active">1</button>
+            <button class="page-button">2</button>
+            <button class="page-button">3</button>
+          </div>
           <button class="page-button">
             <i class="fas fa-chevron-right"></i>
           </button>
