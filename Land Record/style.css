@@ -3368,6 +3368,7 @@ nav ul li a:hover {
   border-radius: 15px;
   font-size: 14px;
   font-weight: 500;
+  height: fit-content;
 }
 
 .status-badge.pending {
@@ -3525,15 +3526,6 @@ nav ul li a:hover {
 }
 .error {
     color: red
-}
-.status-pill-pending {
-    color: yellow;
-}
-.status-pill-approved {
-    color: yellow;
-}
-.status-pill-rejected {
-    color: yellow;
 }
 ul {
     list-style-type: none; /* Options: disc, circle, square, none */
