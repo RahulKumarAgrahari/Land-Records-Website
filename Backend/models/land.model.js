@@ -65,7 +65,7 @@ const landSchema = new mongoose.Schema({
         required: true
     },
     document: {
-        type: String,        
+        type: String,
     }
 },
     {
@@ -73,4 +73,13 @@ const landSchema = new mongoose.Schema({
     });
 
 const Land = mongoose.model('User', landSchema);
-export default Land
+const landHistorySchema = new mongoose.Schema({
+    landId: { type: mongoose.Schema.Types.ObjectId, ref: "Land", required: true },
+    action: { type: String, enum: ["Created", "Updated", "Transferred", "Approved", "Rejected"], required: true },
+    previousData: { type: Object }, // Stores previous state before update
+    newData: { type: Object }, // Stores new state after update
+    changedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    timestamp: { type: Date, default: Date.now }
+});
+const LandHistory = mongoose.model("LandHistory", landHistorySchema);
+export { Land, LandHistory }
