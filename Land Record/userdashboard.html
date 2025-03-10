@@ -182,977 +182,979 @@
       </div>
     </div>
 
-    <div class="sidebar">
-      <div class="user-logo">K</div>
-      <div class="user-name">Krishna</div>
-      <ul>
-        <li>
-          <a href="#" class="active">
-            <i class="fas fa-home"></i>
-            <span>Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" onclick="showDashboardSection('landRecords')">
-            <i class="fas fa-landmark"></i>
-            <span>Land Records</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" onclick="showDashboardSection('ownership')">
-            <i class="fas fa-exchange-alt"></i>
-            <span>Ownership Transfer</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" onclick="showDashboardSection('verification')">
-            <i class="fas fa-check-circle"></i>
-            <span>Verification</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" onclick="showDashboardSection('reports')">
-            <i class="fas fa-chart-bar"></i>
-            <span>Reports</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" onclick="showDashboardSection('messages')">
-            <i class="fas fa-envelope"></i>
-            <span>Messages</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" onclick="showDashboardSection('downloads')">
-            <i class="fas fa-download"></i>
-            <span>Downloads</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="content">
-      <!-- Land Records Section -->
-      <div class="rectangle">
-        <div class="rectangle-title">
-          <i class="fas fa-landmark"></i>
-          <span>Land Records</span>
+    <div class="body-container">
+         <div class="sidebar">
+          <div class="user-logo">K</div>
+          <div class="user-name">Krishna</div>
+          <ul>
+            <li>
+              <a href="#" class="active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="showDashboardSection('landRecords')">
+                <i class="fas fa-landmark"></i>
+                <span>Land Records</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="showDashboardSection('ownership')">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Ownership Transfer</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="showDashboardSection('verification')">
+                <i class="fas fa-check-circle"></i>
+                <span>Verification</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="showDashboardSection('reports')">
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="showDashboardSection('messages')">
+                <i class="fas fa-envelope"></i>
+                <span>Messages</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="showDashboardSection('downloads')">
+                <i class="fas fa-download"></i>
+                <span>Downloads</span>
+              </a>
+            </li>
+          </ul>
         </div>
-        <div class="rectangle-notes">
-          View and manage your land records, certificates, and documentation.
-        </div>
-        <div class="quick-actions">
-          <button class="action-button" onclick="handleNewApplication()">
-            <i class="fas fa-plus-circle"></i>
-            New Application
-          </button>
-          <button class="action-button" onclick="toggleSearch()">
-            <i class="fas fa-search"></i>
-            Search Records
-          </button>
-          <button class="action-button" onclick="toggleTrackApplication()">
-            <i class="fas fa-search"></i>
-            Track Application
-          </button>
-          <button class="action-button" onclick="toggleApplicationHistory()">
-            <i class="fas fa-history"></i>
-            Application History
-          </button>
-        </div>
-
-        <!-- Track Application Form -->
-        <div
-          id="trackApplicationForm"
-          class="verification-form"
-          style="display: none"
-        >
-          <div class="form-group">
-            <input
-              type="text"
-              placeholder="Enter Application ID"
-              class="filter-input"
-              id="trackApplicationId"
-            />
-            <button class="filter-button" onclick="trackApplication()">
-              <i class="fas fa-search"></i> Track
-            </button>
-          </div>
-          <div
-            id="trackApplicationResult"
-            class="track-result"
-            style="display: none"
-          >
-            <div class="result-header">
-              <h4>Application Status</h4>
+    
+        <div class="content">
+          <!-- Land Records Section -->
+          <div class="rectangle">
+            <div class="rectangle-title">
+              <i class="fas fa-landmark"></i>
+              <span>Land Records</span>
             </div>
-            <div class="result-content">
-              <div class="status-timeline">
-                <div class="timeline-item completed">
-                  <i class="fas fa-file-alt"></i>
-                  <span>Application Submitted</span>
-                </div>
-                <div class="timeline-item active">
-                  <i class="fas fa-check-circle"></i>
-                  <span>Under Review</span>
-                </div>
-                <div class="timeline-item">
-                  <i class="fas fa-file-signature"></i>
-                  <span>Verification</span>
-                </div>
-                <div class="timeline-item">
-                  <i class="fas fa-check-double"></i>
-                  <span>Completed</span>
-                </div>
-              </div>
-              <div class="status-details">
-                <p>
-                  <strong>Current Status:</strong>
-                  <span class="status-text">Under Review</span>
-                </p>
-                <p>
-                  <strong>Last Updated:</strong>
-                  <span class="last-update">2024-03-20</span>
-                </p>
-                <p>
-                  <strong>Estimated Completion:</strong>
-                  <span class="completion-date">2024-03-25</span>
-                </p>
-              </div>
+            <div class="rectangle-notes">
+              View and manage your land records, certificates, and documentation.
             </div>
-          </div>
-        </div>
-
-        <!-- Application History Section -->
-        <div
-          id="applicationHistorySection"
-          class="history-section"
-          style="display: none"
-        >
-          <div class="history-filters">
-            <select
-              id="historyStatusFilter"
-              onchange="filterApplicationHistory()"
-            >
-              <option value="all">All Status</option>
-              <option value="pending">Pending</option>
-              <option value="in_progress">In Progress</option>
-              <option value="completed">Completed</option>
-              <option value="rejected">Rejected</option>
-            </select>
-            <input
-              type="date"
-              id="historyDateFilter"
-              onchange="filterApplicationHistory()"
-            />
-          </div>
-          <div class="history-list">
-            <div class="history-item">
-              <div class="history-header">
-                <span class="application-id">APP001</span>
-                <span class="application-date">2024-03-20</span>
-              </div>
-              <div class="history-content">
-                <p><strong>Type:</strong> Land Registration</p>
-                <p>
-                  <strong>Status:</strong>
-                  <span class="status-badge pending">Pending</span>
-                </p>
-                <p><strong>Last Updated:</strong> 2024-03-20</p>
-              </div>
-            </div>
-            <div class="history-item">
-              <div class="history-header">
-                <span class="application-id">APP002</span>
-                <span class="application-date">2024-03-19</span>
-              </div>
-              <div class="history-content">
-                <p><strong>Type:</strong> Land Registration</p>
-                <p>
-                  <strong>Status:</strong>
-                  <span class="status-badge completed">Completed</span>
-                </p>
-                <p><strong>Last Updated:</strong> 2024-03-19</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Search Filters -->
-        <div id="searchFilters" class="search-filters" style="display: none">
-          <div class="filter-group">
-            <input
-              type="text"
-              placeholder="Search by Owner Name"
-              class="filter-input"
-            />
-            <input
-              type="text"
-              placeholder="Search by Survey No."
-              class="filter-input"
-            />
-            <select class="filter-input">
-              <option value="">Select State</option>
-              <option value="AP">Andhra Pradesh</option>
-              <option value="TN">Tamil Nadu</option>
-              <option value="KA">Karnataka</option>
-            </select>
-            <button class="filter-button">
-              <i class="fas fa-search"></i> Search
-            </button>
-            <button class="filter-button clear">
-              <i class="fas fa-times"></i> Clear
-            </button>
-          </div>
-        </div>
-
-        <!-- Records Table -->
-        <div class="records-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Survey No.</th>
-                <th>Owner Name</th>
-                <th>Area (sq.ft)</th>
-                <th>Location</th>
-                <th>Registration Date</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>SUR123</td>
-                <td>John Doe</td>
-                <td>1200</td>
-                <td>Chennai, TN</td>
-                <td>2024-03-15</td>
-                <td>Verified</td>
-                <td>
-                  <div class="action-icons">
-                    <i class="fas fa-eye" title="View"></i>
-                    <i class="fas fa-edit" title="Edit"></i>
-                    <i class="fas fa-download" title="Download"></i>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>SUR124</td>
-                <td>Jane Smith</td>
-                <td>2500</td>
-                <td>Bangalore, KA</td>
-                <td>2024-03-10</td>
-                <td>Pending</td>
-                <td>
-                  <div class="action-icons">
-                    <i class="fas fa-eye" title="View"></i>
-                    <i class="fas fa-edit" title="Edit"></i>
-                    <i class="fas fa-download" title="Download"></i>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination">
-          <button class="page-button">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="page-button active">1</button>
-          <button class="page-button">2</button>
-          <button class="page-button">3</button>
-          <button class="page-button">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Applications Section -->
-      <div id="applicationsSection" class="rectangle" style="display: none">
-        <div class="rectangle-title">
-          <i class="fas fa-file-alt"></i>
-          <span>Applications</span>
-        </div>
-        <div class="rectangle-notes">
-          Manage and track your land-related applications.
-        </div>
-        <div class="quick-actions">
-          <button class="action-button" onclick="handleNewLandApplication()">
-            <i class="fas fa-plus-circle"></i>
-            New Application
-          </button>
-          <button class="action-button">
-            <i class="fas fa-search"></i>
-            Track Application
-          </button>
-          <button class="action-button">
-            <i class="fas fa-history"></i>
-            Application History
-          </button>
-        </div>
-
-        <!-- New Application Form -->
-        <div
-          id="newApplicationForm"
-          class="form-container"
-          style="display: none"
-        >
-          <form
-            id="landApplicationForm"
-            action="save_application.php"
-            method="POST"
-            enctype="multipart/form-data"
-          >
-            <div class="form-header">
-              <h3><i class="fas fa-user"></i> Personal Details</h3>
-              <button
-                type="button"
-                class="close-button"
-                onclick="toggleNewApplicationForm()"
-              >
-                <i class="fas fa-times"></i>
+            <div class="quick-actions">
+              <button class="action-button" onclick="handleNewApplication()">
+                <i class="fas fa-plus-circle"></i>
+                New Application
+              </button>
+              <button class="action-button" onclick="toggleSearch()">
+                <i class="fas fa-search"></i>
+                Search Records
+              </button>
+              <button class="action-button" onclick="toggleTrackApplication()">
+                <i class="fas fa-search"></i>
+                Track Application
+              </button>
+              <button class="action-button" onclick="toggleApplicationHistory()">
+                <i class="fas fa-history"></i>
+                Application History
               </button>
             </div>
-
-            <div class="form-grid">
+    
+            <!-- Track Application Form -->
+            <div
+              id="trackApplicationForm"
+              class="verification-form"
+              style="display: none"
+            >
               <div class="form-group">
-                <label>Full Name <span class="required">*</span></label>
-                <input type="text" name="fullName" required />
+                <input
+                  type="text"
+                  placeholder="Enter Application ID"
+                  class="filter-input"
+                  id="trackApplicationId"
+                />
+                <button class="filter-button" onclick="trackApplication()">
+                  <i class="fas fa-search"></i> Track
+                </button>
               </div>
-              <div class="form-group">
-                <label>Email <span class="required">*</span></label>
-                <input type="email" name="email" required />
+              <div
+                id="trackApplicationResult"
+                class="track-result"
+                style="display: none"
+              >
+                <div class="result-header">
+                  <h4>Application Status</h4>
+                </div>
+                <div class="result-content">
+                  <div class="status-timeline">
+                    <div class="timeline-item completed">
+                      <i class="fas fa-file-alt"></i>
+                      <span>Application Submitted</span>
+                    </div>
+                    <div class="timeline-item active">
+                      <i class="fas fa-check-circle"></i>
+                      <span>Under Review</span>
+                    </div>
+                    <div class="timeline-item">
+                      <i class="fas fa-file-signature"></i>
+                      <span>Verification</span>
+                    </div>
+                    <div class="timeline-item">
+                      <i class="fas fa-check-double"></i>
+                      <span>Completed</span>
+                    </div>
+                  </div>
+                  <div class="status-details">
+                    <p>
+                      <strong>Current Status:</strong>
+                      <span class="status-text">Under Review</span>
+                    </p>
+                    <p>
+                      <strong>Last Updated:</strong>
+                      <span class="last-update">2024-03-20</span>
+                    </p>
+                    <p>
+                      <strong>Estimated Completion:</strong>
+                      <span class="completion-date">2024-03-25</span>
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
-                <label>Phone Number <span class="required">*</span></label>
-                <input type="tel" name="phone" required />
-              </div>
-              <div class="form-group">
-                <label>Aadhar Number <span class="required">*</span></label>
-                <input type="text" name="aadhar" maxlength="12" required />
-              </div>
-              <div class="form-group">
-                <label
-                  >Date of Registering <span class="required">*</span></label
+            </div>
+    
+            <!-- Application History Section -->
+            <div
+              id="applicationHistorySection"
+              class="history-section"
+              style="display: none"
+            >
+              <div class="history-filters">
+                <select
+                  id="historyStatusFilter"
+                  onchange="filterApplicationHistory()"
                 >
-                <input type="date" name="regDate" required />
+                  <option value="all">All Status</option>
+                  <option value="pending">Pending</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+                <input
+                  type="date"
+                  id="historyDateFilter"
+                  onchange="filterApplicationHistory()"
+                />
+              </div>
+              <div class="history-list">
+                <div class="history-item">
+                  <div class="history-header">
+                    <span class="application-id">APP001</span>
+                    <span class="application-date">2024-03-20</span>
+                  </div>
+                  <div class="history-content">
+                    <p><strong>Type:</strong> Land Registration</p>
+                    <p>
+                      <strong>Status:</strong>
+                      <span class="status-badge pending">Pending</span>
+                    </p>
+                    <p><strong>Last Updated:</strong> 2024-03-20</p>
+                  </div>
+                </div>
+                <div class="history-item">
+                  <div class="history-header">
+                    <span class="application-id">APP002</span>
+                    <span class="application-date">2024-03-19</span>
+                  </div>
+                  <div class="history-content">
+                    <p><strong>Type:</strong> Land Registration</p>
+                    <p>
+                      <strong>Status:</strong>
+                      <span class="status-badge completed">Completed</span>
+                    </p>
+                    <p><strong>Last Updated:</strong> 2024-03-19</p>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div class="form-header">
-              <h3><i class="fas fa-map-marker-alt"></i> Land Details</h3>
-            </div>
-
-            <div class="form-grid">
-              <div class="form-group">
-                <label>Owner Name <span class="required">*</span></label>
-                <input type="text" name="ownerName" required />
-              </div>
-              <div class="form-group">
-                <label>Survey No. <span class="required">*</span></label>
-                <input type="text" name="surveyNo" required />
-              </div>
-              <div class="form-group">
-                <label>Area (in sq.ft) <span class="required">*</span></label>
-                <input type="number" name="area" required />
-              </div>
-              <div class="form-group">
-                <label>State <span class="required">*</span></label>
-                <select name="state" required>
+    
+            <!-- Search Filters -->
+            <div id="searchFilters" class="search-filters" style="display: none">
+              <div class="filter-group">
+                <input
+                  type="text"
+                  placeholder="Search by Owner Name"
+                  class="filter-input"
+                />
+                <input
+                  type="text"
+                  placeholder="Search by Survey No."
+                  class="filter-input"
+                />
+                <select class="filter-input">
                   <option value="">Select State</option>
                   <option value="AP">Andhra Pradesh</option>
                   <option value="TN">Tamil Nadu</option>
                   <option value="KA">Karnataka</option>
                 </select>
-              </div>
-              <div class="form-group">
-                <label>City/District <span class="required">*</span></label>
-                <input type="text" name="city" required />
-              </div>
-              <div class="form-group">
-                <label>Pincode <span class="required">*</span></label>
-                <input type="text" name="pincode" maxlength="6" required />
-              </div>
-              <div class="form-group full-width">
-                <label>Complete Address <span class="required">*</span></label>
-                <textarea name="address" required rows="3"></textarea>
-              </div>
-            </div>
-
-            <div class="form-header">
-              <h3><i class="fas fa-file-upload"></i> Upload Documents</h3>
-            </div>
-
-            <div class="form-grid">
-              <div class="form-group full-width">
-                <div class="file-upload">
-                  <input
-                    type="file"
-                    name="documents[]"
-                    id="application-docs"
-                    multiple
-                  />
-                  <label for="application-docs">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <span>Drop files here or click to upload</span>
-                  </label>
-                </div>
-              </div>
-              <div class="form-group full-width">
-                <button type="submit" class="submit-button" name="submit">
-                  <i class="fas fa-check-circle"></i>
-                  Generate Record
+                <button class="filter-button">
+                  <i class="fas fa-search"></i> Search
+                </button>
+                <button class="filter-button clear">
+                  <i class="fas fa-times"></i> Clear
                 </button>
               </div>
             </div>
-          </form>
-        </div>
-
-        <div class="records-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Application ID</th>
-                <th>Type</th>
-                <th>Submission Date</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>APP001</td>
-                <td>Land Registration</td>
-                <td>2024-03-20</td>
-                <td>Pending</td>
-                <td>
-                  <div class="action-icons">
-                    <i class="fas fa-eye" title="View"></i>
-                    <i class="fas fa-edit" title="Edit"></i>
-                    <i class="fas fa-trash-alt" title="Delete"></i>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Ownership Transfer Section -->
-      <div id="ownershipSection" class="rectangle" style="display: none">
-        <div class="rectangle-title">
-          <i class="fas fa-exchange-alt"></i>
-          <span>Ownership Transfer</span>
-        </div>
-        <div class="rectangle-notes">
-          Initiate and track ownership transfer requests.
-        </div>
-        <div class="quick-actions">
-          <button class="action-button" onclick="toggleTransferForm()">
-            <i class="fas fa-plus-circle"></i>
-            New Transfer
-          </button>
-          <button class="action-button" onclick="toggleTransferTracking()">
-            <i class="fas fa-search"></i>
-            Track Transfer
-          </button>
-          <button class="action-button" onclick="toggleTransferForms()">
-            <i class="fas fa-file-download"></i>
-            Download Forms
-          </button>
-        </div>
-
-        <!-- Transfer Forms Download Section -->
-        <div
-          id="transferFormsSection"
-          class="download-grid"
-          style="display: none"
-        >
-          <div class="download-card">
-            <i class="fas fa-file-pdf"></i>
-            <h4>Transfer Status Report</h4>
-            <p>View and download your transfer request status</p>
-            <button
-              class="action-button"
-              onclick="downloadForm('transfer_status')"
-            >
-              <i class="fas fa-download"></i> Download
-            </button>
-          </div>
-          <div class="download-card">
-            <i class="fas fa-history"></i>
-            <h4>Transfer History</h4>
-            <p>Download your complete transfer history report</p>
-            <button
-              class="action-button"
-              onclick="downloadForm('transfer_history')"
-            >
-              <i class="fas fa-download"></i> Download
-            </button>
-          </div>
-        </div>
-
-        <!-- Transfer Tracking Form -->
-        <div
-          id="transferTrackingForm"
-          class="verification-form"
-          style="display: none"
-        >
-          <div class="form-group">
-            <input
-              type="text"
-              placeholder="Enter Transfer ID"
-              class="filter-input"
-              id="transferTrackingId"
-            />
-            <button class="filter-button" onclick="trackTransfer()">
-              <i class="fas fa-search"></i> Track
-            </button>
-          </div>
-        </div>
-
-        <!-- New Transfer Form -->
-        <div id="transferForm" class="form-container" style="display: none">
-          <div class="form-header">
-            <h3><i class="fas fa-exchange-alt"></i> New Transfer Request</h3>
-            <button class="close-button" onclick="toggleTransferForm()">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Current Owner Name <span class="required">*</span></label>
-              <input type="text" id="currentOwner" required />
+    
+            <!-- Records Table -->
+            <div class="records-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Survey No.</th>
+                    <th>Owner Name</th>
+                    <th>Area (sq.ft)</th>
+                    <th>Location</th>
+                    <th>Registration Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>SUR123</td>
+                    <td>John Doe</td>
+                    <td>1200</td>
+                    <td>Chennai, TN</td>
+                    <td>2024-03-15</td>
+                    <td>Verified</td>
+                    <td>
+                      <div class="action-icons">
+                        <i class="fas fa-eye" title="View"></i>
+                        <i class="fas fa-edit" title="Edit"></i>
+                        <i class="fas fa-download" title="Download"></i>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>SUR124</td>
+                    <td>Jane Smith</td>
+                    <td>2500</td>
+                    <td>Bangalore, KA</td>
+                    <td>2024-03-10</td>
+                    <td>Pending</td>
+                    <td>
+                      <div class="action-icons">
+                        <i class="fas fa-eye" title="View"></i>
+                        <i class="fas fa-edit" title="Edit"></i>
+                        <i class="fas fa-download" title="Download"></i>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="form-group">
-              <label>New Owner Name <span class="required">*</span></label>
-              <input type="text" id="newOwner" required />
+    
+            <!-- Pagination -->
+            <div class="pagination">
+              <button class="page-button">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="page-button active">1</button>
+              <button class="page-button">2</button>
+              <button class="page-button">3</button>
+              <button class="page-button">
+                <i class="fas fa-chevron-right"></i>
+              </button>
             </div>
-            <div class="form-group">
-              <label
-                >Property ID/Survey No. <span class="required">*</span></label
+          </div>
+    
+          <!-- Applications Section -->
+          <div id="applicationsSection" class="rectangle" style="display: none">
+            <div class="rectangle-title">
+              <i class="fas fa-file-alt"></i>
+              <span>Applications</span>
+            </div>
+            <div class="rectangle-notes">
+              Manage and track your land-related applications.
+            </div>
+            <div class="quick-actions">
+              <button class="action-button" onclick="handleNewLandApplication()">
+                <i class="fas fa-plus-circle"></i>
+                New Application
+              </button>
+              <button class="action-button">
+                <i class="fas fa-search"></i>
+                Track Application
+              </button>
+              <button class="action-button">
+                <i class="fas fa-history"></i>
+                Application History
+              </button>
+            </div>
+    
+            <!-- New Application Form -->
+            <div
+              id="newApplicationForm"
+              class="form-container"
+              style="display: none"
+            >
+              <form
+                id="landApplicationForm"
+                action="save_application.php"
+                method="POST"
+                enctype="multipart/form-data"
               >
-              <input type="text" id="propertyId" required />
-            </div>
-            <div class="form-group">
-              <label>Transfer Reason <span class="required">*</span></label>
-              <select id="transferReason" required>
-                <option value="">Select Reason</option>
-                <option value="sale">Sale</option>
-                <option value="inheritance">Inheritance</option>
-                <option value="gift">Gift</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="form-group full-width">
-              <label>Additional Details</label>
-              <textarea id="transferDetails" rows="3"></textarea>
-            </div>
-            <div class="form-group full-width">
-              <div class="file-upload">
-                <input type="file" id="transferDocs" multiple />
-                <label for="transferDocs">
-                  <i class="fas fa-cloud-upload-alt"></i>
-                  <span>Upload supporting documents</span>
-                </label>
-              </div>
-            </div>
-            <div class="form-group">
-              <button class="submit-button" onclick="submitTransfer()">
-                <i class="fas fa-check-circle"></i> Submit Transfer Request
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Records Table -->
-        <div class="records-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Transfer ID</th>
-                <th>Property Details</th>
-                <th>Current Owner</th>
-                <th>New Owner</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>TRF001</td>
-                <td>Plot 123, Chennai</td>
-                <td>John Doe</td>
-                <td>Jane Smith</td>
-                <td>In Progress</td>
-                <td>
-                  <div class="action-icons">
-                    <i class="fas fa-eye" title="View"></i>
-                    <i class="fas fa-file-alt" title="Documents"></i>
-                    <i class="fas fa-times-circle" title="Cancel"></i>
+                <div class="form-header">
+                  <h3><i class="fas fa-user"></i> Personal Details</h3>
+                  <button
+                    type="button"
+                    class="close-button"
+                    onclick="toggleNewApplicationForm()"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+    
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label>Full Name <span class="required">*</span></label>
+                    <input type="text" name="fullName" required />
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Verification Section -->
-      <div id="verificationSection" class="rectangle" style="display: none">
-        <div class="rectangle-title">
-          <i class="fas fa-check-circle"></i>
-          <span>Verification</span>
-        </div>
-        <div class="rectangle-notes">Verify land records and documents.</div>
-        <div class="quick-actions">
-          <button class="action-button">
-            <i class="fas fa-search"></i>
-            Verify Record
-          </button>
-          <button class="action-button">
-            <i class="fas fa-history"></i>
-            Verification History
-          </button>
-          <button class="action-button">
-            <i class="fas fa-question-circle"></i>
-            Help Guide
-          </button>
-        </div>
-        <div class="verification-form">
-          <div class="form-group">
-            <input
-              type="text"
-              placeholder="Enter Record ID or Survey Number"
-              class="filter-input"
-            />
-            <button class="filter-button">
-              <i class="fas fa-search"></i> Verify
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Reports Section -->
-      <div id="reportsSection" class="rectangle" style="display: none">
-        <div class="rectangle-title">
-          <i class="fas fa-chart-bar"></i>
-          <span>Reports</span>
-        </div>
-        <div class="rectangle-notes">
-          Generate and view various reports related to your land records.
-        </div>
-        <div class="quick-actions">
-          <button class="action-button">
-            <i class="fas fa-file-pdf"></i>
-            Generate Report
-          </button>
-          <button class="action-button">
-            <i class="fas fa-download"></i>
-            Download Report
-          </button>
-          <button class="action-button">
-            <i class="fas fa-print"></i>
-            Print Report
-          </button>
-        </div>
-        <div class="report-types">
-          <div class="report-card">
-            <i class="fas fa-file-alt"></i>
-            <h4>Land Ownership Report</h4>
-            <button class="action-button">Generate</button>
-          </div>
-          <div class="report-card">
-            <i class="fas fa-history"></i>
-            <h4>Transaction History</h4>
-            <button class="action-button">Generate</button>
-          </div>
-          <div class="report-card">
-            <i class="fas fa-map-marked-alt"></i>
-            <h4>Property Details Report</h4>
-            <button class="action-button">Generate</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Messages Section -->
-      <div id="messagesSection" class="rectangle" style="display: none">
-        <div class="rectangle-title">
-          <i class="fas fa-envelope"></i>
-          <span>Messages</span>
-        </div>
-        <div class="rectangle-notes">View and manage your communications.</div>
-        <div class="quick-actions">
-          <button class="action-button" onclick="toggleComposeForm()">
-            <i class="fas fa-pen"></i>
-            Compose
-          </button>
-          <button class="action-button" onclick="showMessages('inbox')">
-            <i class="fas fa-inbox"></i>
-            Inbox
-          </button>
-          <button class="action-button" onclick="showMessages('sent')">
-            <i class="fas fa-paper-plane"></i>
-            Sent
-          </button>
-        </div>
-
-        <!-- Compose Message Form -->
-        <div id="composeForm" class="compose-form" style="display: none">
-          <div class="form-header">
-            <h3><i class="fas fa-pen"></i> New Message</h3>
-            <button class="close-button" onclick="toggleComposeForm()">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>To <span class="required">*</span></label>
-              <input
-                type="email"
-                id="messageRecipient"
-                required
-                placeholder="Enter recipient's email"
-              />
+                  <div class="form-group">
+                    <label>Email <span class="required">*</span></label>
+                    <input type="email" name="email" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Phone Number <span class="required">*</span></label>
+                    <input type="tel" name="phone" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Aadhar Number <span class="required">*</span></label>
+                    <input type="text" name="aadhar" maxlength="12" required />
+                  </div>
+                  <div class="form-group">
+                    <label
+                      >Date of Registering <span class="required">*</span></label
+                    >
+                    <input type="date" name="regDate" required />
+                  </div>
+                </div>
+    
+                <div class="form-header">
+                  <h3><i class="fas fa-map-marker-alt"></i> Land Details</h3>
+                </div>
+    
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label>Owner Name <span class="required">*</span></label>
+                    <input type="text" name="ownerName" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Survey No. <span class="required">*</span></label>
+                    <input type="text" name="surveyNo" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Area (in sq.ft) <span class="required">*</span></label>
+                    <input type="number" name="area" required />
+                  </div>
+                  <div class="form-group">
+                    <label>State <span class="required">*</span></label>
+                    <select name="state" required>
+                      <option value="">Select State</option>
+                      <option value="AP">Andhra Pradesh</option>
+                      <option value="TN">Tamil Nadu</option>
+                      <option value="KA">Karnataka</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>City/District <span class="required">*</span></label>
+                    <input type="text" name="city" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Pincode <span class="required">*</span></label>
+                    <input type="text" name="pincode" maxlength="6" required />
+                  </div>
+                  <div class="form-group full-width">
+                    <label>Complete Address <span class="required">*</span></label>
+                    <textarea name="address" required rows="3"></textarea>
+                  </div>
+                </div>
+    
+                <div class="form-header">
+                  <h3><i class="fas fa-file-upload"></i> Upload Documents</h3>
+                </div>
+    
+                <div class="form-grid">
+                  <div class="form-group full-width">
+                    <div class="file-upload">
+                      <input
+                        type="file"
+                        name="documents[]"
+                        id="application-docs"
+                        multiple
+                      />
+                      <label for="application-docs">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Drop files here or click to upload</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group full-width">
+                    <button type="submit" class="submit-button" name="submit">
+                      <i class="fas fa-check-circle"></i>
+                      Generate Record
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-            <div class="form-group">
-              <label>Subject <span class="required">*</span></label>
-              <input
-                type="text"
-                id="messageSubject"
-                required
-                placeholder="Enter message subject"
-              />
+    
+            <div class="records-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Application ID</th>
+                    <th>Type</th>
+                    <th>Submission Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>APP001</td>
+                    <td>Land Registration</td>
+                    <td>2024-03-20</td>
+                    <td>Pending</td>
+                    <td>
+                      <div class="action-icons">
+                        <i class="fas fa-eye" title="View"></i>
+                        <i class="fas fa-edit" title="Edit"></i>
+                        <i class="fas fa-trash-alt" title="Delete"></i>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="form-group full-width">
-              <label>Message <span class="required">*</span></label>
-              <textarea
-                id="messageContent"
-                rows="5"
-                required
-                placeholder="Type your message here"
-              ></textarea>
+          </div>
+    
+          <!-- Ownership Transfer Section -->
+          <div id="ownershipSection" class="rectangle" style="display: none">
+            <div class="rectangle-title">
+              <i class="fas fa-exchange-alt"></i>
+              <span>Ownership Transfer</span>
             </div>
-            <div class="form-group">
-              <button class="submit-button" onclick="sendMessage()">
-                <i class="fas fa-paper-plane"></i> Send Message
+            <div class="rectangle-notes">
+              Initiate and track ownership transfer requests.
+            </div>
+            <div class="quick-actions">
+              <button class="action-button" onclick="toggleTransferForm()">
+                <i class="fas fa-plus-circle"></i>
+                New Transfer
+              </button>
+              <button class="action-button" onclick="toggleTransferTracking()">
+                <i class="fas fa-search"></i>
+                Track Transfer
+              </button>
+              <button class="action-button" onclick="toggleTransferForms()">
+                <i class="fas fa-file-download"></i>
+                Download Forms
               </button>
             </div>
-          </div>
-        </div>
-
-        <!-- Message Lists -->
-        <div id="inboxMessages" class="message-list">
-          <div class="message-item unread">
-            <div class="message-sender">Admin</div>
-            <div class="message-subject">Document Verification Complete</div>
-            <div class="message-date">2024-03-20</div>
-            <div class="message-actions">
-              <i
-                class="fas fa-reply"
-                title="Reply"
-                onclick="replyToMessage(this)"
-              ></i>
-              <i
-                class="fas fa-trash-alt"
-                title="Delete"
-                onclick="deleteMessage(this)"
-              ></i>
-            </div>
-          </div>
-          <div class="message-item">
-            <div class="message-sender">System</div>
-            <div class="message-subject">Application Status Update</div>
-            <div class="message-date">2024-03-19</div>
-            <div class="message-actions">
-              <i
-                class="fas fa-reply"
-                title="Reply"
-                onclick="replyToMessage(this)"
-              ></i>
-              <i
-                class="fas fa-trash-alt"
-                title="Delete"
-                onclick="deleteMessage(this)"
-              ></i>
-            </div>
-          </div>
-        </div>
-
-        <div id="sentMessages" class="message-list" style="display: none">
-          <div class="message-item">
-            <div class="message-sender">To: Support Team</div>
-            <div class="message-subject">Query about Land Registration</div>
-            <div class="message-date">2024-03-18</div>
-            <div class="message-actions">
-              <i
-                class="fas fa-trash-alt"
-                title="Delete"
-                onclick="deleteMessage(this)"
-              ></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Downloads Section -->
-      <div id="downloadsSection" class="rectangle" style="display: none">
-        <div class="rectangle-title">
-          <i class="fas fa-download"></i>
-          <span>Downloads</span>
-        </div>
-        <div class="rectangle-notes">
-          Access and download important documents and forms.
-        </div>
-        <div class="quick-actions">
-          <button class="action-button">
-            <i class="fas fa-file-download"></i>
-            Available for Download
-          </button>
-          <button class="action-button">
-            <i class="fas fa-history"></i>
-            Download History
-          </button>
-        </div>
-        <div class="download-grid">
-          <div class="download-card">
-            <i class="fas fa-file-download"></i>
-            <h4>Land Record Certificate</h4>
-            <p>Download your verified land record certificate</p>
-            <button class="action-button">
-              <i class="fas fa-download"></i> Download
-            </button>
-          </div>
-          <div class="download-card">
-            <i class="fas fa-file-download"></i>
-            <h4>Property Tax Receipt</h4>
-            <p>Download your latest property tax payment receipt</p>
-            <button class="action-button">
-              <i class="fas fa-download"></i> Download
-            </button>
-          </div>
-          <div class="download-card">
-            <i class="fas fa-history"></i>
-            <h4>Recent Downloads</h4>
-            <p>View your download history for the last 30 days</p>
-            <button class="action-button">
-              <i class="fas fa-eye"></i> View History
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Record Form -->
-      <div id="recordForm" class="form-container" style="display: none">
-        <form
-          id="landRegistrationForm"
-          action="save_registration.php"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <div class="form-header">
-            <h3><i class="fas fa-user"></i> Personal Details</h3>
-            <button
-              type="button"
-              class="close-button"
-              onclick="toggleForm('recordForm')"
+    
+            <!-- Transfer Forms Download Section -->
+            <div
+              id="transferFormsSection"
+              class="download-grid"
+              style="display: none"
             >
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Full Name <span class="required">*</span></label>
-              <input type="text" name="fullName" required />
-            </div>
-            <div class="form-group">
-              <label>Email <span class="required">*</span></label>
-              <input type="email" name="email" required />
-            </div>
-            <div class="form-group">
-              <label>Phone Number <span class="required">*</span></label>
-              <input type="tel" name="phone" required />
-            </div>
-            <div class="form-group">
-              <label>Aadhar Number <span class="required">*</span></label>
-              <input type="text" name="aadhar" maxlength="12" required />
-            </div>
-            <div class="form-group">
-              <label>Date of Registering <span class="required">*</span></label>
-              <input type="date" name="regDate" required />
-            </div>
-          </div>
-
-          <div class="form-header">
-            <h3><i class="fas fa-map-marker-alt"></i> Land Details</h3>
-          </div>
-
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Owner Name <span class="required">*</span></label>
-              <input type="text" name="ownerName" required />
-            </div>
-            <div class="form-group">
-              <label>Survey No. <span class="required">*</span></label>
-              <input type="text" name="surveyNo" required />
-            </div>
-            <div class="form-group">
-              <label>Area (in sq.ft) <span class="required">*</span></label>
-              <input type="number" name="area" required />
-            </div>
-            <div class="form-group">
-              <label>State <span class="required">*</span></label>
-              <select name="state" required>
-                <option value="">Select State</option>
-                <option value="AP">Andhra Pradesh</option>
-                <option value="TN">Tamil Nadu</option>
-                <option value="KA">Karnataka</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>City/District <span class="required">*</span></label>
-              <input type="text" name="city" required />
-            </div>
-            <div class="form-group">
-              <label>Pincode <span class="required">*</span></label>
-              <input type="text" name="pincode" maxlength="6" required />
-            </div>
-            <div class="form-group full-width">
-              <label>Complete Address <span class="required">*</span></label>
-              <textarea name="address" required rows="3"></textarea>
-            </div>
-          </div>
-
-          <div class="form-header">
-            <h3><i class="fas fa-file-upload"></i> Upload Documents</h3>
-          </div>
-
-          <div class="form-grid">
-            <div class="form-group full-width">
-              <div class="file-upload">
-                <input
-                  type="file"
-                  name="documents[]"
-                  id="document-upload"
-                  multiple
-                />
-                <label for="document-upload">
-                  <i class="fas fa-cloud-upload-alt"></i>
-                  <span>Drop files here or click to upload</span>
-                </label>
+              <div class="download-card">
+                <i class="fas fa-file-pdf"></i>
+                <h4>Transfer Status Report</h4>
+                <p>View and download your transfer request status</p>
+                <button
+                  class="action-button"
+                  onclick="downloadForm('transfer_status')"
+                >
+                  <i class="fas fa-download"></i> Download
+                </button>
+              </div>
+              <div class="download-card">
+                <i class="fas fa-history"></i>
+                <h4>Transfer History</h4>
+                <p>Download your complete transfer history report</p>
+                <button
+                  class="action-button"
+                  onclick="downloadForm('transfer_history')"
+                >
+                  <i class="fas fa-download"></i> Download
+                </button>
               </div>
             </div>
-            <div class="form-group full-width">
-              <button type="submit" class="submit-button" name="submit">
-                <i class="fas fa-check-circle"></i>
-                Generate Record
-              </button>
+    
+            <!-- Transfer Tracking Form -->
+            <div
+              id="transferTrackingForm"
+              class="verification-form"
+              style="display: none"
+            >
+              <div class="form-group">
+                <input
+                  type="text"
+                  placeholder="Enter Transfer ID"
+                  class="filter-input"
+                  id="transferTrackingId"
+                />
+                <button class="filter-button" onclick="trackTransfer()">
+                  <i class="fas fa-search"></i> Track
+                </button>
+              </div>
+            </div>
+    
+            <!-- New Transfer Form -->
+            <div id="transferForm" class="form-container" style="display: none">
+              <div class="form-header">
+                <h3><i class="fas fa-exchange-alt"></i> New Transfer Request</h3>
+                <button class="close-button" onclick="toggleTransferForm()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Current Owner Name <span class="required">*</span></label>
+                  <input type="text" id="currentOwner" required />
+                </div>
+                <div class="form-group">
+                  <label>New Owner Name <span class="required">*</span></label>
+                  <input type="text" id="newOwner" required />
+                </div>
+                <div class="form-group">
+                  <label
+                    >Property ID/Survey No. <span class="required">*</span></label
+                  >
+                  <input type="text" id="propertyId" required />
+                </div>
+                <div class="form-group">
+                  <label>Transfer Reason <span class="required">*</span></label>
+                  <select id="transferReason" required>
+                    <option value="">Select Reason</option>
+                    <option value="sale">Sale</option>
+                    <option value="inheritance">Inheritance</option>
+                    <option value="gift">Gift</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group full-width">
+                  <label>Additional Details</label>
+                  <textarea id="transferDetails" rows="3"></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <div class="file-upload">
+                    <input type="file" id="transferDocs" multiple />
+                    <label for="transferDocs">
+                      <i class="fas fa-cloud-upload-alt"></i>
+                      <span>Upload supporting documents</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button class="submit-button" onclick="submitTransfer()">
+                    <i class="fas fa-check-circle"></i> Submit Transfer Request
+                  </button>
+                </div>
+              </div>
+            </div>
+    
+            <!-- Records Table -->
+            <div class="records-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Transfer ID</th>
+                    <th>Property Details</th>
+                    <th>Current Owner</th>
+                    <th>New Owner</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>TRF001</td>
+                    <td>Plot 123, Chennai</td>
+                    <td>John Doe</td>
+                    <td>Jane Smith</td>
+                    <td>In Progress</td>
+                    <td>
+                      <div class="action-icons">
+                        <i class="fas fa-eye" title="View"></i>
+                        <i class="fas fa-file-alt" title="Documents"></i>
+                        <i class="fas fa-times-circle" title="Cancel"></i>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-        </form>
-      </div>
+    
+          <!-- Verification Section -->
+          <div id="verificationSection" class="rectangle" style="display: none">
+            <div class="rectangle-title">
+              <i class="fas fa-check-circle"></i>
+              <span>Verification</span>
+            </div>
+            <div class="rectangle-notes">Verify land records and documents.</div>
+            <div class="quick-actions">
+              <button class="action-button">
+                <i class="fas fa-search"></i>
+                Verify Record
+              </button>
+              <button class="action-button">
+                <i class="fas fa-history"></i>
+                Verification History
+              </button>
+              <button class="action-button">
+                <i class="fas fa-question-circle"></i>
+                Help Guide
+              </button>
+            </div>
+            <div class="verification-form">
+              <div class="form-group">
+                <input
+                  type="text"
+                  placeholder="Enter Record ID or Survey Number"
+                  class="filter-input"
+                />
+                <button class="filter-button">
+                  <i class="fas fa-search"></i> Verify
+                </button>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Reports Section -->
+          <div id="reportsSection" class="rectangle" style="display: none">
+            <div class="rectangle-title">
+              <i class="fas fa-chart-bar"></i>
+              <span>Reports</span>
+            </div>
+            <div class="rectangle-notes">
+              Generate and view various reports related to your land records.
+            </div>
+            <div class="quick-actions">
+              <button class="action-button">
+                <i class="fas fa-file-pdf"></i>
+                Generate Report
+              </button>
+              <button class="action-button">
+                <i class="fas fa-download"></i>
+                Download Report
+              </button>
+              <button class="action-button">
+                <i class="fas fa-print"></i>
+                Print Report
+              </button>
+            </div>
+            <div class="report-types">
+              <div class="report-card">
+                <i class="fas fa-file-alt"></i>
+                <h4>Land Ownership Report</h4>
+                <button class="action-button">Generate</button>
+              </div>
+              <div class="report-card">
+                <i class="fas fa-history"></i>
+                <h4>Transaction History</h4>
+                <button class="action-button">Generate</button>
+              </div>
+              <div class="report-card">
+                <i class="fas fa-map-marked-alt"></i>
+                <h4>Property Details Report</h4>
+                <button class="action-button">Generate</button>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Messages Section -->
+          <div id="messagesSection" class="rectangle" style="display: none">
+            <div class="rectangle-title">
+              <i class="fas fa-envelope"></i>
+              <span>Messages</span>
+            </div>
+            <div class="rectangle-notes">View and manage your communications.</div>
+            <div class="quick-actions">
+              <button class="action-button" onclick="toggleComposeForm()">
+                <i class="fas fa-pen"></i>
+                Compose
+              </button>
+              <button class="action-button" onclick="showMessages('inbox')">
+                <i class="fas fa-inbox"></i>
+                Inbox
+              </button>
+              <button class="action-button" onclick="showMessages('sent')">
+                <i class="fas fa-paper-plane"></i>
+                Sent
+              </button>
+            </div>
+    
+            <!-- Compose Message Form -->
+            <div id="composeForm" class="compose-form" style="display: none">
+              <div class="form-header">
+                <h3><i class="fas fa-pen"></i> New Message</h3>
+                <button class="close-button" onclick="toggleComposeForm()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>To <span class="required">*</span></label>
+                  <input
+                    type="email"
+                    id="messageRecipient"
+                    required
+                    placeholder="Enter recipient's email"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Subject <span class="required">*</span></label>
+                  <input
+                    type="text"
+                    id="messageSubject"
+                    required
+                    placeholder="Enter message subject"
+                  />
+                </div>
+                <div class="form-group full-width">
+                  <label>Message <span class="required">*</span></label>
+                  <textarea
+                    id="messageContent"
+                    rows="5"
+                    required
+                    placeholder="Type your message here"
+                  ></textarea>
+                </div>
+                <div class="form-group">
+                  <button class="submit-button" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                  </button>
+                </div>
+              </div>
+            </div>
+    
+            <!-- Message Lists -->
+            <div id="inboxMessages" class="message-list">
+              <div class="message-item unread">
+                <div class="message-sender">Admin</div>
+                <div class="message-subject">Document Verification Complete</div>
+                <div class="message-date">2024-03-20</div>
+                <div class="message-actions">
+                  <i
+                    class="fas fa-reply"
+                    title="Reply"
+                    onclick="replyToMessage(this)"
+                  ></i>
+                  <i
+                    class="fas fa-trash-alt"
+                    title="Delete"
+                    onclick="deleteMessage(this)"
+                  ></i>
+                </div>
+              </div>
+              <div class="message-item">
+                <div class="message-sender">System</div>
+                <div class="message-subject">Application Status Update</div>
+                <div class="message-date">2024-03-19</div>
+                <div class="message-actions">
+                  <i
+                    class="fas fa-reply"
+                    title="Reply"
+                    onclick="replyToMessage(this)"
+                  ></i>
+                  <i
+                    class="fas fa-trash-alt"
+                    title="Delete"
+                    onclick="deleteMessage(this)"
+                  ></i>
+                </div>
+              </div>
+            </div>
+    
+            <div id="sentMessages" class="message-list" style="display: none">
+              <div class="message-item">
+                <div class="message-sender">To: Support Team</div>
+                <div class="message-subject">Query about Land Registration</div>
+                <div class="message-date">2024-03-18</div>
+                <div class="message-actions">
+                  <i
+                    class="fas fa-trash-alt"
+                    title="Delete"
+                    onclick="deleteMessage(this)"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Downloads Section -->
+          <div id="downloadsSection" class="rectangle" style="display: none">
+            <div class="rectangle-title">
+              <i class="fas fa-download"></i>
+              <span>Downloads</span>
+            </div>
+            <div class="rectangle-notes">
+              Access and download important documents and forms.
+            </div>
+            <div class="quick-actions">
+              <button class="action-button">
+                <i class="fas fa-file-download"></i>
+                Available for Download
+              </button>
+              <button class="action-button">
+                <i class="fas fa-history"></i>
+                Download History
+              </button>
+            </div>
+            <div class="download-grid">
+              <div class="download-card">
+                <i class="fas fa-file-download"></i>
+                <h4>Land Record Certificate</h4>
+                <p>Download your verified land record certificate</p>
+                <button class="action-button">
+                  <i class="fas fa-download"></i> Download
+                </button>
+              </div>
+              <div class="download-card">
+                <i class="fas fa-file-download"></i>
+                <h4>Property Tax Receipt</h4>
+                <p>Download your latest property tax payment receipt</p>
+                <button class="action-button">
+                  <i class="fas fa-download"></i> Download
+                </button>
+              </div>
+              <div class="download-card">
+                <i class="fas fa-history"></i>
+                <h4>Recent Downloads</h4>
+                <p>View your download history for the last 30 days</p>
+                <button class="action-button">
+                  <i class="fas fa-eye"></i> View History
+                </button>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Record Form -->
+          <div id="recordForm" class="form-container" style="display: none">
+            <form
+              id="landRegistrationForm"
+              action="save_registration.php"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <div class="form-header">
+                <h3><i class="fas fa-user"></i> Personal Details</h3>
+                <button
+                  type="button"
+                  class="close-button"
+                  onclick="toggleForm('recordForm')"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+    
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Full Name <span class="required">*</span></label>
+                  <input type="text" name="fullName" required />
+                </div>
+                <div class="form-group">
+                  <label>Email <span class="required">*</span></label>
+                  <input type="email" name="email" required />
+                </div>
+                <div class="form-group">
+                  <label>Phone Number <span class="required">*</span></label>
+                  <input type="tel" name="phone" required />
+                </div>
+                <div class="form-group">
+                  <label>Aadhar Number <span class="required">*</span></label>
+                  <input type="text" name="aadhar" maxlength="12" required />
+                </div>
+                <div class="form-group">
+                  <label>Date of Registering <span class="required">*</span></label>
+                  <input type="date" name="regDate" required />
+                </div>
+              </div>
+    
+              <div class="form-header">
+                <h3><i class="fas fa-map-marker-alt"></i> Land Details</h3>
+              </div>
+    
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Owner Name <span class="required">*</span></label>
+                  <input type="text" name="ownerName" required />
+                </div>
+                <div class="form-group">
+                  <label>Survey No. <span class="required">*</span></label>
+                  <input type="text" name="surveyNo" required />
+                </div>
+                <div class="form-group">
+                  <label>Area (in sq.ft) <span class="required">*</span></label>
+                  <input type="number" name="area" required />
+                </div>
+                <div class="form-group">
+                  <label>State <span class="required">*</span></label>
+                  <select name="state" required>
+                    <option value="">Select State</option>
+                    <option value="AP">Andhra Pradesh</option>
+                    <option value="TN">Tamil Nadu</option>
+                    <option value="KA">Karnataka</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>City/District <span class="required">*</span></label>
+                  <input type="text" name="city" required />
+                </div>
+                <div class="form-group">
+                  <label>Pincode <span class="required">*</span></label>
+                  <input type="text" name="pincode" maxlength="6" required />
+                </div>
+                <div class="form-group full-width">
+                  <label>Complete Address <span class="required">*</span></label>
+                  <textarea name="address" required rows="3"></textarea>
+                </div>
+              </div>
+    
+              <div class="form-header">
+                <h3><i class="fas fa-file-upload"></i> Upload Documents</h3>
+              </div>
+    
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <div class="file-upload">
+                    <input
+                      type="file"
+                      name="documents[]"
+                      id="document-upload"
+                      multiple
+                    />
+                    <label for="document-upload">
+                      <i class="fas fa-cloud-upload-alt"></i>
+                      <span>Drop files here or click to upload</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group full-width">
+                  <button type="submit" class="submit-button" name="submit">
+                    <i class="fas fa-check-circle"></i>
+                    Generate Record
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
     </div>
 
     <script>
@@ -1184,7 +1186,7 @@
             method: "POST",
             body: formData,
           })
-            .then((response) => response.json())
+            .then((response) => console.log(response))
             .then((data) => {
               if (data.status === "success") {
                 alert("Record generated successfully!");

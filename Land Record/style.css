@@ -14,7 +14,10 @@ body {
     min-height: 100vh;
     font-size: 18px; /* Increased from 16px */
 }
+.body-container{
+    display: flex;
 
+}
 /* Header Styles */
 header {
     background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
@@ -561,16 +564,20 @@ nav ul li a:hover {
 }
 
 .sidebar {
-    width: 300px;
+    width: max-content;
+    min-width: 300px;
     background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
     color: white;
     padding: 40px 30px;
-    height: calc(100vh - 110px);
-    position: fixed;
+    height:100dvh;
+    /* position: fixed; */
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #6dd5ed #1a252f;
+    position: sticky;
+    top: 0;
+
 }
 
 .sidebar::-webkit-scrollbar {
@@ -686,10 +693,10 @@ nav ul li a:hover {
 }
 
 .content {
-    margin-left: 320px;
+    /* margin-left: 320px; */
     padding: 40px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-columns: repeat(2, 1fr); */
     gap: 40px;
     animation: fadeIn 0.5s ease;
 }
@@ -2732,7 +2739,7 @@ nav ul li a:hover {
     border-collapse: collapse;
     background: white;
     border-radius: 10px;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .records-table th,
@@ -3429,7 +3436,7 @@ nav ul li a:hover {
   border-collapse: collapse;
   background: white;
   border-radius: 15px;
-  overflow: hidden;
+  /* overflow: hidden;   */
 }
 
 .records-table th {

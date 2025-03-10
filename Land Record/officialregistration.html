@@ -228,7 +228,7 @@
           errors: [],
           value: ""
         },
-        officeId: {
+        office_id:{
           id: "office-id",
           errors: [],
           value: ""
@@ -309,7 +309,7 @@
           console.log(response)
           if (response.ok) {
             alert("User created successfully!");
-            document.getElementById("myForm").reset();
+            // document.getElementById("myForm").reset();
           } else {
             alert("Failed to create user. Please try again.");
           }
