@@ -6,7 +6,7 @@ import Official from "../models/official.model.js";
 const loginOfficial = async (req, res) => {
     const body = req.body
     try {
-        const userData = await Official.findOne({ username: body.username })
+        const userData = await Official.findOne({ office_id: body.officialId, designation:body.role })
         if (userData && userData.password == body.password) {
 
             const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
@@ -16,6 +16,7 @@ const loginOfficial = async (req, res) => {
                 data: {
                     id: userData._id,
                     username: userData.username,
+                    office_id: userData.office_id,
                     first_name: userData.first_name,
                     last_name: userData.last_name,
                     email: userData.email,

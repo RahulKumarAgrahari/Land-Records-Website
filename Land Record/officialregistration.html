@@ -296,7 +296,7 @@
             payload[e] = formData[e].value
           })
 
-          const response = await fetch("http://localhost:8080/create-official", {
+          const response = await fetch("http://localhost:8080/api/official/create", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -451,7 +451,7 @@
 
     }
 
-    function handleOfficialLogin(event) {
+    async function handleOfficialLogin(event) {
       event.preventDefault();
       const officialId = event.target.querySelector(
         'input[name="officialId"]'
@@ -467,59 +467,76 @@
         return;
       }
 
-      // For demonstration purposes - in production this would validate against a server
-      switch (role) {
-        case "clerk":
-          window.location.href = "clerkdashboard.html";
-          break;
-        case "officer":
-          window.location.href = "officialhome.html";
-          break;
-        case "superintendent":
-          window.location.href = "superintendentdashboard.html";
-          break;
-        case "projectofficer":
-          window.location.href = "projectofficerdashboard.html";
-          break;
-        case "mro":
-          window.location.href = "mrodashboard.html";
-          break;
-        case "surveyor":
-          window.location.href = "surveyordashboard.html";
-          break;
-        case "revenueinspector":
-          window.location.href = "revenueinspectordashboard.html";
-          break;
-        case "vro":
-          window.location.href = "vrodashboard.html";
-          break;
-        case "revenuedepartmentofficer":
-          window.location.href = "revenuedepartmentofficerdashboard.html";
-          break;
-        case "jointcollector":
-          window.location.href = "jointcollectordashboard.html";
-          break;
-        case "districtcollector":
-          window.location.href = "districtcollectordashboard.html";
-          break;
-        case "ministryofwelfare":
-          window.location.href = "ministryofwelfaredashboard.html";
-          break;
-        case "admin":
-          window.location.href = "admindashboard.html";
-          break;
-        default:
-          alert("Invalid role selected");
+      const response = await fetch("http://localhost:8080/api/official/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          mode: 'no-cors'
+        },
+        body: JSON.stringify({officialId, password, role })
+      });
+      const res = await response.json()
+      if (!response.ok) {
+        alert(res.message)
+        return
+      } else {
+        console.log(res)
+        document.cookie = `token=${res.data.token}`;
+        // For demonstration purposes - in production this would validate against a server
+        switch (role) {
+          case "clerk":
+            window.location.href = "clerkdashboard.html";
+            break;
+          case "officer":
+            window.location.href = "officialhome.html";
+            break;
+          case "superintendent":
+            window.location.href = "superintendentdashboard.html";
+            break;
+          case "projectofficer":
+            window.location.href = "projectofficerdashboard.html";
+            break;
+          case "mro":
+            window.location.href = "mrodashboard.html";
+            break;
+          case "surveyor":
+            window.location.href = "surveyordashboard.html";
+            break;
+          case "revenueinspector":
+            window.location.href = "revenueinspectordashboard.html";
+            break;
+          case "vro":
+            window.location.href = "vrodashboard.html";
+            break;
+          case "revenuedepartmentofficer":
+            window.location.href = "revenuedepartmentofficerdashboard.html";
+            break;
+          case "jointcollector":
+            window.location.href = "jointcollectordashboard.html";
+            break;
+          case "districtcollector":
+            window.location.href = "districtcollectordashboard.html";
+            break;
+          case "ministryofwelfare":
+            window.location.href = "ministryofwelfaredashboard.html";
+            break;
+          case "admin":
+            window.location.href = "admindashboard.html";
+            break;
+          default:
+            alert("Invalid role selected");
+        }
       }
     }
 
-    function handleContactSubmit(event) {
-      event.preventDefault();
-      // Add contact form submission logic here
-      alert("Thank you for your message. We will get back to you soon!");
-      event.target.reset();
-      return false;
-    }
+      function handleContactSubmit(event) {
+        event.preventDefault();
+        // Add contact form submission logic here
+        alert("Thank you for your message. We will get back to you soon!");
+        event.target.reset();
+        return false;
+      }
   </script>
 </body>
 
