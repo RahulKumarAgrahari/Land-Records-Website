@@ -6,25 +6,20 @@ const officialSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    middle_name: {
-        type: String,
-        trim: true,
-    },
     last_name: {
         type: String,
         required: true,
         trim: true,
     },
-    dob: {
-        type: Date,
-        required: true,
-        min: new Date('1900-01-01'), // Minimum date (1st Jan 1900)
-        max: new Date() // Maximum date (Today’s date)
-    },
-    gender: {
+    designation: {
         type: String,
         required: true,
-        enum: ["Male", "Female", "Other"] // Restrict values to predefined options
+        // enum: ["1", "2", "HR", "Admin", "Intern", "CEO", "CTO"], // Allowed values
+        // default: "Intern" // Default designation
+    },
+    department: {
+        type: String,
+        required: true
     },
     phone: {
         type: String,
@@ -39,16 +34,10 @@ const officialSchema = new mongoose.Schema({
         trim: true,
         lowercase: true,
     },
-    aadhar: {
-        type: String,
-        required: true,
-        unique: true, // Ensures no duplicate Aadhar numbers
-        match: [/^\d{12}$/, "Aadhar number must be exactly 12 digits"] // Validates 12-digit format
-    },
-    address: {
+    office_id: {
         type: String,
         required: true
-    },    
+    },
     username: {
         type: String,
         required: true,
@@ -56,7 +45,7 @@ const officialSchema = new mongoose.Schema({
         minlength: 3, // Minimum length of 3 characters
         maxlength: 20, // Maximum length of 20 characters
         match: [/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"]
-      },    
+    },
     password: {
         type: String,
         required: true,
@@ -67,5 +56,5 @@ const officialSchema = new mongoose.Schema({
         timestamps: true
     });
 
-const Official = mongoose.model('User', officialSchemaSchema);
+const Official = mongoose.model('Official', officialSchema);
 export default Official

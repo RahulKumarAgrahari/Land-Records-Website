@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 const app = express()
 import user from './models/user.model.js'
+import official from './models/official.model.js'
 const PORT = 8080
 
 app.use(express.json())
@@ -62,6 +63,40 @@ try {
             const userData = await user.create(body)
             res.send({
                 message: "user created successfuly",
+                status: true
+            })
+        } catch (err) {
+
+            if (err.name === 'ValidationError') {
+                // Collect all validation errors
+                const errorMessages = [];
+                for (let field in err.errors) {
+                    errorMessages.push(err.errors[field].message); // Store the error messages
+                }
+
+                // Return the errors to the client
+                res.status(400).json({
+                    message: 'Validation errors',
+                    errors: errorMessages
+                });
+                return
+            }
+
+            // For other errors (e.g., database issues)
+            res.status(500).json({
+                message: 'Internal Server Error',
+                error: err.message
+            });
+        }
+    })
+    app.post('/create-official', async function (req, res) {
+        res.header("Access-Control-Allow-Origin", "*");
+        const body = req.body
+        try {
+            console.log(body)
+            const userData = await official.create(body)
+            res.send({
+                message: "Official Created Successfuly",
                 status: true
             })
         } catch (err) {

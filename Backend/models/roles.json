@@ -6,23 +6,57 @@
     },
     {
         "value": 2,
-        "post": "Superintendent",
+        "post": "Officer",
         "level": 2
     },
     {
         "value": 3,
-        "post": "PO",
+        "post": "Superintendent",
         "level": 3
     },
     {
         "value": 4,
-        "post": "MRO",
+        "post": "PO",
         "level": 4
     },
     {
         "value": 5,
-        "post": "surveyor",
+        "post": "Surveyor",
         "level": 5
     },
+    {
+        "value": 6,
+        "post": "MRO",
+        "level": 6
+    },
+    {
+        "value": 7,
+        "post": "VRO",
+        "level": 7
+    },
+    {
+        "value": 8,
+        "post": "RI",
+        "level": 8
+    },
+    {
+        "value": 9,
+        "post": "RDO",
+        "level": 5
+    },{
+        "value": 9,
+        "post": "JC",
+        "level": 5
+    },
+    {
+        "value": 10,
+        "post": "DC",
+        "level": 10
+    },
+    {
+        "value": 11,
+        "post": "MoW",
+        "level": 11
+    }    
 
 ]
