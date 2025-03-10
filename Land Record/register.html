@@ -22,7 +22,7 @@
   <div class="register-container">
     <div class="register-box">
       <h2>Create User Registration</h2>
-      <form id="registrationForm" onsubmit="return validateForm()">
+      <form id="registrationForm" onsubmit="validateForm(event)">
         <div class="form-grid">
           <!-- Personal Information -->
           <div class="form-section">
@@ -321,7 +321,7 @@
             payload[e] = formData[e].value
           })
 
-          const response = await fetch("http://localhost:8080/create-user", {
+          const response = await fetch("http://localhost:8080/api/user/create", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

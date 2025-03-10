@@ -5,7 +5,7 @@ import User from "../models/user.model.js";
 const loginUser = async (req, res) => {
     const body = req.body
     try {
-        const userData = await User.findOne({ email: body.email })
+        const userData = await User.findOne({ username: body.username })
         if (userData && userData.password == body.password) {
             delete userData.password
             delete userData.id
@@ -54,7 +54,41 @@ const loginUser = async (req, res) => {
     }
 };
 
+const createUser = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    const body = req.body
+    try {
+        console.log(body)
+        const userData = await User.create(body)
+        res.send({
+            message: "user created successfuly",
+            status: true
+        })
+    } catch (err) {
 
+        if (err.name === 'ValidationError') {
+            // Collect all validation errors
+            const errorMessages = [];
+            for (let field in err.errors) {
+                errorMessages.push(err.errors[field].message); // Store the error messages
+            }
+
+            // Return the errors to the client
+            res.status(400).json({
+                message: 'Validation errors',
+                errors: errorMessages
+            });
+            return
+        }
+
+        // For other errors (e.g., database issues)
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: err.message
+        });
+    }
+}
 export {
-    loginUser
+    loginUser,
+    createUser
 }
