@@ -1,6 +1,8 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import { config } from 'dotenv'
+config()
 const app = express()
 import user from './models/user.model.js'
 import official from './models/official.model.js'
@@ -13,7 +15,7 @@ app.use((req, res, next) => {
     next();
 })
 try {
-    await mongoose.connect('mongodb+srv://67rahulrbgj:u58FZci4ikDRFTrr@cluster0.bv4fp.mongodb.net/')
+    await mongoose.connect('mongodb+srv://Abhishek:asdfghjkl@dev.d2zyd.mongodb.net/')
     console.log("connection successfull")
     app.get('/', function (req, res) {
         res.send('Hello World')

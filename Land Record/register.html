@@ -176,7 +176,7 @@
       aadhar: [{
         regex: /^\d{12}$/,
         errorMsg: 'Enter Valid 12 digit Aadhar Number'
-      }],      
+      }],
       address: [{
         regex: /^[a-zA-Z0-9\s,.'-]{10,}$/,
         errorMsg: 'Enter a Valid address'
@@ -187,6 +187,24 @@
       // }]
     };
 
+    const validateForms = (e) => {
+      console.log(e.target)
+      console.dir(e)
+      const name = e.target.id
+      const id = e.target.id
+      const value = e.target.value
+      const validations = validationRegex[name]
+      if (validations) {
+        validations.forEach((cases) => {
+          if (!cases.regex.test(value)) {
+            // formData[e].errors.push(cases.errorMsg)
+            document.getElementById(`error-${id}`).innerHTML = cases.errorMsg
+          } else {
+            document.getElementById(`error-${id}`).innerHTML = ""
+          }
+        })
+      }
+    }
     async function validateForm() {
       event.preventDefault(); // Prevent form submission
 
@@ -237,7 +255,7 @@
           id: "address",
           errors: [],
           value: ""
-        },                
+        },
         username: {
           id: "username",
           errors: [],
@@ -291,8 +309,8 @@
           isValid = false
           error.innerHTML = formData[e].errors[0]
         }
-        else 
-        error.innerHTML = ""
+        else
+          error.innerHTML = ""
       })
 
       // Send Data to backend
@@ -307,8 +325,8 @@
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Access-Control-Allow-Origin":"*",
-              mode:'no-cors'
+              "Access-Control-Allow-Origin": "*",
+              mode: 'no-cors'
             },
             body: JSON.stringify(payload)
           });
@@ -343,6 +361,9 @@
         }
       });
     });
+
+    const form = document.getElementById('registrationForm')
+    form.addEventListener('input', validateForms)
   </script>
 </body>
 
