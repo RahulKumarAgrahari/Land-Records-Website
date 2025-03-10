@@ -2,12 +2,15 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import { config } from 'dotenv'
+import connectDB from './config/db.connect.js'
 config()
+connectDB()
 const app = express()
 import user from './models/user.model.js'
 import official from './models/official.model.js'
+import officialRoutes from './routes/official.routes.js'
 const PORT = 8080
-
+app.use("/api/official", officialRoutes);
 app.use(express.json())
 app.use(cors())
 app.use((req, res, next) => {
@@ -15,8 +18,8 @@ app.use((req, res, next) => {
     next();
 })
 try {
-    await mongoose.connect('mongodb+srv://Abhishek:asdfghjkl@dev.d2zyd.mongodb.net/')
-    console.log("connection successfull")
+    // await mongoose.connect('mongodb+srv://Abhishek:asdfghjkl@dev.d2zyd.mongodb.net/')
+    // console.log("connection successfull")
     app.get('/', function (req, res) {
         res.send('Hello World')
 
