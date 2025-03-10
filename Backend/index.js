@@ -7,6 +7,7 @@ connectDB()
 const app = express()
 import officialRoutes from './routes/official.routes.js'
 import userRoutes from './routes/user.routes.js'
+import landRoutes from './routes/land.routes.js'
 const PORT = 8080
 app.use(express.json())
 app.use(cors())
