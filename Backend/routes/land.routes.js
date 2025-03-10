@@ -3,6 +3,6 @@ import { registerLand } from "../controllers/land.controller.js";
 
 const router = express.Router();
 
-router.post("/create", registerLand);
+router.post("/register", registerLand);
 
 export default router;

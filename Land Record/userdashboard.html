@@ -67,10 +67,33 @@
       applicationsSection.scrollIntoView({ behavior: "smooth" });
 
     }
-    function registerLand(event) {
+    async function registerLand(event) {
       event.preventDefault(); // Prevent form submission
       let formData = new FormData(event.target);
-      console.log(Object.fromEntries(formData))
+      const payload = Object.fromEntries(formData)
+      try {
+        const response = await fetch("http://localhost:8080/api/land/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            mode: 'no-cors',
+            authrization: document.cookie.split("token=")[1]
+          },
+          // credentials: "include",
+          body: JSON.stringify(payload)
+        });
+
+        const res = await response.json()
+        if (response.ok) {
+          alert(res.message);
+          // document.getElementById("myForm").reset();
+        } else {
+          alert("Failed to create user. Please try again.");
+        }
+      } catch (error) {
+
+      }
     }
     function handleNewLandApplication() {
       // Hide any other open forms or sections first
