@@ -400,6 +400,13 @@
   </section>
 
   <script>
+    function showErrors(response) {
+      if (response.status === false && response.errors && response.errors.length > 0) {
+        alert("Errors:\n" + response.errors.join("\n"));
+      } else {
+        alert("Unknown error occurred.");
+      }
+    }
     function showSection(sectionId) {
       // Hide all sections
       document.querySelector(".login-container").style.display = "none";
@@ -444,7 +451,7 @@
         // Redirect to user dashboard
         document.cookie = `token=${res.data.token}`;
         // document.cookie = `token=${res.data.token}; HttpOnly; Secure`;
-
+        showErrors(res)
         window.location.href = "userdashboard.html";
       }
 
@@ -473,15 +480,15 @@
           "Access-Control-Allow-Origin": "*",
           mode: 'no-cors'
         },
-        body: JSON.stringify({officialId, password, role })
+        body: JSON.stringify({ officialId, password, role })
       });
       const res = await response.json()
       if (!response.ok) {
         alert(res.message)
         return
       } else {
-        console.log(res)
         document.cookie = `token=${res.data.token}`;
+        showErrors(res)
         // For demonstration purposes - in production this would validate against a server
         switch (role) {
           case "clerk":
@@ -529,13 +536,13 @@
       }
     }
 
-      function handleContactSubmit(event) {
-        event.preventDefault();
-        // Add contact form submission logic here
-        alert("Thank you for your message. We will get back to you soon!");
-        event.target.reset();
-        return false;
-      }
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      // Add contact form submission logic here
+      alert("Thank you for your message. We will get back to you soon!");
+      event.target.reset();
+      return false;
+    }
   </script>
 </body>
 

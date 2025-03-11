@@ -18,6 +18,9 @@ import jwt from "jsonwebtoken";
 //     }
 // };
 
+const generateApplicationId = () => {
+    return "APP-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+};
 
 const registerLand = async (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -25,7 +28,8 @@ const registerLand = async (req, res) => {
     try {
         const token = req.headers.authrization
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const landData = await Land.create({ ...body, createdBy: decoded.id })
+        const applicationId = await generateApplicationId();
+        const landData = await Land.create({ ...body, createdBy: decoded.id, applicationId })
         if (landData) {
             await LandHistory.create({
                 landId: landData._id,
@@ -35,7 +39,10 @@ const registerLand = async (req, res) => {
             });
             res.send({
                 message: "land register application submitted sucessfully",
-                status: true
+                status: true,
+                data:{
+                    applicationId
+                }
             })
         } else {
             res.status(500).json({

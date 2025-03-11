@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const landSchema = new mongoose.Schema({
+    applicationId: { type: String, unique: true },
     full_name: {
         type: String,
         required: true,

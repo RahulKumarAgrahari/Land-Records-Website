@@ -29,7 +29,17 @@ const loginUser = async (req, res) => {
             });
         }
     } catch (err) {
-
+        let errors = [];
+        if (err.code === 11000) {
+            const field = Object.keys(err.keyPattern)[0]; // Get the field name (e.g., "email")
+            errors.push(`The ${field} '${req.body[field]}' is already in use.`);
+            res.status(400).json({
+                message: 'Validation errors',
+                errors,
+                status:false
+            });
+            return
+        }
         if (err.name === 'ValidationError') {
             // Collect all validation errors
             const errorMessages = [];
@@ -57,14 +67,23 @@ const createUser = async (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const body = req.body
     try {
-        console.log(body)
         const userData = await User.create(body)
         res.send({
             message: "User Created Successfuly",
             status: true
         })
     } catch (err) {
-
+        let errors = [];
+        if (err.code === 11000) {
+            const field = Object.keys(err.keyPattern)[0]; // Get the field name (e.g., "email")
+            errors.push(`The ${field} '${req.body[field]}' is already in use.`);
+            res.status(400).json({
+                message: 'Validation errors',
+                errors,
+                status:false
+            });
+            return
+        }
         if (err.name === 'ValidationError') {
             // Collect all validation errors
             const errorMessages = [];

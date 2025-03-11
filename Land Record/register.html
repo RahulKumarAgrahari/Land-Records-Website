@@ -151,7 +151,13 @@
   </div>
 
   <script>
-
+    function showErrors(response) {
+      if (response.status === false && response.errors && response.errors.length > 0) {
+        alert("Errors:\n" + response.errors.join("\n"));
+      } else {
+        alert("Unknown error occurred.");
+      }
+    }
     const validationRegex = {
       first_name: [{
         regex: /^[a-zA-Z]{3,20}$/,
@@ -332,11 +338,12 @@
           });
 
           console.log(response)
+          const res = await response.json()
           if (response.ok) {
             alert("User created successfully!");
             // document.getElementById("myForm").reset();
           } else {
-            alert("Failed to create user. Please try again.");
+            showErrors(res)
           }
         } catch (error) {
           console.error("Error:", error);
