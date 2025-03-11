@@ -442,8 +442,8 @@
         alert(res.message)
       } else {
         // Redirect to user dashboard
-        // document.cookie = `token=${res.data.token}`;
-        document.cookie = `token=${res.data.token}; HttpOnly; Secure`;
+        document.cookie = `token=${res.data.token}`;
+        // document.cookie = `token=${res.data.token}; HttpOnly; Secure`;
 
         window.location.href = "userdashboard.html";
       }
