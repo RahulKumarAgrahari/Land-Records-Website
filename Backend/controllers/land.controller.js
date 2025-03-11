@@ -131,7 +131,7 @@ const getLandRecord = async (req, res) => {
 const getLandRecordCondition = async (dbData) => {
     const query = {}
     Object.keys(dbData).forEach((key) => {
-        if (dbData[key] && !['limit', 'page'].includes(key)) {
+        if (![null,undefined].includes(dbData[key]) && !['limit', 'page'].includes(key)) {
             query[key] = dbData[key]
         }
     })
