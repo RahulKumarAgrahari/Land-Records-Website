@@ -193,6 +193,59 @@ const getLandRecordClerk = async (req, res) => {
         });
     }
 }
+const getLandRecordre = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    const body = req.body
+    try {
+        const token = req.headers.authrization
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        // const landData = await Land.find({createdBy:decoded.id}).skip(body.skip).limit(body.limit);
+        // const totalRecords = await Land.countDocuments({ createdBy: decoded.id });
+        // console.log(landData)
+        const landData = await getLandRecordCondition({
+            reviewedBy: body.reviewedBY,
+            status: 'pending',
+            limit: body.limit,
+            page: body.page
+        })
+        if (landData) {
+            res.send({
+                message: "sucess",
+                status: true,
+                ...landData
+            })
+        } else {
+            res.status(500).json({
+                message: 'Somthing went wrong',
+                status: false
+            });
+        }
+    } catch (err) {
+
+        if (err.name === 'ValidationError') {
+            // Collect all validation errors
+            const errorMessages = [];
+            for (let field in err.errors) {
+                errorMessages.push(err.errors[field].message); // Store the error messages
+            }
+
+            // Return the errors to the client
+            res.status(400).json({
+                message: 'Validation errors',
+                errors: errorMessages,
+                status: false
+            });
+            return
+        }
+
+        // For other errors (e.g., database issues)
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: err.message,
+            status: false
+        });
+    }
+}
 const updateLandRecordStatus = async (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const body = req.body
@@ -205,6 +258,7 @@ const updateLandRecordStatus = async (req, res) => {
             { _id: body.id },  // Filter by ID
             { $set: update } // Dynamically set the field to update
         );
+        console.log(updatedLand)
         if (updatedLand.modifiedCount > 0) {
             res.send({
                 message: "Status updated successfully",
@@ -247,5 +301,6 @@ export {
     registerLand,
     getLandRecord,
     getLandRecordClerk,
-    updateLandRecordStatus
+    updateLandRecordStatus,
+    getLandRecordre
 }
