@@ -262,10 +262,11 @@
         survey_no: "Survey No.",
         updatedAt: "Last updated At",
       }
+      const dates = ['createdAt','dor','updatedAt']
       const deta = Object.keys(dataToShow).map((e) => {
         return `<div class="notification-item">
                     <div class="notification-content">
-                      <div class="notification-title">${dataToShow[e]} : ${userData[e]}</div>
+                      <div class="notification-title">${dataToShow[e]} : ${dates.includes(e) ? new Date(userData[e]).toDateString() : userData[e]}</div>
                     </div>
                   </div>`
       })
