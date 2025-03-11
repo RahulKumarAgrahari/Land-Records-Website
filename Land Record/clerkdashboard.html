@@ -80,7 +80,7 @@
             mode: 'no-cors',
             authrization: document.cookie.split("token=")[1]
           },
-          body: JSON.stringify({ status, id })
+          body: JSON.stringify({ status, id,reviewedBY:"project_officer" })
         });
         if (response.ok) {
           alert('updated')

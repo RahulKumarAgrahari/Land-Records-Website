@@ -250,7 +250,7 @@ const updateLandRecordStatus = async (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const body = req.body
     try {
-        let update = {reviewedBy: "clerk"}
+        let update = {reviewedBy: body.reviewedBY}
         if(req.status == 'rejected') {
             update.status = 'rejected'
         }

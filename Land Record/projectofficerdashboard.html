@@ -74,6 +74,28 @@
       }
     }
     getLandList()
+    const updateStatus = async (status, id) => {
+      console.log(status, id)
+      try {
+        const response = await fetch("http://localhost:8080/api/land/update-status", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            mode: 'no-cors',
+            authrization: document.cookie.split("token=")[1]
+          },
+          body: JSON.stringify({ status, id,reviewedBY:"project_officer" })
+        });
+        if (response.ok) {
+          alert('updated')
+          getLandList()
+        }
+      } catch (error) {
+
+      }
+    }
+
       function showDashboardSection(sectionId) {
         // Hide all sections first
         const sections = document.querySelectorAll(".content > div");

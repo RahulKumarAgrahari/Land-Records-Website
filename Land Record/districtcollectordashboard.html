@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-Land Records - District Collector Dashboard</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <script>
-      const getLandList = async () => {
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Land Records - District Collector Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <script>
+    const getLandList = async () => {
       try {
         const response = await fetch("http://localhost:8080/api/land/list-all", {
           method: "POST",
@@ -27,7 +22,7 @@
           body: JSON.stringify({
             page: 1,
             limit: 10,
-            reviewedBY: 'clerk'
+            reviewedBY: 'project_officer'
           })
         });
         const res = await response.json()
@@ -74,44 +69,66 @@
       }
     }
     getLandList()
-      function showDashboardSection(sectionId) {
-        // Hide all sections first
-        const sections = document.querySelectorAll(".content > div");
-        sections.forEach((section) => {
-          section.style.display = "none";
+    const updateStatus = async (status, id) => {
+      console.log(status, id)
+      try {
+        const response = await fetch("http://localhost:8080/api/land/update-status", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            mode: 'no-cors',
+            authrization: document.cookie.split("token=")[1]
+          },
+          body: JSON.stringify({ status, id,reviewedBY:"district_collector" })
         });
-
-        // Show the selected section
-        switch (sectionId) {
-          case "overview":
-            document.getElementById("overviewSection").style.display = "block";
-            break;
-          case "revenue":
-            document.getElementById("revenueSection").style.display = "block";
-            break;
-          case "land":
-            document.getElementById("landSection").style.display = "block";
-            break;
-          case "projects":
-            document.getElementById("projectsSection").style.display = "block";
-            break;
-          case "reports":
-            document.getElementById("reportsSection").style.display = "block";
-            break;
-          case "communications":
-            document.getElementById("communicationsSection").style.display =
-              "block";
-            break;
-          case "settings":
-            document.getElementById("settingsSection").style.display = "block";
-            break;
+        if (response.ok) {
+          alert('updated')
+          getLandList()
         }
-      }
+      } catch (error) {
 
-      function showNotifications() {
-        const modal = document.createElement("div");
-        modal.className = "modal";
-        modal.innerHTML = `
+      }
+    }
+
+    function showDashboardSection(sectionId) {
+      // Hide all sections first
+      const sections = document.querySelectorAll(".content > div");
+      sections.forEach((section) => {
+        section.style.display = "none";
+      });
+
+      // Show the selected section
+      switch (sectionId) {
+        case "overview":
+          document.getElementById("overviewSection").style.display = "block";
+          break;
+        case "revenue":
+          document.getElementById("revenueSection").style.display = "block";
+          break;
+        case "land":
+          document.getElementById("landSection").style.display = "block";
+          break;
+        case "projects":
+          document.getElementById("projectsSection").style.display = "block";
+          break;
+        case "reports":
+          document.getElementById("reportsSection").style.display = "block";
+          break;
+        case "communications":
+          document.getElementById("communicationsSection").style.display =
+            "block";
+          break;
+        case "settings":
+          document.getElementById("settingsSection").style.display = "block";
+          break;
+      }
+    }
+
+    function showNotifications() {
+      const modal = document.createElement("div");
+      modal.className = "modal";
+      modal.innerHTML = `
           <div class="modal-content">
             <div class="modal-header">
               <h2><i class="fas fa-bell"></i> Notifications</h2>
@@ -146,13 +163,13 @@
             </div>
           </div>
         `;
-        document.body.appendChild(modal);
-      }
+      document.body.appendChild(modal);
+    }
 
-      function showProfile() {
-        const modal = document.createElement("div");
-        modal.className = "modal";
-        modal.innerHTML = `
+    function showProfile() {
+      const modal = document.createElement("div");
+      modal.className = "modal";
+      modal.innerHTML = `
           <div class="modal-content">
             <div class="modal-header">
               <h2><i class="fas fa-user"></i> Profile</h2>
@@ -194,172 +211,172 @@
             </div>
           </div>
         `;
-        document.body.appendChild(modal);
+      document.body.appendChild(modal);
 
-        // Add event listener for edit profile button
-        const editButton = modal.querySelector(".edit-profile-button");
-        const editableInputs = modal.querySelectorAll(".editable");
-        editButton.addEventListener("click", function () {
-          if (this.textContent.includes("Edit")) {
-            editableInputs.forEach((input) =>
-              input.removeAttribute("readonly")
-            );
-            this.innerHTML = '<i class="fas fa-save"></i> Save Changes';
-          } else {
-            editableInputs.forEach((input) =>
-              input.setAttribute("readonly", true)
-            );
-            this.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
-            alert("Profile changes saved successfully!");
-          }
-        });
-      }
-
-      function handleLogout() {
-        if (confirm("Are you sure you want to logout?")) {
-          window.location.href = "index.html";
+      // Add event listener for edit profile button
+      const editButton = modal.querySelector(".edit-profile-button");
+      const editableInputs = modal.querySelectorAll(".editable");
+      editButton.addEventListener("click", function () {
+        if (this.textContent.includes("Edit")) {
+          editableInputs.forEach((input) =>
+            input.removeAttribute("readonly")
+          );
+          this.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+        } else {
+          editableInputs.forEach((input) =>
+            input.setAttribute("readonly", true)
+          );
+          this.innerHTML = '<i class="fas fa-edit"></i> Edit Profile';
+          alert("Profile changes saved successfully!");
         }
+      });
+    }
+
+    function handleLogout() {
+      if (confirm("Are you sure you want to logout?")) {
+        window.location.href = "index.html";
       }
-    </script>
-  </head>
-  <body>
-    <div class="blue-line">
-      <div class="logo-container">
-        <img src="earth.png" alt="Logo" />
-        <span class="title">E-Land Records</span>
-      </div>
-      <span class="header-title"
-        >Collectorate Office - District Collector Dashboard</span
-      >
-    </div>
+    }
+  </script>
+</head>
 
-    <div class="second-bar">
-      <div class="menu-item" onclick="showNotifications()">
-        <i class="fas fa-bell"></i>
-        <span>Notifications</span>
-      </div>
-      <div class="menu-item">
-        <i class="fas fa-cog"></i>
-        <span>Settings</span>
-      </div>
-      <div class="menu-item" onclick="showProfile()">
-        <i class="fas fa-user"></i>
-        <span>Profile</span>
-      </div>
-      <div class="menu-item" onclick="handleLogout()">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Logout</span>
-      </div>
+<body>
+  <div class="blue-line">
+    <div class="logo-container">
+      <img src="earth.png" alt="Logo" />
+      <span class="title">E-Land Records</span>
     </div>
+    <span class="header-title">Collectorate Office - District Collector Dashboard</span>
+  </div>
 
-    <div class="body-container" >
-      <div class="sidebar">
-        <div class="user-logo"><i class="fas fa-building-government"></i></div>
-        <div class="user-name">District Collector Dashboard</div>
-        <ul>
-          <li>
-            <a href="#" class="active" onclick="showDashboardSection('overview')">
-              <i class="fas fa-home"></i>
-              <span>Overview</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" onclick="showDashboardSection('revenue')">
-              <i class="fas fa-chart-line"></i>
-              <span>Revenue Management</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" onclick="showDashboardSection('land')">
-              <i class="fas fa-map-marked-alt"></i>
-              <span>Land Management</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" onclick="showDashboardSection('projects')">
-              <i class="fas fa-project-diagram"></i>
-              <span>Projects</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" onclick="showDashboardSection('reports')">
-              <i class="fas fa-file-alt"></i>
-              <span>Reports</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" onclick="showDashboardSection('communications')">
-              <i class="fas fa-comments"></i>
-              <span>Communications</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" onclick="showDashboardSection('settings')">
-              <i class="fas fa-cog"></i>
-              <span>Settings</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="content" style="flex-grow: 1;">
-        <!-- Pending Applications Section -->
-        <div id="pendingApplicationsSection" class="rectangle">
-          <div class="rectangle-title">
-            <i class="fas fa-clipboard-list"></i>
-            <span>Pending Applications</span>
+  <div class="second-bar">
+    <div class="menu-item" onclick="showNotifications()">
+      <i class="fas fa-bell"></i>
+      <span>Notifications</span>
+    </div>
+    <div class="menu-item">
+      <i class="fas fa-cog"></i>
+      <span>Settings</span>
+    </div>
+    <div class="menu-item" onclick="showProfile()">
+      <i class="fas fa-user"></i>
+      <span>Profile</span>
+    </div>
+    <div class="menu-item" onclick="handleLogout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </div>
+  </div>
+
+  <div class="body-container">
+    <div class="sidebar">
+      <div class="user-logo"><i class="fas fa-building-government"></i></div>
+      <div class="user-name">District Collector Dashboard</div>
+      <ul>
+        <li>
+          <a href="#" class="active" onclick="showDashboardSection('overview')">
+            <i class="fas fa-home"></i>
+            <span>Overview</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('revenue')">
+            <i class="fas fa-chart-line"></i>
+            <span>Revenue Management</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('land')">
+            <i class="fas fa-map-marked-alt"></i>
+            <span>Land Management</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('projects')">
+            <i class="fas fa-project-diagram"></i>
+            <span>Projects</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('reports')">
+            <i class="fas fa-file-alt"></i>
+            <span>Reports</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('communications')">
+            <i class="fas fa-comments"></i>
+            <span>Communications</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showDashboardSection('settings')">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="content" style="flex-grow: 1;">
+      <!-- Pending Applications Section -->
+      <div id="pendingApplicationsSection" class="rectangle">
+        <div class="rectangle-title">
+          <i class="fas fa-clipboard-list"></i>
+          <span>Pending Applications</span>
+        </div>
+        <div class="rectangle-notes">
+          Process and manage pending land record applications.
+        </div>
+        <div class="quick-actions">
+          <button class="action-button">
+            <i class="fas fa-filter"></i>
+            Filter
+          </button>
+          <button class="action-button">
+            <i class="fas fa-sort"></i>
+            Sort
+          </button>
+          <div class="search-box">
+            <input type="text" placeholder="Search applications..." />
+            <button><i class="fas fa-search"></i></button>
           </div>
-          <div class="rectangle-notes">
-            Process and manage pending land record applications.
+        </div>
+        <div class="applications-table">
+          <table id="land-list" class="records-table">
+            <thead>
+              <tr>
+                <th>Application ID</th>
+                <th>Type</th>
+                <th>Submitted Date</th>
+                <th>Applicant</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Add more rows as needed -->
+            </tbody>
+          </table>
+        </div>
+        <!-- Pagination -->
+        <div id="land-list-pagination" class="pagination">
+          <button class="page-button">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="pagination-btn" style="display: flex; gap:3px;">
+            <button class="page-button active">1</button>
+            <button class="page-button">2</button>
+            <button class="page-button">3</button>
           </div>
-          <div class="quick-actions">
-            <button class="action-button">
-              <i class="fas fa-filter"></i>
-              Filter
-            </button>
-            <button class="action-button">
-              <i class="fas fa-sort"></i>
-              Sort
-            </button>
-            <div class="search-box">
-              <input type="text" placeholder="Search applications..." />
-              <button><i class="fas fa-search"></i></button>
-            </div>
-          </div>
-          <div class="applications-table">
-            <table id="land-list" class="records-table">
-              <thead>
-                <tr>
-                  <th>Application ID</th>
-                  <th>Type</th>
-                  <th>Submitted Date</th>
-                  <th>Applicant</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Add more rows as needed -->
-              </tbody>
-            </table>
-          </div>
-          <!-- Pagination -->
-          <div id="land-list-pagination" class="pagination">
-            <button class="page-button">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="pagination-btn" style="display: flex; gap:3px;">
-              <button class="page-button active">1</button>
-              <button class="page-button">2</button>
-              <button class="page-button">3</button>
-            </div>
-            <button class="page-button">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
+          <button class="page-button">
+            <i class="fas fa-chevron-right"></i>
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    
-  </body>
+
+</body>
+
 </html>
