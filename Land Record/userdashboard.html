@@ -27,6 +27,7 @@
         form.style.display = "none";
       }
     }
+    let dataList = {}
     const getLandList = async () => {
       try {
         const response = await fetch("http://localhost:8080/api/land/list", {
@@ -47,6 +48,8 @@
           const tbody = document.getElementById('land-list')
           tbody.innerHTML = ''
           res.data.forEach((rowData) => {
+            const idss = rowData._id
+            dataList[`${idss}`] = rowData
             const row = document.createElement('tr')
             const rowD = `<tr>
                 <td>${rowData.survey_no}</td>
@@ -57,7 +60,7 @@
                 <td><span class="status-badge ${rowData.status}" >${rowData.status}</span></td>
                 <td>
                   <div class="action-icons">
-                    <i class="fas fa-eye" title="View"></i>
+                    <i class="fas fa-eye" onclick="showUserData('${rowData._id}')" title="View"></i>
                     <i class="fas fa-edit" title="Edit"></i>
                     <i class="fas fa-download" title="Download"></i>
                   </div>
@@ -215,6 +218,79 @@
       return false;
     }
 
+    const showUserData = (idss) => {
+      // Create and show notifications panel
+      const modal = document.createElement("div");
+      modal.className = "modal";
+      // aadhar:"123456789123"
+      // address:"dafdf, fgdd"
+      // applicationId:"APP-1741684162015-539"
+      // area:"13241325"
+      // city:"varanasi"
+      // createdAt:"2025-03-11T09:09:22.017Z"
+      // createdBy:"67cffbb62654572801991a6c"
+      // dor:"2025-02-28T00:00:00.000Z"
+      // email:"67rahul.rbgj@gmail.com"
+      // full_name:"Rahul Agrahari"
+      // owner_name:"Rahul"
+      // phone:"6387422206"
+      // pincode:"231216"
+      // reviewedBy:"clerk"
+      // state:"AP"
+      // status:"pending"
+      // survey_no:"23143245"
+      // updatedAt:"2025-03-11T09:44:00.026Z"
+      console.log(dataList)
+      const userData = dataList[idss]
+      const dataToShow = {
+        applicationId: "Application ID",
+        reviewedBy: "Reviewed By",
+        status: "Status",
+        full_name: "Full Name",
+        owner_name: "Owner Name",
+        email: "Email",
+        phone: "Mobile No.",
+        aadhar: "Aadhar",
+        address: "Address",
+        area: "Area",
+        city: "City",
+        state: "State",
+        pincode: "Pin Code",
+        createdAt: "Created AT",
+        createdBy: "Created By",
+        dor: "Date of Registry",
+        survey_no: "Survey No.",
+        updatedAt: "Last updated At",
+      }
+      const deta = Object.keys(dataToShow).map((e) => {
+        return `<div class="notification-item">
+                    <div class="notification-content">
+                      <div class="notification-title">${dataToShow[e]} : ${userData[e]}</div>
+                    </div>
+                  </div>`
+      })
+      modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Details</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="notifications-panel">
+                <div class="notification-list">
+                  <div class="notification-item">
+                    <div class="notification-content">
+                      <div class="notification-title">Full Name : ${userData.full_name}</div>
+                    </div>
+                  </div>
+                  ${deta.join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      document.body.appendChild(modal);
+    }
     // Add file upload preview for application documents
     // document
     //   .getElementById("application-docs")
@@ -1040,16 +1116,6 @@
     </div>
   </div>
 
-  <div class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2> Detail</h2>
-        <button class="close-button" onclick="">×</button>
-      </div>
-      <div class="modal-body"></div>
-      hvsghdvghs
-    </div>
-  </div>
   <script>
     // Add file upload preview functionality
     // document

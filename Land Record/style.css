@@ -1282,6 +1282,7 @@ nav ul li a:hover {
     background: white;
     border-radius: 15px;
     padding: 20px;
+    padding-top: 0;
     width: 90%;
     max-width: 600px;
     max-height: 80vh;
@@ -1297,6 +1298,9 @@ nav ul li a:hover {
     padding-bottom: 15px;
     border-bottom: 2px solid #f0f2f5;
     margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background: white;
 }
 
 .modal-header h2 {
@@ -2857,7 +2861,7 @@ nav ul li a:hover {
 
 /* Notifications Panel */
 .notifications-panel .notification-list {
-    max-height: 400px;
+    /* max-height: 400px; */
     overflow-y: auto;
     padding: 10px;
 }
