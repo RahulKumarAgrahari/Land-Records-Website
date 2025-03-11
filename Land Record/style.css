@@ -3530,3 +3530,22 @@ nav ul li a:hover {
 ul {
     list-style-type: none; /* Options: disc, circle, square, none */
 }
+.modal-backdrop{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgb(166, 164, 164);
+    z-index: 1000;
+    align-content: center;
+}
+.modal-container{
+    background: white;
+    margin: auto;
+    max-width: 100vw;
+    width: 900px;
+    padding: 10px;
+}

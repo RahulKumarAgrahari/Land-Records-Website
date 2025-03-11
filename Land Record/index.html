@@ -403,6 +403,8 @@
     function showErrors(response) {
       if (response.status === false && response.errors && response.errors.length > 0) {
         alert("Errors:\n" + response.errors.join("\n"));
+      } else if(response.message){
+        alert(response.message);
       } else {
         alert("Unknown error occurred.");
       }
@@ -445,13 +447,12 @@
         body: JSON.stringify({ username, password })
       });
       const res = await response.json()
-      if (!response.ok) {
-        alert(res.message)
+      if (!res.status) {
+        showErrors(res)
       } else {
         // Redirect to user dashboard
         document.cookie = `token=${res.data.token}`;
         // document.cookie = `token=${res.data.token}; HttpOnly; Secure`;
-        showErrors(res)
         window.location.href = "userdashboard.html";
       }
 
