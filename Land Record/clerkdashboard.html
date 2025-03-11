@@ -25,8 +25,8 @@
             limit: 10
           })
         });
+        
         const res = await response.json()
-        console.log(res)
         if (res.status) {
           const tbody = document.getElementById('land-list')
           tbody.innerHTML = ''

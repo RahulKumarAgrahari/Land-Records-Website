@@ -78,7 +78,6 @@ const getLandRecord = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const landData = await Land.find({ createdBy: decoded.id }).skip(body.skip).limit(body.limit);
         const totalRecords = await Land.countDocuments({ createdBy: decoded.id });
-        console.log(landData)
         if (landData) {
             res.send({
                 message: "land register application submitted sucessfully",
@@ -199,9 +198,6 @@ const getLandRecordre = async (req, res) => {
     try {
         const token = req.headers.authrization
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        // const landData = await Land.find({createdBy:decoded.id}).skip(body.skip).limit(body.limit);
-        // const totalRecords = await Land.countDocuments({ createdBy: decoded.id });
-        // console.log(landData)
         const landData = await getLandRecordCondition({
             reviewedBy: body.reviewedBY,
             status: 'pending',
@@ -251,14 +247,13 @@ const updateLandRecordStatus = async (req, res) => {
     const body = req.body
     try {
         let update = {reviewedBy: body.reviewedBY}
-        if(req.status == 'rejected') {
+        if(body.status == 'rejected') {
             update.status = 'rejected'
         }
         const updatedLand = await Land.updateOne(
             { _id: body.id },  // Filter by ID
             { $set: update } // Dynamically set the field to update
         );
-        console.log(updatedLand)
         if (updatedLand.modifiedCount > 0) {
             res.send({
                 message: "Status updated successfully",
