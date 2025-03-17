@@ -18,6 +18,8 @@ const loginUser = async (req, res) => {
                     first_name: userData.first_name,
                     last_name: userData.last_name,
                     email: userData.email,
+                    mobileno:userData.phone,
+                    aadhar:userData.aadhar,
                     token
                 }
             })
@@ -105,6 +107,9 @@ const createUser = async (req, res) => {
             error: err.message
         });
     }
+}
+const verifyUser = () => {
+
 }
 export {
     loginUser,

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Records Protection</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="../css/tab.css">
+    <link rel="stylesheet" href="../css/tab2.css">
+    <link rel="stylesheet" href="../css/tab31.css">
+    <link rel="stylesheet" href="../css/tab41.css">
+    <link rel="stylesheet" href="../css/tab6.css">
+    <link rel="stylesheet" href="../css/tab17.css">
+    
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/tab4.css">
+
+
+
+    <!-- <script src='{% static 'script.js' %}'></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.9.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <script async >
+        var user = {
+            username:"jjdgfhgdfj"
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <div class="globe-icon"></div>
+            <h1 class="header-title">E - Land Records</h1>
+        </div>
+        <div class="header-right">
+            <div class="language-dropdown">
+                <button class="language-button"><i class="fas fa-globe"></i> en</button>
+                <div class="language-content">
+                    <a href="#">English</a>
+                    <a href="#">Español</a>
+                    <a href="#">Français</a>
+                </div>
+            </div>
+            <i class="fas fa-bell notification-icon"></i> <!-- Notification icon -->
+            <div class="dropdown">
+                <button class="dropbtn">{{data.username}}</button>
+                <div class="dropdown-content">
+                    <a href="#">Profile</a>
+                    <a href="#">Settings</a>
+                    <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+                </div>
+            </div>
+            <i class="fas fa-user-circle user-icon"></i> <!-- User profile icon -->
+           
+        </div>
+    </header>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-icon active" data-icon="menu"><i class="fas fa-bars"></i></div>
+        <div class="sidebar-icon" data-icon="file"><i class="fas fa-file"></i></div>
+        <div class="sidebar-icon" data-icon="folder"><i class="fas fa-folder"></i></div>
+        <div class="sidebar-icon" data-icon="pdf"><i class="fas fa-file-pdf"></i></div>
+        <div class="sidebar-icon" data-icon="document"><i class="fas fa-file-alt"></i></div>
+        <div class="sidebar-icon" data-icon="email"><i class="fas fa-envelope"></i></div>
+        <div class="sidebar-icon" data-icon="message"><i class="fas fa-comment"></i></div>
+        <div class="sidebar-icon" data-icon="inbox"><i class="fas fa-inbox"></i></div>
+        <div class="sidebar-icon" data-icon="sent"><i class="fas fa-paper-plane"></i></div>
+        <div class="sidebar-icon" data-icon="settings"><i class="fas fa-cog"></i></div>
+    </div>
+
+    <!-- Notebook Tabs -->
+    <div class="notebook">
+        <div class="tab-buttons">
+            <button class="tab-btn " disabled  hx-get="./tab1.html" hx-target="#tab-content" hx-swap="innerHTML">DASHBOARD</button>
+            <button class="tab-btn active" hx-get="./tab1.html" hx-target="#tab-content" hx-swap="innerHTML">View</button>
+            <button class="tab-btn" disabled hx-get="./tab2" hx-target="#tab-content" hx-swap="innerHTML">RECEIPT</button>
+            <button class="tab-btn" hx-get="./tab3.html" hx-target="#tab-content" hx-swap="innerHTML">CREATE</button>
+            <button class="tab-btn" hx-get="./tab4.html" hx-target="#tab-content" hx-swap="innerHTML">Inbox</button>
+            <button class="tab-btn" hx-get="./tab5.html" hx-target="#tab-content" hx-swap="innerHTML">Sent</button>
+            <button class="tab-btn" hx-get="./tab2.html" hx-target="#tab-content" hx-swap="innerHTML">Advance Search</button>
+            <button class="tab-btn" disabled hx-get="./tab4.html" hx-target="#tab-content" hx-swap="innerHTML">FILE</button>
+            <button class="tab-btn" hx-get="./tab17.html" hx-target="#tab-content" hx-swap="innerHTML">CREATE</button>
+            <button class="tab-btn" hx-get="./tab4.html" hx-target="#tab-content" hx-swap="innerHTML">Inbox</button>
+            <button class="tab-btn" hx-get="./tab5.html" hx-target="#tab-content" hx-swap="innerHTML">Sent</button>
+            <button class="tab-btn" hx-get="./tab6.html" hx-target="#tab-content" hx-swap="innerHTML">Advance Search</button>
+
+            <button class="tab-btn" disabled hx-get="./tab4.html" hx-target="#tab-content" hx-swap="innerHTML">ISSUE</button>
+            <button class="tab-btn" hx-get="./tab5.html" hx-target="#tab-content" hx-swap="innerHTML">Sent</button>
+            <button class="tab-btn" hx-get="./tab4.html" hx-target="#tab-content" hx-swap="innerHTML">Returned</button>
+            <button class="tab-btn" hx-get="./tab2.html" hx-target="#tab-content" hx-swap="innerHTML">Advance Search</button>
+        </div>
+
+        <div id="tab-content">
+            <h3>Welcome! Click on Tabs to Load Content</h3>
+        </div>
+    </div>
+
+    <script>
+        // Add active class to clicked tab button
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Sidebar Click Active
+        const sidebarIcons = document.querySelectorAll('.sidebar-icon');
+        sidebarIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                sidebarIcons.forEach(i => i.classList.remove('active'));
+                icon.classList.add('active');
+            });
+        });
+        window.onload = function() {
+            document.querySelector('.tab-btn.active').click();
+        };
+        document.querySelector(".logout-link").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+    
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to log out?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, log out",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to the logout URL after confirmation
+                    window.location.href = this.getAttribute("href"); // Use the link's href
+                }
+            });
+        });
+    </script>
+</body>
+</html>

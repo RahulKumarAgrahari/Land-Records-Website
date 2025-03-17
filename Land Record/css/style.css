@@ -1,0 +1,124 @@
+/* Updated CSS for a professional and responsive design */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url('https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?cs=srgb&dl=pexels-akos-szabo-145938-440731.jpg&fm=jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    color: #333;
+}
+
+.header {
+    background: linear-gradient(90deg, #004080, #4a90e2);
+    color: white;
+    padding: 15px 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+    margin-right: 15px;
+}
+
+.nav-buttons .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: white;
+    background: transparent;
+    border: 1px solid white;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-buttons .btn:hover {
+    background: white;
+    color: #004080;
+}
+
+.search-bar {
+    max-width: 250px;
+    border-radius: 20px;
+    padding: 8px;
+    border: 1px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.login-container {
+    margin-top: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5%;
+    flex-wrap: wrap;
+}
+
+.login-box {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 350px;
+    transition: transform 0.3s;
+    height: 410px;
+}
+
+.login-box:hover {
+    transform: translateY(-5px);
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #004080;
+    font-weight: 600;
+}
+
+.login-box .form-control {
+    margin: 12px 0;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.login-box .btn {
+    margin-top: 15px;
+    font-size: 14px;
+    border-radius: 8px;
+    background: #004080;
+    color: white;
+    padding: 10px;
+    transition: all 0.3s;
+}
+
+.login-box .btn:hover {
+    background: #4a90e2;
+}
+
+.register-link {
+    color: #004080;
+    text-decoration: none;
+    font-size: 12px;
+    display: block;
+    margin-top: 12px;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}

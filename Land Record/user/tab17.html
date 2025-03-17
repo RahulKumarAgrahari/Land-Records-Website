@@ -1,0 +1,97 @@
+
+    <style>
+  
+    </style>
+
+    <section class="file_create-sec">
+        <div class="file_create-container">
+            <div class="file_create-header">
+                <h1>Land Record</h1>
+            </div>
+
+            <div class="file_create-section">
+                <h2>Land Details</h2>
+                <div class="file_create-form-group">
+                    <label class="file_create-label" for="survey_number">Choose Survey Number:</label>
+                    <select class="file_create-select" id="survey_number" name="survey_number">
+                        <option value="">-- Select Survey Number --</option>
+                        {% for number in data.sno %}
+                            <option value="{{ number }}">{{ number }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="file_create-form-group">
+                    <label class="file_create-label" for="total-area">Total Area (in acres/hectares)</label>
+                    <input class="file_create-input" type="text" id="total-area" placeholder="{{ number }}">
+                </div>
+                <div class="file_create-form-group">
+                    <label class="file_create-label" for="purpose">Purpose</label>
+                    <div class="file_create-dropdown-group">
+                        <select class="file_create-select" id="purpose-file">
+                            <option value="">File No.</option>
+                            <option value="file1">File 1</option>
+                            <option value="file2">File 2</option>
+                        </select>
+                        <select class="file_create-select" id="purpose-choice1">
+                            <option value="">Choose One</option>
+                            <option value="choice1">Choice 1</option>
+                            <option value="choice2">Choice 2</option>
+                        </select>
+                        <select class="file_create-select" id="purpose-choice2">
+                            <option value="">Choose One</option>
+                            <option value="choice1">Choice 1</option>
+                            <option value="choice2">Choice 2</option>
+                        </select>
+                        <select class="file_create-select" id="purpose-choice3">
+                            <option value="">Choose One</option>
+                            <option value="choice1">Choice 1</option>
+                            <option value="choice2">Choice 2</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="file_create-section">
+                <h2>Land Address</h2>
+                <div class="file_create-form-group">
+                    <textarea class="file_create-textarea" id="land-address" placeholder="{{ number }}"></textarea>
+                </div>
+            </div>
+
+            <div class="file_create-section">
+                <h2>Other Details</h2>
+                <div class="file_create-form-group">
+                    <label class="file_create-label" for="remarks">Remarks</label>
+                    <textarea class="file_create-textarea" id="remarks" placeholder="Enter remarks"></textarea>
+                </div>
+            </div>
+
+            <div class="file_create-submit-btn">
+                <button class="file_create-btn" type="submit">Continue Working</button>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+        document.querySelector(".file_create-btn").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent default action
+        
+            Swal.fire({
+                title: "Confirmation",
+                text: "File Number will be generated (Number generated will be final and cannot be edited). Do you wish to proceed?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Proceed",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{% url 'dashboard'  %}";  // Redirect to load_tab 5
+                }
+            });
+        });
+        
+</script>
+
+    </section>
+

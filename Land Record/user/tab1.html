@@ -1,0 +1,67 @@
+<div class="row" id="user-dashboard-tab1">
+    <div class="container-section">
+        <div class="section">
+            <div class="section-header">File Details</div>
+            <div class="form-group">
+                <label>Data Not Available</label>
+            </div>
+            <div class="green-line"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">User & Login Details</div>
+            <div class="form-group">
+                <label>Username</label>
+                <input name="userName" type="text" readonly disabled >
+            </div>
+
+            <div class="form-group">
+                <label>PhoneNumber</label>
+                <input name="phoneNumber" type="text" readonly disabled >
+            </div>
+
+            <div class="form-group">
+                <label>AadharNumber</label>
+                <input name="addharNumber" type="text" readonly disabled >
+            </div>
+        </div>
+
+        <div class="section roles-section">
+            <div class="section-header">Current Assigned Roles</div>
+            <div class="form-group">
+                <label>User</label>
+            </div>
+            <div class="roles-history-tab">Roles History »</div>
+
+        </div>
+    </div>
+
+    <div class="alerts-section">
+        <div class="section1">
+            <div class="section-header">Alerts and Notification</div>
+            <!-- Empty section, matching the image's appearance -->
+        </div>
+    </div>
+    <script>
+        const inputs = {
+            'userName': {
+                name: 'userName',
+                variable:'username'
+            },
+            'phoneNumber': {
+                name: 'phoneNumber',
+                variable:'mobileno'
+            },
+            'addharNumber': {
+                name: 'addharNumber',
+                variable:'aadhar'
+            }
+        }
+        const userData = JSON.parse(localStorage.getItem('user')) || {}
+        const section = document.getElementById('user-dashboard-tab1')
+        Object.values(inputs).forEach(item => {
+            const input = section.querySelector(`[name="${item.name}"]`)
+            input.value = userData[item.variable] || ''
+        });
+    </script>
+</div>

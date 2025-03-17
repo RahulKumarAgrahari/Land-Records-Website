@@ -1,0 +1,133 @@
+<style>
+    /* Add your styles here */
+</style>
+<section class="tab3-sec">
+    <div class="acknowledge-navbar">
+        <div class="acknowledge-nav-buttons">
+            <button class="acknowledge-nav-btn">Movement</button>
+            <button class="acknowledge-nav-btn">Copy</button>
+            <button class="acknowledge-nav-btn">Send</button>
+            <button class="acknowledge-nav-btn">Put in a file</button>
+            <button class="acknowledge-nav-btn">Edit</button>
+            <button class="acknowledge-nav-btn">Attach ▼</button>
+            <button class="acknowledge-nav-btn">Draft</button>
+            <button class="acknowledge-nav-btn">Close</button>
+            <button class="acknowledge-nav-btn">Generate Acknowledgment</button>
+        </div>
+        <div class="acknowledge-header-text">
+            E Comp. No: {{ data.e_comp_no }} | Receipt No: {{ data.receipt_no }} | Subject: {{ data.subject }}
+        </div>
+    </div>
+    <div class="acknowledge-container">
+        <div class="acknowledge-letter-section">
+            <div class="acknowledge-letter">
+                <h2>Acknowledgment Letter</h2>
+                <p>Date: {{ data.current_date }}</p>
+                <p>To</p>
+                <p>{{ data.recipient_name }}<br>
+                {{ data.street_address }}<br>
+                {{ data.city }}, {{ data.state }} {{ data.zip_code }}</p>
+                <p>Subject: {{ data.subject }}</p>
+                <p>I am writing to acknowledge your request for land record management regarding the land located at {{ data.land_address }}. We have received your application and the following details:</p>
+                <ul>
+                    <li>Application Number: {{ data.application_number }}</li>
+                    <li>User Name: {{ data.user_name }}</li>
+                    <li>Aadhar Number: {{ data.aadhar_number }}</li>
+                    <li>Mobile Number: {{ data.mobile_number }}</li>
+                    <li>Email: {{ data.email }}</li>
+                    <li>Address: {{ data.user_address }}</li>
+                    <li>Land Type: {{ data.land_type }}</li>
+                    <li>Survey Number: {{ data.survey_number }}</li>
+                    <li>Location: {{ data.location }}</li>
+                    <li>Total Area: {{ data.total_area }}</li>
+                    <li>Land Market Value: {{ data.land_market_value }}</li>
+                </ul>
+                <p>We will process your request and provide further updates. Please contact us for any queries.</p>
+                <p>Sincerely,<br>
+                {{ data.sender_name }}<br>
+                {{ data.sender_address }}</p>
+            </div>
+        </div>
+        <div class="acknowledge-form-section">
+            <div class="acknowledge-header">
+                E Comp. No: {{ data.e_comp_no }} | Receipt No: {{ data.receipt_no }} | Subject: {{ data.subject }}
+            </div>
+            <div class="acknowledge-form-group">
+                <label class="acknowledge-label">Receipt ID</label>
+                <input type="text" class="acknowledge-input" value="{{ data.receipt_no }}" readonly>
+            </div>
+            <h3>Basic Details</h3>
+            <div class="acknowledge-form-columns">
+                <div class="acknowledge-column">
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Date & Time:</label>
+                        <input type="text" class="acknowledge-input" value="{{ data.date_time }}" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Application Number:</label>
+                        <input type="text" class="acknowledge-input" value="{{ data.application_number }}" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">User Name:</label>
+                        <input type="text" class="acknowledge-input" value="{{ data.user_name }}" readonly>
+                    </div>
+                </div>
+                <div class="acknowledge-column">
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Aadhar Number:</label>
+                        <input type="text" class="acknowledge-input" value="{{ data.aadhar_number }}" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Mobile Number:</label>
+                        <input type="text" class="acknowledge-input" value="{{ data.mobile_number }}" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Email:</label>
+                        <input type="email" class="acknowledge-input" value="{{ data.email }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="acknowledge-form-group">
+                <label class="acknowledge-label">Address:</label>
+                <input type="text" class="acknowledge-input" value="{{ data.user_address }}" readonly>
+            </div>
+            <h3>Land Details</h3>
+            <div class="acknowledge-form-columns">
+                <div class="acknowledge-column">
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Land Type:</label>
+                        <input type="text" class="acknowledge-input" value="{{ data.land_type }}" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Survey Number:</label>
+                        <input type="text" class="acknowledge-input" value="{{ data.survey_number }}" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Total Area:</label>
+                        <input type="text" class="acknowledge-input" value="{{ data.total_area }}" readonly>
+                    </div>
+                </div>
+                <div class="acknowledge-column">
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Location:</label>
+                        <input type="text" class="acknowledge-input" value="{{ data.location }}" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Land Market Value:</label>
+                        <input type="text" class="acknowledge-input" value="{{ data.land_market_value }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <button class="acknowledge-button445">Submit</button>
+            {% comment %} <button class="acknowledge-button" onclick="window.location.href='{% url 'load_tab' 5 %}'">Submit</button> {% endcomment %}
+
+        </div>
+    </div>
+    <footer class="acknowledge-footer">
+        Copyright © 20205, designed and developed by NTTW
+    </footer>
+    {% load static %}
+       
+   
+
+      </section>

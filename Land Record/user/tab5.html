@@ -1,0 +1,146 @@
+{% load static %}
+
+<section class="tab3-sec">
+    <div class="dms_container">
+        <div class="dms_header">
+            <div class="dms_header-buttons">
+                <button>Movement</button>
+                <button>Copy</button>
+                <button>Send</button>
+                <button>Put in a file</button>
+                <button>Edit</button>
+                <button>Attach</button>
+                <button>Draft</button>
+                <button>Close</button>
+                <button>Generate Acknowledgement</button>
+            </div>
+            <div class="dms_header-title">
+                {% if files %}
+                    E Comp. No.: {{ files.comp_no }} | Receipt No.: {{ files.receipt_no }} | Subject: {{ files.subject }}
+                {% else %}
+                    No header information available
+                {% endif %}
+            </div>
+        </div>
+        <div class="dms_content">
+            <div class="dms_department-section">
+                <label for="department">Department:</label>
+                <select id="department" class="dms_department-select">
+                    {% for dept in departments %}
+                        <option value="{{ dept.id }}" {% if dept.selected %}selected{% endif %}>{{ dept.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <table class="dms_table">
+                <thead>
+                    <tr>
+                        <th class="dms_th">File / Receipt Components</th>
+                        <th class="dms_th">Comp. No.</th>
+                        <th class="dms_th">File No. / Receipt No.</th>
+                        <th class="dms_th">Subject</th>
+                        <th class="dms_th">Note Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if files %}
+                        {% for file in files %}
+                            <tr>
+                                <td class="dms_td"><input type="checkbox" {% if file.checked %}checked{% endif %}></td>
+                                <td class="dms_td">{{ file.comp_no }}</td>
+                                <td class="dms_td">{{ file.receipt_no }}</td>
+                                <td class="dms_td">{{ file.subject }}</td>
+                                <td class="dms_td">{{ file.note_type }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="dms_td">No files available</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="dms_footer">
+            <button {% if not can_sign %}disabled{% endif %}>DSC Sign & Send</button>
+            <button class="send-btn123">Send</button>
+        </div>
+    </div>
+    <script>
+        document.querySelector(".send-btn123").addEventListener("click", async function(event) {
+            event.preventDefault(); // Prevent default action
+            
+            // Find the selected row (where checkbox is checked)
+            const selectedRow = document.querySelector(".dms_table tbody tr input[type='checkbox']:checked");
+            
+            // If no row is selected, show an error
+            if (!selectedRow) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Please select a file to send",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+                return;
+            }
+    
+            // Get the receipt number from the selected row (third column, index 2)
+            const receiptNo = selectedRow.parentElement.parentElement.cells[2].textContent;
+    
+            Swal.fire({
+                title: "Confirmation",
+                text: "Do you want to send your application to Clerk?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Proceed",
+                cancelButtonText: "Cancel"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    // Create FormData to send receipt_no
+                    const formData = new FormData();
+                    formData.append('receipt_no', receiptNo);
+    
+                    try {
+                        const submitResponse = await fetch("{% url 'senttoclerk' %}", {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}' // Ensure CSRF token is included
+                            }
+                        });
+    
+                        const responseData = await submitResponse.json(); // Assuming JSON response from backend
+    
+                        if (submitResponse.ok) {
+                            Swal.fire({
+                                title: "Success",
+                                text: "Application sent to Clerk successfully!",
+                                icon: "success",
+                                confirmButtonText: "OK"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.reload(); // Reload the page after clicking OK
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error",
+                                text: responseData.error || "Failed to send application",
+                                icon: "error",
+                                confirmButtonText: "OK"
+                            });
+                        }
+                    } catch (error) {
+                        Swal.fire({
+                            title: "Error",
+                            text: "An error occurred: " + error.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</section>
