@@ -452,6 +452,8 @@
       } else {
         // Redirect to user dashboard
         document.cookie = `token=${res.data.token}`;
+        delete res.token
+        localStorage.setItem('user',JSON.stringify(res.data))
         // document.cookie = `token=${res.data.token}; HttpOnly; Secure`;
         window.location.href = "userdashboard.html";
       }
@@ -489,6 +491,8 @@
         return
       } else {
         document.cookie = `token=${res.data.token}`;
+        delete res.token
+        localStorage.setItem('official',JSON.stringify(res.data))
         showErrors(res)
         // For demonstration purposes - in production this would validate against a server
         switch (role) {
