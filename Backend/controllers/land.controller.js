@@ -1,5 +1,6 @@
-import { Land, LandHistory } from "../models/land.model.js";
+import { Land, LandHistory} from "../models/land.model.js";
 import jwt from "jsonwebtoken";
+import { landRecipt } from "../models/recipt.model.js";
 
 // const verifyToken = (req, res, next) => {
 //     const token = req.cookies.token; // ✅ Get token from cookies
@@ -21,6 +22,59 @@ import jwt from "jsonwebtoken";
 const generateApplicationId = () => {
     return "APP-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
 };
+const generateReciptNo = () => {
+    return Date.now();
+};
+
+const createLandRecipt = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    const body = req.body
+    try {
+        const token = req.headers.authrization
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log(decoded)
+        const reciptNo = await generateReciptNo();
+        const landData = await landRecipt.create({ ...body, createdBy: decoded.id, reciptNo })
+        if (landData) {
+            res.send({
+                message: `Land registration successful!\nReceipt No: ${reciptNo}\nSubmitted by: ${landData.full_name}`,
+                status: true,
+                data:{
+                    reciptNo
+                }
+            })
+        } else {
+            res.status(500).json({
+                message: 'Somthing went wrong',
+                status: false
+            });
+        }
+    } catch (err) {
+
+        if (err.name === 'ValidationError') {
+            // Collect all validation errors
+            const errorMessages = [];
+            for (let field in err.errors) {
+                errorMessages.push(err.errors[field].message); // Store the error messages
+            }
+
+            // Return the errors to the client
+            res.status(400).json({
+                message: 'Validation errors',
+                errors: errorMessages,
+                status: false
+            });
+            return
+        }
+
+        // For other errors (e.g., database issues)
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: err.message,
+            status: false
+        });
+    }
+}
 
 const registerLand = async (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -28,6 +82,7 @@ const registerLand = async (req, res) => {
     try {
         const token = req.headers.authrization
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log(decoded)
         const applicationId = await generateApplicationId();
         const landData = await Land.create({ ...body, createdBy: decoded.id, applicationId })
         if (landData) {
@@ -38,7 +93,7 @@ const registerLand = async (req, res) => {
                 changedBy: decoded.id, // Assuming you have user authentication
             });
             res.send({
-                message: "land register application submitted sucessfully",
+                message: `Land registration successful!\nReceipt No: ${applicationId}\nSubmitted by: ${landData.full_name}`,
                 status: true,
                 data:{
                     applicationId
@@ -304,5 +359,6 @@ export {
     getLandRecord,
     getLandRecordClerk,
     updateLandRecordStatus,
-    getLandRecordre
+    getLandRecordre,
+    createLandRecipt
 }

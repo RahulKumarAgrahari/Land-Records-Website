@@ -7,11 +7,13 @@
         </div>
 
         <div class="land-request-form-section">
-            <form method="POST" enctype="multipart/form-data" action="{% url 'submit-land-request' %}" id="land-request-form">
-                {% csrf_token %}
+            <form id="land-request-form">
                 <div class="land-request-upload-section">
-                    <input type="file" id="land-request-pdf-upload" name="land-request-pdf-upload" accept="application/pdf" class="land-request-input" style="display: none;" required>
-                    <button type="button" class="land-request-upload-btn" onclick="document.getElementById('land-request-pdf-upload').click()">Upload ↑</button>
+                    <input type="file" id="land-request-pdf-upload" name="land-request-pdf-upload"
+                        accept="application/pdf" class="land-request-input" style="display: none;">
+                    <button type="button" class="land-request-upload-btn"
+                        onclick="document.getElementById('land-request-pdf-upload').click()"><label
+                            for="land-request-pdf-upload">Upload ↑</label></button>
                     <button type="button" class="land-request-remove-btn" onclick="removePDF()">Remove ×</button>
                     <span class="land-request-pdf-info">PDF Only ≤ 20 MB *</span>
                 </div>
@@ -21,21 +23,25 @@
                     <div class="land-request-column">
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-fullName">Full Name:</label>
-                            <input type="text" id="land-request-fullName" name="fullName" class="land-request-input" required>
+                            <input type="text" id="land-request-fullName" name="fullName" class="land-request-input"
+                                required>
                         </div>
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-email">Email:</label>
-                            <input type="email" id="land-request-email" name="email" class="land-request-input" required>
+                            <input type="email" id="land-request-email" name="email" class="land-request-input"
+                                required>
                         </div>
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-phoneNumber">Phone Number:</label>
-                            <input type="number" id="land-request-phoneNumber" name="phoneNumber" class="land-request-input" required>
+                            <input type="number" id="land-request-phoneNumber" name="phoneNumber"
+                                class="land-request-input" required>
                         </div>
                     </div>
                     <div class="land-request-column">
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-aadharNumber">Aadhar Number:</label>
-                            <input type="number" id="land-request-aadharNumber" name="aadharNumber" class="land-request-input" required>
+                            <input type="number" id="land-request-aadharNumber" name="aadharNumber"
+                                class="land-request-input" required>
                         </div>
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-dob">Date of Birth:</label>
@@ -49,11 +55,13 @@
                     <div class="land-request-column">
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-ownerName">Owner Name:</label>
-                            <input type="text" id="land-request-ownerName" name="ownerName" class="land-request-input" required>
+                            <input type="text" id="land-request-ownerName" name="ownerName" class="land-request-input"
+                                required>
                         </div>
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-surveyNumber">Survey Number:</label>
-                            <input type="text" id="land-request-surveyNumber" name="surveyNumber" class="land-request-input" required>
+                            <input type="text" id="land-request-surveyNumber" name="surveyNumber"
+                                class="land-request-input" required>
                         </div>
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-area">Area (in sq. ft):</label>
@@ -61,7 +69,8 @@
                         </div>
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-address">Address:</label>
-                            <input type="text" id="land-request-address" name="address" class="land-request-input" required>
+                            <input type="text" id="land-request-address" name="address" class="land-request-input"
+                                required>
                         </div>
                     </div>
                     <div class="land-request-column">
@@ -71,11 +80,13 @@
                         </div>
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-cityDistrict">City/District:</label>
-                            <input type="text" id="land-request-cityDistrict" name="cityDistrict" class="land-request-input" required>
+                            <input type="text" id="land-request-cityDistrict" name="cityDistrict"
+                                class="land-request-input" required>
                         </div>
                         <div class="land-request-form-group">
                             <label class="land-request-label" for="land-request-pinCode">Pin Code:</label>
-                            <input type="number" id="land-request-pinCode" name="pinCode" class="land-request-input" required>
+                            <input type="number" id="land-request-pinCode" name="pinCode" class="land-request-input"
+                                required>
                         </div>
                     </div>
                 </div>
@@ -91,7 +102,7 @@
     <script>
         let pdf_Url = null;
 
-        document.getElementById('land-request-pdf-upload').addEventListener('change', function(e) {
+        document.getElementById('land-request-pdf-upload').addEventListener('change', function (e) {
             const file = e.target.files[0];
             if (file) {
                 if (file.type !== 'application/pdf') {
@@ -118,36 +129,68 @@
             }
         }
 
-      
-        document.getElementById('land-request-form').addEventListener('submit', async function(e) {
+
+        function showErrors(response) {
+            if (response.status === false && response.errors && response.errors.length > 0) {
+                alert("Errors:\n" + response.errors.join("\n"));
+            } else {
+                alert("Unknown error occurred.");
+            }
+        }
+        document.getElementById('land-request-form').addEventListener('submit', async function (e) {
             e.preventDefault();
-        
+
             const fileInput = document.getElementById('land-request-pdf-upload');
             if (!fileInput.files.length) {
                 alert('Please upload a PDF file before submitting.');
                 return;
             }
-        
-            const formData = new FormData(this);
-        
+            let formData = new FormData(event.target);
+            const payload = Object.fromEntries(formData)
+            console.log(payload)
+            const newPayload = {
+                full_name: payload.fullName,
+                phone: payload.phoneNumber,
+                aadhar: payload.aadharNumber,
+                dob: payload.dob,
+                owner_name: payload.ownerName,
+                survey_no: payload.surveyNumber,
+                ...payload
+            }
             try {
-                const submitResponse = await fetch("{% url 'submit-land-request' %}", {
-                    method: 'POST',
-                    body: formData,
+                const response = await fetch("http://localhost:8080/api/land/generate-recipt", {
+                    method: "POST",
                     headers: {
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    }
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        mode: 'no-cors',
+                        authrization: document.cookie.split("token=")[1]
+                    },
+                    // credentials: "include",
+                    body: JSON.stringify(newPayload)
                 });
-        
-                if (!submitResponse.ok) {
-                    throw new Error('Form submission failed');
+
+                const res = await response.json()
+                if (response.ok) {
+                    alert(res.message);
+                    document.querySelectorAll('.tab-btn')[4].click();
+                    // document.getElementById("myForm").reset();
+                } else {
+                    showErrors(res)
                 }
-        
+            } catch (error) {
+
+            }
+
+
+            try {
+
+
                 const responseData = await submitResponse.json();
-        
+
                 // Display meaningful data from newdata
                 alert(`Land registration successful!\nReceipt No: ${responseData.RecipetNo}\nSubmitted by: ${responseData.full_name}`);
-        
+
                 // Pass newdata fields to load_tab
                 const queryParams = new URLSearchParams({
                     full_name: responseData.full_name,
@@ -163,11 +206,11 @@
                     pin_code: responseData.pin_code,
                     // Add more fields as needed
                 }).toString();
-        
+
                 const loadTabResponse = await fetch("{% url 'load_tab' 2 %}?" + queryParams, {
                     method: 'GET'
                 });
-        
+
                 if (loadTabResponse.ok) {
                     const tabContent = await loadTabResponse.text();
                     document.querySelector('.tab3-sec').innerHTML = tabContent;
