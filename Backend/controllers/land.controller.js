@@ -406,5 +406,6 @@ export {
     getLandRecordClerk,
     updateLandRecordStatus,
     getLandRecordre,
-    createLandRecipt
+    createLandRecipt,
+    getReciptList
 }

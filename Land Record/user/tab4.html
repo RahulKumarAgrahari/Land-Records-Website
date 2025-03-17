@@ -1,5 +1,5 @@
 <style>
-  
+
 </style>
 <section class="tab3-sec">
     <div class="doc-header">
@@ -34,12 +34,73 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="receipt-pending-list">
                 <tr>
                     <td colspan="9" style="text-align: center;">No Record(s) Found</td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <script>
+    let dataList = {}
+        const getLandList = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/api/land/get-recipt-list", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        mode: 'no-cors',
+                        authrization: document.cookie.split("token=")[1]
+                    },
+                    body: JSON.stringify({
+                        page: 1,
+                        limit: 10
+                    })
+                });
+                const res = await response.json()
+                console.log(res)
+                if (res.status) {
+                    const tbody = document.getElementById('receipt-pending-list')
+                    tbody.innerHTML = ''
+                    res.data.forEach((rowData) => {
+                        const idss = rowData._id
+                        dataList[`${idss}`] = rowData
+                        const row = document.createElement('tr')
+                        const rowD = `<tr>
+                <td>${rowData.survey_no}</td>
+                <td>${rowData.owner_name}</td>
+                <td>${rowData.area}</td>
+                <td>${rowData.address}</td>
+                <td>${new Date(rowData.createdAt).toLocaleDateString()}</td>
+                <td><span class="status-badge ${rowData.status}" >${rowData.status}</span></td>
+                <td>
+                  <div class="action-icons">
+                    <i class="fas fa-eye" onclick="showUserData('${rowData._id}')" title="View"></i>
+                    <i class="fas fa-edit" title="Edit"></i>
+                    <i class="fas fa-download" onclick="downloadPDF('${rowData._id}')" title="Download"></i>
+                  </div>
+                </td>
+              </tr>`
+                        row.innerHTML = rowD
+                        tbody.appendChild(row)
+                    })
+                    // const landListPagination = res.pagination.totalPages
+                    // const pagination = document.getElementById('land-list-pagination').querySelector('.pagination-btn')
+                    // pagination.innerHTML = ''
+                    // for (let i = 0; i < landListPagination; i++) {
+                    //     const button = document.createElement('button')
+                    //     button.setAttribute('class', 'page-button active')
+                    //     button.innerHTML = `<button class="page-button ${i == 0 ? 'active' : ''}">1</button>`
+                    //     pagination.appendChild(button)
+                    // }
+
+                }
+            } catch {
+
+            }
+        }
+        getLandList()
+    </script>
 
 </section>
