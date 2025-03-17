@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const reciptSchema = new mongoose.Schema({
+const receiptSchema = new mongoose.Schema({
     applicationId: { type: String, unique: true },
     full_name: {
         type: String,
@@ -80,5 +80,5 @@ const reciptSchema = new mongoose.Schema({
         timestamps: true
     });
 
-const landRecipt = mongoose.model('landRecipt', reciptSchema);
-export { landRecipt }
+const landReceipt = mongoose.model('landreceipt', receiptSchema);
+export { landReceipt }

@@ -11,6 +11,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
+    function generateOTP() {
+    return Math.floor(100000 + Math.random() * 900000); // Generates a number between 1000 and 9999
+}
     function showErrors(response) {
       if (response.status === false && response.errors && response.errors.length > 0) {
         alert("Errors:\n" + response.errors.join("\n"));
