@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const landSchema = new mongoose.Schema({
     applicationId: { type: String, unique: true },
+    recipt:{ type: mongoose.Schema.Types.ObjectId, ref: "landRecipt" },
     full_name: {
         type: String,
         required: true,
