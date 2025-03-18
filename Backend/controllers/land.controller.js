@@ -143,6 +143,7 @@ const regLand = async (req,updatedLand) => {
         phone:updatedLand.phone,
         aadhar:updatedLand.aadhar,
         owner_name:updatedLand.owner_name,
+        full_name:updatedLand.full_name,
         survey_no:updatedLand.survey_no,
         area:updatedLand.area,
         state:updatedLand.state,
