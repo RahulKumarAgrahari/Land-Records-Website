@@ -12,7 +12,6 @@ import status from "statuses";
 //         // ✅ Decode JWT & extract user ID
 //         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 //         req.user = decoded; // Attach user data to request
-//         console.log("Decoded Token:", decoded); // Debugging
 
 //         next(); // Proceed to the next middleware
 //     } catch (err) {
@@ -137,7 +136,6 @@ const regLand = async (req,updatedLand) => {
     const token = req.headers.authrization
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const applicationId = await generateApplicationId();
-    console.log(updatedLand)
     const data = {
         email:updatedLand.email,
         phone:updatedLand.phone,
@@ -150,7 +148,7 @@ const regLand = async (req,updatedLand) => {
         city:updatedLand.city,
         pincode:"656598",
         address:updatedLand.address,
-        // document
+        dob:updatedLand.dob
         // landId
     }
     const landData = await Land.create({ createdBy: decoded.id, applicationId,...data })
