@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const receiptSchema = new mongoose.Schema({
-    applicationId: { type: String, unique: true },
+    receiptId: { type: String, unique: true },
     full_name: {
         type: String,
         required: true,
@@ -67,8 +67,8 @@ const receiptSchema = new mongoose.Schema({
     },
     status:{
         type:String,
-        enum:['pending','approved','rejected'],
-        default:'pending'
+        enum:['generated','submitted','file'],
+        default:'generated'
     },
     reviewedBy:{
         type:String,

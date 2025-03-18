@@ -23,14 +23,14 @@
         <table class="doc-table-container">
             <thead>
                 <tr>
-                    <th class="doc-checkbox-column"><input type="checkbox"></th>
-                    <th>Comp. No.</th>
-                    <th>File No.</th>
-                    <th>Subject</th>
+                    <th >SN</th>
+                    <th>Survey No.</th>
+                    <th>Owner name</th>
                     <th>Sent To</th>
+                    <th>Address</th>
                     <th>Sent On</th>
-                    <th>Currently With</th>
-                    <th>Due On</th>
+                    <th>Status</th>
+                    <!-- <th>Due On</th> -->
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -63,21 +63,21 @@
                 if (res.status) {
                     const tbody = document.getElementById('receipt-pending-list')
                     tbody.innerHTML = ''
-                    res.data.forEach((rowData) => {
+                    res.data.forEach((rowData, index) => {
                         const idss = rowData._id
                         dataList[`${idss}`] = rowData
                         const row = document.createElement('tr')
                         const rowD = `<tr>
+                <td>${index+1}</td>
                 <td>${rowData.survey_no}</td>
                 <td>${rowData.owner_name}</td>
-                <td>${rowData.area}</td>
+                <td>Clerk</td>
                 <td>${rowData.address}</td>
-                <td>${new Date(rowData.createdAt).toLocaleDateString()}</td>
+                <td>${new Date(rowData.updatedAt).toLocaleDateString()} ${new Date(rowData.updatedAt).toLocaleTimeString()}</td>
                 <td><span class="status-badge ${rowData.status}" >${rowData.status}</span></td>
                 <td>
                   <div class="action-icons">
                     <i class="fas fa-eye" onclick="showUserData('${rowData._id}')" title="View"></i>
-                    <i class="fas fa-edit" title="Edit"></i>
                     <i class="fas fa-download" onclick="downloadPDF('${rowData._id}')" title="Download"></i>
                   </div>
                 </td>

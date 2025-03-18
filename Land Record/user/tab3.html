@@ -137,6 +137,133 @@
                 alert("Unknown error occurred.");
             }
         }
+        const showRecipt = (landData) => {
+            console.log(landData)
+            const prevewHtml = `
+            <section class="tab3-sec">
+    <div class="acknowledge-navbar">
+        <div class="acknowledge-nav-buttons">
+            <button class="acknowledge-nav-btn">Movement</button>
+            <button class="acknowledge-nav-btn">Copy</button>
+            <button class="acknowledge-nav-btn">Send</button>
+            <button class="acknowledge-nav-btn">Put in a file</button>
+            <button class="acknowledge-nav-btn">Edit</button>
+            <button class="acknowledge-nav-btn">Attach ▼</button>
+            <button class="acknowledge-nav-btn">Draft</button>
+            <button class="acknowledge-nav-btn">Close</button>
+            <button class="acknowledge-nav-btn">Generate Acknowledgment</button>
+        </div>
+        <div class="acknowledge-header-text">
+            E Receipt No: ${ landData.reciptNo } | Subject: Land Record Management
+        </div>
+    </div>
+    <div class="acknowledge-container">
+        <div class="acknowledge-letter-section">
+            <div class="acknowledge-letter">
+                <h2>Acknowledgment Letter</h2>
+                <p>Date: ${ new Date().toLocaleDateString() }</p>
+                <p>To</p>
+                <p>${ landData.full_name }<br>
+                    ${ landData.address }<br>
+                    ${ landData.cityDistrict }, ${ landData.state } ${ landData.pinCode }</p>
+                <p>Subject: ${ landData.subject }</p>
+                <p>I am writing to acknowledge your request for land record management regarding the land located at ${
+                    landData.address }. We have received your application and the following details:</p>
+                <ul>
+                    <li>Application Number: ${ landData.reciptNo }</li>
+                    <li>User Name: ${ landData.fullName }</li>
+                    <li>Aadhar Number: ${ landData.aadharNumber }</li>
+                    <li>Mobile Number: ${ landData.phoneNumber }</li>
+                    <li>Email: ${ landData.email }</li>
+                    <li>Address: ${ landData.address }</li>
+                    <li>Land Type: Agriculture</li>
+                    <li>Survey Number: ${ landData.surveyNumber }</li>
+                    <li>Location: ${ landData.address }</li>
+                    <li>Total Area: ${ landData.area }</li>
+                </ul>
+                <p>We will process your request and provide further updates. Please contact us for any queries.</p>
+                <p>Sincerely,<br>
+                    ${ landData.fullName }<br>
+                    ${ landData.address }</p>
+            </div>
+        </div>
+        <div class="acknowledge-form-section">
+            <div class="acknowledge-header">
+                Receipt No: ${ landData.reciptNo } | Subject: Land Record Management
+            </div>
+            <div class="acknowledge-form-group">
+                <label class="acknowledge-label">Receipt ID</label>
+                <input type="text" class="acknowledge-input" value="${ landData.reciptNo }" readonly>
+            </div>
+            <h3>Basic Details</h3>
+            <div class="acknowledge-form-columns">
+                <div class="acknowledge-column">
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Date & Time:</label>
+                        <input type="text" class="acknowledge-input" value="${ new Date().toLocaleDateString() }" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Application Number:</label>
+                        <input type="text" class="acknowledge-input" value="${ landData.reciptNo }" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">User Name:</label>
+                        <input type="text" class="acknowledge-input" value="${ landData.fullName }" readonly>
+                    </div>
+                </div>
+                <div class="acknowledge-column">
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Aadhar Number:</label>
+                        <input type="text" class="acknowledge-input" value="${ landData.aadharNumber }" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Mobile Number:</label>
+                        <input type="text" class="acknowledge-input" value="${ landData.phoneNumber }" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Email:</label>
+                        <input type="email" class="acknowledge-input" value="${ landData.email }" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="acknowledge-form-group">
+                <label class="acknowledge-label">Address:</label>
+                <input type="text" class="acknowledge-input" value="${ landData.address }" readonly>
+            </div>
+            <h3>Land Details</h3>
+            <div class="acknowledge-form-columns">
+                <div class="acknowledge-column">
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Land Type:</label>
+                        <input type="text" class="acknowledge-input" value="Agriculture" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Survey Number:</label>
+                        <input type="text" class="acknowledge-input" value="${ landData.surveyNumber }" readonly>
+                    </div>
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Total Area:</label>
+                        <input type="text" class="acknowledge-input" value="${ landData.area }" readonly>
+                    </div>
+                </div>
+                <div class="acknowledge-column">
+                    <div class="acknowledge-form-group">
+                        <label class="acknowledge-label">Location:</label>
+                        <input type="text" class="acknowledge-input" value="${ landData.address }" readonly>
+                    </div>
+                </div>
+            </div>
+            <button class="acknowledge-button" onclick="document.querySelectorAll('.tab-btn')[5].click()">Submit</button>
+
+        </div>
+    </div>
+    <footer class="acknowledge-footer">
+        Copyright © 20205, designed and developed by NTTW
+    </footer>
+</section>
+            `
+            document.getElementById('tab-content').innerHTML = prevewHtml
+        }
         document.getElementById('land-request-form').addEventListener('submit', async function (e) {
             e.preventDefault();
 
@@ -147,7 +274,6 @@
             }
             let formData = new FormData(event.target);
             const payload = Object.fromEntries(formData)
-            console.log(payload)
             const newPayload = {
                 full_name: payload.fullName,
                 phone: payload.phoneNumber,
@@ -173,7 +299,8 @@
                 const res = await response.json()
                 if (response.ok) {
                     alert(res.message);
-                    document.querySelectorAll('.tab-btn')[4].click();
+                    showRecipt({ ...newPayload, ...res.data })
+
                     // document.getElementById("myForm").reset();
                 } else {
                     showErrors(res)
@@ -183,44 +310,44 @@
             }
 
 
-            try {
+            // try {
 
 
-                const responseData = await submitResponse.json();
+            //     const responseData = await submitResponse.json();
 
-                // Display meaningful data from newdata
-                alert(`Land registration successful!\nReceipt No: ${responseData.RecipetNo}\nSubmitted by: ${responseData.full_name}`);
+            //     // Display meaningful data from newdata
+            //     alert(`Land registration successful!\nReceipt No: ${responseData.RecipetNo}\nSubmitted by: ${responseData.full_name}`);
 
-                // Pass newdata fields to load_tab
-                const queryParams = new URLSearchParams({
-                    full_name: responseData.full_name,
-                    aadhaar_number: responseData.aadhaar_number,
-                    email: responseData.email,
-                    phone_number: responseData.phone_number,
-                    survey_no: responseData.survey_no,
-                    RecipetNo: responseData.RecipetNo,
-                    address: responseData.address,
-                    area_sqft: responseData.area_sqft,
-                    city_district: responseData.city_district,
-                    state: responseData.state,
-                    pin_code: responseData.pin_code,
-                    // Add more fields as needed
-                }).toString();
+            //     // Pass newdata fields to load_tab
+            //     const queryParams = new URLSearchParams({
+            //         full_name: responseData.full_name,
+            //         aadhaar_number: responseData.aadhaar_number,
+            //         email: responseData.email,
+            //         phone_number: responseData.phone_number,
+            //         survey_no: responseData.survey_no,
+            //         RecipetNo: responseData.RecipetNo,
+            //         address: responseData.address,
+            //         area_sqft: responseData.area_sqft,
+            //         city_district: responseData.city_district,
+            //         state: responseData.state,
+            //         pin_code: responseData.pin_code,
+            //         // Add more fields as needed
+            //     }).toString();
 
-                const loadTabResponse = await fetch("{% url 'load_tab' 2 %}?" + queryParams, {
-                    method: 'GET'
-                });
+            //     const loadTabResponse = await fetch("{% url 'load_tab' 2 %}?" + queryParams, {
+            //         method: 'GET'
+            //     });
 
-                if (loadTabResponse.ok) {
-                    const tabContent = await loadTabResponse.text();
-                    document.querySelector('.tab3-sec').innerHTML = tabContent;
-                } else {
-                    alert('Failed to load tab content.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-            }
+            //     if (loadTabResponse.ok) {
+            //         const tabContent = await loadTabResponse.text();
+            //         document.querySelector('.tab3-sec').innerHTML = tabContent;
+            //     } else {
+            //         alert('Failed to load tab content.');
+            //     }
+            // } catch (error) {
+            //     console.error('Error:', error);
+            //     alert('An error occurred. Please try again.');
+            // }
         });
     </script>
 </section>

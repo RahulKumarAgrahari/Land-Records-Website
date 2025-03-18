@@ -1,6 +1,6 @@
 import { Land, LandHistory} from "../models/land.model.js";
 import jwt from "jsonwebtoken";
-import { landRecipt } from "../models/recipt.model.js";
+import { landReceipt } from "../models/recipt.model.js";
 
 // const verifyToken = (req, res, next) => {
 //     const token = req.cookies.token; // ✅ Get token from cookies
@@ -34,7 +34,7 @@ const createLandRecipt = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log(decoded)
         const reciptNo = await generateReciptNo();
-        const landData = await landRecipt.create({ ...body, createdBy: decoded.id, reciptNo })
+        const landData = await landReceipt.create({ ...body, createdBy: decoded.id, receiptId:reciptNo })
         if (landData) {
             res.send({
                 message: `Land registration successful!\nReceipt No: ${reciptNo}\nSubmitted by: ${landData.full_name}`,
@@ -81,8 +81,14 @@ const getReciptList = async (req, res) => {
     try {
         const token = req.headers.authrization
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const landData = await landRecipt.find({ createdBy: decoded.id }).skip(body.skip).limit(body.limit);
-        const totalRecords = await landRecipt.countDocuments({ createdBy: decoded.id });
+        const query  = {
+            createdBy: decoded.id
+        }
+        if(body.status) {
+            query.status = body.status
+        }
+        const landData = await landReceipt.find(query).skip(body.skip).limit(body.limit);
+        const totalRecords = await landReceipt.countDocuments(query);
         if (landData) {
             res.send({
                 message: "list recipt",
