@@ -32,7 +32,6 @@ const createLandRecipt = async (req, res) => {
     try {
         const token = req.headers.authrization
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log(decoded)
         const reciptNo = await generateReciptNo();
         const landData = await landReceipt.create({ ...body, createdBy: decoded.id, receiptId:reciptNo })
         if (landData) {
@@ -205,6 +204,53 @@ const getLandRecord = async (req, res) => {
                     totalPages: Math.ceil(totalRecords / body.limit),
                     total: totalRecords
                 }
+            })
+        } else {
+            res.status(500).json({
+                message: 'Somthing went wrong',
+                status: false
+            });
+        }
+    } catch (err) {
+
+        if (err.name === 'ValidationError') {
+            // Collect all validation errors
+            const errorMessages = [];
+            for (let field in err.errors) {
+                errorMessages.push(err.errors[field].message); // Store the error messages
+            }
+
+            // Return the errors to the client
+            res.status(400).json({
+                message: 'Validation errors',
+                errors: errorMessages,
+                status: false
+            });
+            return
+        }
+
+        // For other errors (e.g., database issues)
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: err.message,
+            status: false
+        });
+    }
+}
+const updateLandReciptStatus = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    const body = req.body
+    try {
+        let update = {reviewedBy: body.reviewedBY}
+        update.status = 'rejected'
+        const updatedLand = await landReceipt.updateOne(
+            { _id: body.id },  // Filter by ID
+            { $set: update } // Dynamically set the field to update
+        );
+        if (updatedLand.modifiedCount > 0) {
+            res.send({
+                message: "Status updated successfully",
+                status: true
             })
         } else {
             res.status(500).json({
@@ -413,5 +459,6 @@ export {
     updateLandRecordStatus,
     getLandRecordre,
     createLandRecipt,
-    getReciptList
+    getReciptList,
+    updateLandReciptStatus
 }

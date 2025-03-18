@@ -1,5 +1,3 @@
-{% load static %}
-
 <section class="tab3-sec">
     <div class="dms_container">
         <div class="dms_header">
@@ -14,49 +12,37 @@
                 <button>Close</button>
                 <button>Generate Acknowledgement</button>
             </div>
-            <div class="dms_header-title">
+            <!-- <div class="dms_header-title">
                 {% if files %}
                     E Comp. No.: {{ files.comp_no }} | Receipt No.: {{ files.receipt_no }} | Subject: {{ files.subject }}
                 {% else %}
                     No header information available
                 {% endif %}
-            </div>
+            </div> -->
         </div>
         <div class="dms_content">
-            <div class="dms_department-section">
+            <!-- <div class="dms_department-section">
                 <label for="department">Department:</label>
                 <select id="department" class="dms_department-select">
                     {% for dept in departments %}
-                        <option value="{{ dept.id }}" {% if dept.selected %}selected{% endif %}>{{ dept.name }}</option>
+                    <option value="{{ dept.id }}" {% if dept.selected %}selected{% endif %}>{{ dept.name }}</option>
                     {% endfor %}
                 </select>
-            </div>
+            </div> -->
             <table class="dms_table">
                 <thead>
                     <tr>
-                        <th class="dms_th">File / Receipt Components</th>
-                        <th class="dms_th">Comp. No.</th>
+                        <!-- <th class="dms_th">File / Receipt Components</th> -->
+                        <!-- <th class="dms_th">Comp. No.</th> -->
                         <th class="dms_th">File No. / Receipt No.</th>
-                        <th class="dms_th">Subject</th>
-                        <th class="dms_th">Note Type</th>
+                        <th class="dms_th">Status</th>
+                        <!-- <th class="dms_th">Note Type</th> -->
                     </tr>
                 </thead>
-                <tbody>
-                    {% if files %}
-                        {% for file in files %}
-                            <tr>
-                                <td class="dms_td"><input type="checkbox" {% if file.checked %}checked{% endif %}></td>
-                                <td class="dms_td">{{ file.comp_no }}</td>
-                                <td class="dms_td">{{ file.receipt_no }}</td>
-                                <td class="dms_td">{{ file.subject }}</td>
-                                <td class="dms_td">{{ file.note_type }}</td>
-                            </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="5" class="dms_td">No files available</td>
-                        </tr>
-                    {% endif %}
+                <tbody id="sent-recipt-list">
+                    <tr>
+                        <td colspan="5" class="dms_td">No files available</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -66,12 +52,62 @@
         </div>
     </div>
     <script>
-        document.querySelector(".send-btn123").addEventListener("click", async function(event) {
+
+
+        var dataList1 = {}
+        var getReiceptList = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/api/land/get-recipt-list", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        mode: 'no-cors',
+                        authrization: document.cookie.split("token=")[1]
+                    },
+                    body: JSON.stringify({
+                        page: 1,
+                        limit: 10
+                    })
+                });
+                const res = await response.json()
+                if (res.status) {
+                    const tbody = document.getElementById('sent-recipt-list')
+                    tbody.innerHTML = ''
+                    res.data.forEach((rowData, index) => {
+                        const idss = rowData._id
+                        dataList1[`${idss}`] = rowData
+                        const row = document.createElement('tr')
+                        const rowD = `<tr class="dms_td" >
+                <td>${rowData.receiptId}</td>
+                <td>${rowData.status}</td>
+              </tr>`
+                        row.innerHTML = rowD
+                        tbody.appendChild(row)
+                    })
+                    // const landListPagination = res.pagination.totalPages
+                    // const pagination = document.getElementById('land-list-pagination').querySelector('.pagination-btn')
+                    // pagination.innerHTML = ''
+                    // for (let i = 0; i < landListPagination; i++) {
+                    //     const button = document.createElement('button')
+                    //     button.setAttribute('class', 'page-button active')
+                    //     button.innerHTML = `<button class="page-button ${i == 0 ? 'active' : ''}">1</button>`
+                    //     pagination.appendChild(button)
+                    // }
+
+                }
+            } catch {
+
+            }
+        }
+        getReiceptList()
+
+        document.querySelector(".send-btn123").addEventListener("click", async function (event) {
             event.preventDefault(); // Prevent default action
-            
+
             // Find the selected row (where checkbox is checked)
             const selectedRow = document.querySelector(".dms_table tbody tr input[type='checkbox']:checked");
-            
+
             // If no row is selected, show an error
             if (!selectedRow) {
                 Swal.fire({
@@ -82,10 +118,10 @@
                 });
                 return;
             }
-    
+
             // Get the receipt number from the selected row (third column, index 2)
             const receiptNo = selectedRow.parentElement.parentElement.cells[2].textContent;
-    
+
             Swal.fire({
                 title: "Confirmation",
                 text: "Do you want to send your application to Clerk?",
@@ -100,7 +136,7 @@
                     // Create FormData to send receipt_no
                     const formData = new FormData();
                     formData.append('receipt_no', receiptNo);
-    
+
                     try {
                         const submitResponse = await fetch("{% url 'senttoclerk' %}", {
                             method: 'POST',
@@ -109,9 +145,9 @@
                                 'X-CSRFToken': '{{ csrf_token }}' // Ensure CSRF token is included
                             }
                         });
-    
+
                         const responseData = await submitResponse.json(); // Assuming JSON response from backend
-    
+
                         if (submitResponse.ok) {
                             Swal.fire({
                                 title: "Success",

@@ -42,8 +42,8 @@
         </table>
     </div>
     <script>
-    let dataList = {}
-        const getLandList = async () => {
+    var dataList = {}
+        var getLandList = async () => {
             try {
                 const response = await fetch("http://localhost:8080/api/land/get-recipt-list", {
                     method: "POST",
@@ -59,7 +59,6 @@
                     })
                 });
                 const res = await response.json()
-                console.log(res)
                 if (res.status) {
                     const tbody = document.getElementById('receipt-pending-list')
                     tbody.innerHTML = ''
