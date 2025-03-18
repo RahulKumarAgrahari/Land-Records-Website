@@ -455,7 +455,7 @@
         delete res.token
         localStorage.setItem('user',JSON.stringify(res.data))
         // document.cookie = `token=${res.data.token}; HttpOnly; Secure`;
-        window.location.href = "userdashboard.html";
+        window.location.href = "user/dashboard.html";
       }
 
     }
