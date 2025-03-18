@@ -1,6 +1,7 @@
-import { Land, LandHistory} from "../models/land.model.js";
+import { Land, LandHistory } from "../models/land.model.js";
 import jwt from "jsonwebtoken";
 import { landReceipt } from "../models/recipt.model.js";
+import status from "statuses";
 
 // const verifyToken = (req, res, next) => {
 //     const token = req.cookies.token; // ✅ Get token from cookies
@@ -33,12 +34,12 @@ const createLandRecipt = async (req, res) => {
         const token = req.headers.authrization
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const reciptNo = await generateReciptNo();
-        const landData = await landReceipt.create({ ...body, createdBy: decoded.id, receiptId:reciptNo })
+        const landData = await landReceipt.create({ ...body, createdBy: decoded.id, receiptId: reciptNo })
         if (landData) {
             res.send({
                 message: `Land registration successful!\nReceipt No: ${reciptNo}\nSubmitted by: ${landData.full_name}`,
                 status: true,
-                data:{
+                data: {
                     reciptNo
                 }
             })
@@ -80,10 +81,10 @@ const getReciptList = async (req, res) => {
     try {
         const token = req.headers.authrization
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const query  = {
+        const query = {
             createdBy: decoded.id
         }
-        if(body.status) {
+        if (body.status) {
             query.status = body.status
         }
         const landData = await landReceipt.find(query).skip(body.skip).limit(body.limit);
@@ -131,6 +132,36 @@ const getReciptList = async (req, res) => {
         });
     }
 }
+const regLand = async (req,updatedLand) => {
+    const body = req.body
+    const token = req.headers.authrization
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const applicationId = await generateApplicationId();
+    console.log(updatedLand)
+    const data = {
+        email:updatedLand.email,
+        phone:updatedLand.phone,
+        aadhar:updatedLand.aadhar,
+        owner_name:updatedLand.owner_name,
+        survey_no:updatedLand.survey_no,
+        area:updatedLand.area,
+        state:updatedLand.state,
+        city:updatedLand.city,
+        pincode:"656598",
+        address:updatedLand.address,
+        // document
+        // landId
+    }
+    const landData = await Land.create({ createdBy: decoded.id, applicationId,...data })
+    if (landData) {
+        await LandHistory.create({
+            landId: landData._id,
+            action: "Created",
+            newData: landData,
+            changedBy: decoded.id, // Assuming you have user authentication
+        });
+    }
+}
 const registerLand = async (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const body = req.body
@@ -149,7 +180,7 @@ const registerLand = async (req, res) => {
             res.send({
                 message: `Land registration successful!\nReceipt No: ${applicationId}\nSubmitted by: ${landData.full_name}`,
                 status: true,
-                data:{
+                data: {
                     applicationId
                 }
             })
@@ -241,13 +272,18 @@ const updateLandReciptStatus = async (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const body = req.body
     try {
-        let update = {reviewedBy: body.reviewedBY}
-        update.status = 'rejected'
+        let update = { reviewedBy: body.reviewedBY }
+        update.status = body.status || 'rejected'
         const updatedLand = await landReceipt.updateOne(
             { _id: body.id },  // Filter by ID
             { $set: update } // Dynamically set the field to update
         );
+        
         if (updatedLand.modifiedCount > 0) {
+            if (body.status == 'file') {
+                const data = await  landReceipt.findOne({ _id: body.id })
+                regLand(req,data)
+            }
             res.send({
                 message: "Status updated successfully",
                 status: true
@@ -287,7 +323,7 @@ const updateLandReciptStatus = async (req, res) => {
 const getLandRecordCondition = async (dbData) => {
     const query = {}
     Object.keys(dbData).forEach((key) => {
-        if (![null,undefined].includes(dbData[key]) && !['limit', 'page'].includes(key)) {
+        if (![null, undefined].includes(dbData[key]) && !['limit', 'page'].includes(key)) {
             query[key] = dbData[key]
         }
     })
@@ -406,8 +442,8 @@ const updateLandRecordStatus = async (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const body = req.body
     try {
-        let update = {reviewedBy: body.reviewedBY}
-        if(body.status == 'rejected') {
+        let update = { reviewedBy: body.reviewedBY }
+        if (body.status == 'rejected') {
             update.status = 'rejected'
         }
         const updatedLand = await Land.updateOne(

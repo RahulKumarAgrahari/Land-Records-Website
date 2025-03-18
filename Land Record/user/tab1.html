@@ -12,17 +12,17 @@
             <div class="section-header">User & Login Details</div>
             <div class="form-group">
                 <label>Username</label>
-                <input name="userName" type="text" readonly disabled >
+                <input name="userName" type="text" readonly disabled>
             </div>
 
             <div class="form-group">
                 <label>PhoneNumber</label>
-                <input name="phoneNumber" type="text" readonly disabled >
+                <input name="phoneNumber" type="text" readonly disabled>
             </div>
 
             <div class="form-group">
                 <label>AadharNumber</label>
-                <input name="addharNumber" type="text" readonly disabled >
+                <input name="addharNumber" type="text" readonly disabled>
             </div>
         </div>
 
@@ -43,25 +43,28 @@
         </div>
     </div>
     <script>
-        const inputs = {
-            'userName': {
-                name: 'userName',
-                variable:'username'
-            },
-            'phoneNumber': {
-                name: 'phoneNumber',
-                variable:'mobileno'
-            },
-            'addharNumber': {
-                name: 'addharNumber',
-                variable:'aadhar'
+        var renderUserData = () => {
+            const inputs = {
+                'userName': {
+                    name: 'userName',
+                    variable: 'username'
+                },
+                'phoneNumber': {
+                    name: 'phoneNumber',
+                    variable: 'mobileno'
+                },
+                'addharNumber': {
+                    name: 'addharNumber',
+                    variable: 'aadhar'
+                }
             }
+            const userData = JSON.parse(localStorage.getItem('user')) || {}
+            const section = document.getElementById('user-dashboard-tab1')
+            Object.values(inputs).forEach(item => {
+                const input = section.querySelector(`[name="${item.name}"]`)
+                input.value = userData[item.variable] || ''
+            });
         }
-        const userData = JSON.parse(localStorage.getItem('user')) || {}
-        const section = document.getElementById('user-dashboard-tab1')
-        Object.values(inputs).forEach(item => {
-            const input = section.querySelector(`[name="${item.name}"]`)
-            input.value = userData[item.variable] || ''
-        });
+        renderUserData()
     </script>
 </div>

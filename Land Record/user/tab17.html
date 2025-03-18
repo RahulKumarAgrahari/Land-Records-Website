@@ -1,80 +1,165 @@
+<style>
 
-    <style>
-  
-    </style>
+</style>
 
-    <section class="file_create-sec">
-        <div class="file_create-container">
-            <div class="file_create-header">
-                <h1>Land Record</h1>
+<section class="file_create-sec">
+    <div class="file_create-container">
+        <div class="file_create-header">
+            <h1>Land Record</h1>
+        </div>
+
+        <div class="file_create-section">
+            <h2>Land Details</h2>
+            <div class="file_create-form-group">
+                <label class="file_create-label" for="survey_number">Choose Survey Number:</label>
+                <select class="file_create-select" id="survey_number" name="survey_number" required>
+                    <option value="">-- Select Survey Number --</option>
+
+                </select>
             </div>
-
-            <div class="file_create-section">
-                <h2>Land Details</h2>
-                <div class="file_create-form-group">
-                    <label class="file_create-label" for="survey_number">Choose Survey Number:</label>
-                    <select class="file_create-select" id="survey_number" name="survey_number">
-                        <option value="">-- Select Survey Number --</option>
-                        {% for number in data.sno %}
-                            <option value="{{ number }}">{{ number }}</option>
-                        {% endfor %}
+            <div class="file_create-form-group">
+                <label class="file_create-label" for="total-area">Total Area (in acres/hectares)</label>
+                <input class="file_create-input" type="text" id="total-area" readonly disabled>
+            </div>
+            <div class="file_create-form-group">
+                <label class="file_create-label" for="purpose">Purpose</label>
+                <div class="file_create-dropdown-group">
+                    <select class="file_create-select" id="purpose-file">
+                        <option value="">File No.</option>
+                        <option value="file1">File 1</option>
+                        <option value="file2">File 2</option>
+                    </select>
+                    <select class="file_create-select" id="purpose-choice1">
+                        <option value="">Choose One</option>
+                        <option value="choice1">Choice 1</option>
+                        <option value="choice2">Choice 2</option>
+                    </select>
+                    <select class="file_create-select" id="purpose-choice2">
+                        <option value="">Choose One</option>
+                        <option value="choice1">Choice 1</option>
+                        <option value="choice2">Choice 2</option>
+                    </select>
+                    <select class="file_create-select" id="purpose-choice3">
+                        <option value="">Choose One</option>
+                        <option value="choice1">Choice 1</option>
+                        <option value="choice2">Choice 2</option>
                     </select>
                 </div>
-                <div class="file_create-form-group">
-                    <label class="file_create-label" for="total-area">Total Area (in acres/hectares)</label>
-                    <input class="file_create-input" type="text" id="total-area" placeholder="{{ number }}">
-                </div>
-                <div class="file_create-form-group">
-                    <label class="file_create-label" for="purpose">Purpose</label>
-                    <div class="file_create-dropdown-group">
-                        <select class="file_create-select" id="purpose-file">
-                            <option value="">File No.</option>
-                            <option value="file1">File 1</option>
-                            <option value="file2">File 2</option>
-                        </select>
-                        <select class="file_create-select" id="purpose-choice1">
-                            <option value="">Choose One</option>
-                            <option value="choice1">Choice 1</option>
-                            <option value="choice2">Choice 2</option>
-                        </select>
-                        <select class="file_create-select" id="purpose-choice2">
-                            <option value="">Choose One</option>
-                            <option value="choice1">Choice 1</option>
-                            <option value="choice2">Choice 2</option>
-                        </select>
-                        <select class="file_create-select" id="purpose-choice3">
-                            <option value="">Choose One</option>
-                            <option value="choice1">Choice 1</option>
-                            <option value="choice2">Choice 2</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="file_create-section">
-                <h2>Land Address</h2>
-                <div class="file_create-form-group">
-                    <textarea class="file_create-textarea" id="land-address" placeholder="{{ number }}"></textarea>
-                </div>
-            </div>
-
-            <div class="file_create-section">
-                <h2>Other Details</h2>
-                <div class="file_create-form-group">
-                    <label class="file_create-label" for="remarks">Remarks</label>
-                    <textarea class="file_create-textarea" id="remarks" placeholder="Enter remarks"></textarea>
-                </div>
-            </div>
-
-            <div class="file_create-submit-btn">
-                <button class="file_create-btn" type="submit">Continue Working</button>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-        document.querySelector(".file_create-btn").addEventListener("click", function(event) {
+
+        <div class="file_create-section">
+            <h2>Land Address</h2>
+            <div class="file_create-form-group">
+                <textarea class="file_create-textarea" id="land-address" readonly disabled></textarea>
+            </div>
+        </div>
+
+        <div class="file_create-section">
+            <h2>Other Details</h2>
+            <div class="file_create-form-group">
+                <label class="file_create-label" for="remarks">Remarks</label>
+                <textarea class="file_create-textarea" id="remarks" placeholder="Enter remarks"></textarea>
+            </div>
+        </div>
+
+        <div class="file_create-submit-btn">
+            <button class="file_create-btn" type="submit">Continue Working</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        var resiteObj = {}
+        var getReiceptList = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/api/land/get-recipt-list", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        mode: 'no-cors',
+                        authrization: document.cookie.split("token=")[1]
+                    },
+                    body: JSON.stringify({
+                        page: 1,
+                        limit: 10
+                    })
+                });
+                const res = await response.json()
+                if (res.status) {
+                    const options = document.getElementById('survey_number')
+                    options.innerHTML = 'option value="">-- Select Survey Number --</option>'
+                    res.data.forEach((rowData, index) => {
+                        if (index == 0) {
+                            document.querySelector('.file_create-textarea#land-address').value = rowData.address
+                            document.querySelector('.file_create-input#total-area').value = rowData.area
+                        }
+                        const idss = rowData.survey_no
+                        resiteObj[`${idss}`] = rowData
+                        const row = document.createElement('option')
+                        const rowD = `
+                <option value="${rowData.survey_no}"> ${rowData.survey_no} </option>`
+                        row.innerHTML = rowD
+                        options.appendChild(row)
+                    })
+                    options.addEventListener('change', (e) => {
+                        document.querySelector('.file_create-textarea#land-address').value = resiteObj[e.target.value].address
+                        document.querySelector('.file_create-input#total-area').value = resiteObj[e.target.value].area
+                    })
+                    // const landListPagination = res.pagination.totalPages
+                    // const pagination = document.getElementById('land-list-pagination').querySelector('.pagination-btn')
+                    // pagination.innerHTML = ''
+                    // for (let i = 0; i < landListPagination; i++) {
+                    //     const button = document.createElement('button')
+                    //     button.setAttribute('class', 'page-button active')
+                    //     button.innerHTML = `<button class="page-button ${i == 0 ? 'active' : ''}">1</button>`
+                    //     pagination.appendChild(button)
+                    // }
+
+                }
+            } catch {
+
+            }
+        }
+        getReiceptList()
+        const updateResite = async (data) => {
+            console.log(data)
+            try {
+                const response = await fetch("http://localhost:8080/api/land/update-recipt-status", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        mode: 'no-cors',
+                        authrization: document.cookie.split("token=")[1]
+                    },
+                    body: JSON.stringify({
+                        id: data._id,
+                        status: data.status
+                    })
+                });
+                const res = await response.json()
+                if (res.status) {
+                    Swal.fire({
+                        title: "Confirmation",
+                        text: "File successfull",
+                        icon: "warning",
+                        // showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        // cancelButtonColor: "#d33",
+                        confirmButtonText: "Proceed",
+                        // cancelButtonText: "Cancel"
+                    })
+                    document.querySelectorAll('.tab-btn')[1].click()
+                }
+            } catch {
+
+            }
+        }
+        document.querySelector(".file_create-btn").addEventListener("click", async function (event) {
             event.preventDefault(); // Prevent default action
-        
+
+
             Swal.fire({
                 title: "Confirmation",
                 text: "File Number will be generated (Number generated will be final and cannot be edited). Do you wish to proceed?",
@@ -86,12 +171,14 @@
                 cancelButtonText: "Cancel"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "{% url 'dashboard'  %}";  // Redirect to load_tab 5
+                    const options = document.getElementById('survey_number')
+                    console.log(options)
+                    updateResite({ ...resiteObj[options.value], status: 'file' });  // Redirect to load_tab 5
                 }
             });
+
         });
-        
-</script>
 
-    </section>
+    </script>
 
+</section>

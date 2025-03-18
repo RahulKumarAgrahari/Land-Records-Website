@@ -28,7 +28,8 @@ const landSchema = new mongoose.Schema({
         type: Date,
         required: true,
         min: new Date('1900-01-01'), // Minimum date (1st Jan 1900)
-        max: new Date() // Maximum date (Today’s date)
+        max: new Date(), // Maximum date (Today’s date),
+        default:new Date()
     },
     owner_name: {
         type: String,
@@ -44,15 +45,15 @@ const landSchema = new mongoose.Schema({
     },
     area: {
         type: String,
-        required: true,
+        // required: true,
     },
     state: {
         type: String,
-        required: true,
+        // required: true,
     },
     city: {
         type: String,
-        required: true,
+        // required: true,
     },
     pincode: {
         type: String,
