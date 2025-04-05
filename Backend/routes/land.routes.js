@@ -1,10 +1,11 @@
 import express from "express";
-import { createLandRecipt, getLandRecord, getLandRecordClerk, getLandRecordre, getReciptList, registerLand, updateLandReciptStatus, updateLandRecordStatus } from "../controllers/land.controller.js";
+import { createLandRecipt, getLandRecord, getLandRecordClerk, getLandRecordre, getRecipt, getReciptList, registerLand, updateLandReciptStatus, updateLandRecordStatus } from "../controllers/land.controller.js";
 
 const router = express.Router();
 
 router.post("/generate-recipt", createLandRecipt);
 router.post("/get-recipt-list", getReciptList);
+router.post("/get-recipt/:receiptId", getRecipt);
 router.put("/update-recipt-status", updateLandReciptStatus);
 router.post("/register", registerLand);
 router.post("/list", getLandRecord);

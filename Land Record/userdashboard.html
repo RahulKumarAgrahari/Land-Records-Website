@@ -14,6 +14,90 @@
     function generateOTP() {
     return Math.floor(100000 + Math.random() * 900000); // Generates a number between 1000 and 9999
 }
+const showUserData = (idss) => {
+      // Create and show notifications panel
+      const modal = document.createElement("div");
+      modal.className = "modal";
+      // aadhar:"123456789123"
+      // address:"dafdf, fgdd"
+      // applicationId:"APP-1741684162015-539"
+      // area:"13241325"
+      // city:"varanasi"
+      // createdAt:"2025-03-11T09:09:22.017Z"
+      // createdBy:"67cffbb62654572801991a6c"
+      // dor:"2025-02-28T00:00:00.000Z"
+      // email:"67rahul.rbgj@gmail.com"
+      // full_name:"Rahul Agrahari"
+      // owner_name:"Rahul"
+      // phone:"6387422206"
+      // pincode:"231216"
+      // reviewedBy:"clerk"
+      // state:"AP"
+      // status:"pending"
+      // survey_no:"23143245"
+      // updatedAt:"2025-03-11T09:44:00.026Z"
+      console.log(dataList)
+      const userData = dataList[idss]
+      const dataToShow = {
+        applicationId: "Application ID",
+        reviewedBy: "Reviewed By",
+        status: "Status",
+        full_name: "Full Name",
+        owner_name: "Owner Name",
+        email: "Email",
+        phone: "Mobile No.",
+        aadhar: "Aadhar",
+        address: "Address",
+        area: "Area",
+        city: "City",
+        state: "State",
+        pincode: "Pin Code",
+        createdAt: "Created AT",
+        createdBy: "Created By",
+        dor: "Date of Registry",
+        survey_no: "Survey No.",
+        updatedAt: "Last updated At",
+      }
+      const dates = ['createdAt', 'dor', 'updatedAt']
+      const deta = Object.keys(dataToShow).map((e) => {
+        return `<div class="notification-item">
+                    <div class="notification-content">
+                      <div class="notification-title">${dataToShow[e]} : ${dates.includes(e) ? new Date(userData[e]).toDateString() : userData[e]}</div>
+                    </div>
+                  </div>`
+      })
+      modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Details</h2>
+              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="notifications-panel">
+                <div class="notification-list">
+                  <div class="notification-item">
+                    <div class="notification-content">
+                      <div class="notification-title">Full Name : ${userData.full_name}</div>
+                    </div>
+                  </div>
+                  ${deta.join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      document.body.appendChild(modal);
+    }
+    // Add file upload preview for application documents
+    // document
+    //   .getElementById("application-docs")
+    //   .addEventListener("change", function (e) {
+    //     const fileName = e.target.files[0]?.name;
+    //     if (fileName) {
+    //       e.target.nextElementSibling.querySelector("span").textContent =
+    //         fileName;
+    //     }
+    //   });
     function showErrors(response) {
       if (response.status === false && response.errors && response.errors.length > 0) {
         alert("Errors:\n" + response.errors.join("\n"));
@@ -271,90 +355,7 @@
       doc.save(`Land_Detail-${userData.applicationId}.pdf`);
     }
 
-    const showUserData = (idss) => {
-      // Create and show notifications panel
-      const modal = document.createElement("div");
-      modal.className = "modal";
-      // aadhar:"123456789123"
-      // address:"dafdf, fgdd"
-      // applicationId:"APP-1741684162015-539"
-      // area:"13241325"
-      // city:"varanasi"
-      // createdAt:"2025-03-11T09:09:22.017Z"
-      // createdBy:"67cffbb62654572801991a6c"
-      // dor:"2025-02-28T00:00:00.000Z"
-      // email:"67rahul.rbgj@gmail.com"
-      // full_name:"Rahul Agrahari"
-      // owner_name:"Rahul"
-      // phone:"6387422206"
-      // pincode:"231216"
-      // reviewedBy:"clerk"
-      // state:"AP"
-      // status:"pending"
-      // survey_no:"23143245"
-      // updatedAt:"2025-03-11T09:44:00.026Z"
-      console.log(dataList)
-      const userData = dataList[idss]
-      const dataToShow = {
-        applicationId: "Application ID",
-        reviewedBy: "Reviewed By",
-        status: "Status",
-        full_name: "Full Name",
-        owner_name: "Owner Name",
-        email: "Email",
-        phone: "Mobile No.",
-        aadhar: "Aadhar",
-        address: "Address",
-        area: "Area",
-        city: "City",
-        state: "State",
-        pincode: "Pin Code",
-        createdAt: "Created AT",
-        createdBy: "Created By",
-        dor: "Date of Registry",
-        survey_no: "Survey No.",
-        updatedAt: "Last updated At",
-      }
-      const dates = ['createdAt', 'dor', 'updatedAt']
-      const deta = Object.keys(dataToShow).map((e) => {
-        return `<div class="notification-item">
-                    <div class="notification-content">
-                      <div class="notification-title">${dataToShow[e]} : ${dates.includes(e) ? new Date(userData[e]).toDateString() : userData[e]}</div>
-                    </div>
-                  </div>`
-      })
-      modal.innerHTML = `
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2>Details</h2>
-              <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
-            </div>
-            <div class="modal-body">
-              <div class="notifications-panel">
-                <div class="notification-list">
-                  <div class="notification-item">
-                    <div class="notification-content">
-                      <div class="notification-title">Full Name : ${userData.full_name}</div>
-                    </div>
-                  </div>
-                  ${deta.join('')}
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      document.body.appendChild(modal);
-    }
-    // Add file upload preview for application documents
-    // document
-    //   .getElementById("application-docs")
-    //   .addEventListener("change", function (e) {
-    //     const fileName = e.target.files[0]?.name;
-    //     if (fileName) {
-    //       e.target.nextElementSibling.querySelector("span").textContent =
-    //         fileName;
-    //     }
-    //   });
+  
   </script>
 </head>
 

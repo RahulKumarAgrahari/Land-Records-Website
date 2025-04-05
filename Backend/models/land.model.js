@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const landSchema = new mongoose.Schema({
     applicationId: { type: String, unique: true },
-    recipt:{ type: mongoose.Schema.Types.ObjectId, ref: "landRecipt" },
+    recipt: { type: mongoose.Schema.Types.ObjectId, ref: "landRecipt" },
     full_name: {
         type: String,
         required: true,
@@ -10,18 +10,18 @@ const landSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,        
+        required: true,
         trim: true,
         lowercase: true,
     },
     phone: {
         type: String,
-        required: true,        
+        required: true,
         match: [/^\d{10}$/, "Phone number must be 10 digits"] // Validates 10-digit numbers
     },
     aadhar: {
         type: String,
-        required: true,        
+        required: true,
         match: [/^\d{12}$/, "Aadhar number must be exactly 12 digits"] // Validates 12-digit format
     },
     dor: {
@@ -29,11 +29,11 @@ const landSchema = new mongoose.Schema({
         required: true,
         min: new Date('1900-01-01'), // Minimum date (1st Jan 1900)
         max: new Date(), // Maximum date (Today’s date),
-        default:new Date()
+        default: new Date()
     },
     owner_name: {
         type: String,
-        required: true,        
+        required: true,
         minlength: 3, // Minimum length of 3 characters
         maxlength: 20, // Maximum length of 20 characters
         match: [/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"]
@@ -67,16 +67,19 @@ const landSchema = new mongoose.Schema({
     document: {
         type: String,
     },
-    status:{
-        type:String,
-        enum:['pending','approved','rejected'],
-        default:'pending'
+    status: {
+        type: String,
+        enum: ['pending', 'approved', 'rejected'],
+        default: 'pending'
     },
-    reviewedBy:{
-        type:String,
-        default:''
+    reviewedBy: {
+        type: String,
+        default: ''
     },
-    createdBy:{ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    remark: {
+        type: String
+    },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 },
     {
         timestamps: true

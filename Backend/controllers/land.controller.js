@@ -22,6 +22,9 @@ import status from "statuses";
 const generateApplicationId = () => {
     return "APP-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
 };
+const generateServeNo = () => {
+    return "SN-" + Date.now() + "-" + Math.floor(Math.random() * 22);
+};
 const generateReciptNo = () => {
     return Date.now();
 };
@@ -33,7 +36,8 @@ const createLandRecipt = async (req, res) => {
         const token = req.headers.authrization
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const reciptNo = await generateReciptNo();
-        const landData = await landReceipt.create({ ...body, createdBy: decoded.id, receiptId: reciptNo })
+        const serveNo = await generateServeNo();
+        const landData = await landReceipt.create({ ...body, createdBy: decoded.id, receiptId: reciptNo, survey_no:serveNo  })
         if (landData) {
             res.send({
                 message: `Land registration successful!\nReceipt No: ${reciptNo}\nSubmitted by: ${landData.full_name}`,
@@ -83,9 +87,23 @@ const getReciptList = async (req, res) => {
         const query = {
             createdBy: decoded.id
         }
+        // Case-sensitive regex search (no 'i' flag)
         if (body.status) {
-            query.status = body.status
+            if (Array.isArray(body.status)) {
+                query.status = { $in: body.status };
+            } else {
+                query.status = body.status
+            }
         }
+        if (body.survey_no) {
+            query.survey_no = new RegExp(body.survey_no);
+        }
+        if (body.receiptId) {
+            query.receiptId = new RegExp(body.receiptId);
+        }
+        // if (body.owner_name) {
+        //     query.owner_name = new RegExp(body.owner_name);
+        // }
         const landData = await landReceipt.find(query).skip(body.skip).limit(body.limit);
         const totalRecords = await landReceipt.countDocuments(query);
         if (landData) {
@@ -131,27 +149,80 @@ const getReciptList = async (req, res) => {
         });
     }
 }
-const regLand = async (req,updatedLand) => {
+const getRecipt = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    const body = req.body
+    const paramas = req.params
+    try {
+        const token = req.headers.authrization
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const query = {
+            createdBy: decoded.id,
+            receiptId: paramas.receiptId
+        }
+        if (body.status) {
+            query.status = body.status
+        }
+        const reciptData = await landReceipt.findOne(query)
+        if (reciptData) {
+            res.send({
+                message: "success",
+                status: true,
+                data: reciptData
+            })
+        } else {
+            res.status(500).json({
+                message: 'Somthing went wrong',
+                status: false
+            });
+        }
+    } catch (err) {
+
+        if (err.name === 'ValidationError') {
+            // Collect all validation errors
+            const errorMessages = [];
+            for (let field in err.errors) {
+                errorMessages.push(err.errors[field].message); // Store the error messages
+            }
+
+            // Return the errors to the client
+            res.status(400).json({
+                message: 'Validation errors',
+                errors: errorMessages,
+                status: false
+            });
+            return
+        }
+
+        // For other errors (e.g., database issues)
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: err.message,
+            status: false
+        });
+    }
+}
+const regLand = async (req, updatedLand) => {
     const body = req.body
     const token = req.headers.authrization
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const applicationId = await generateApplicationId();
     const data = {
-        email:updatedLand.email,
-        phone:updatedLand.phone,
-        aadhar:updatedLand.aadhar,
-        owner_name:updatedLand.owner_name,
-        full_name:updatedLand.full_name,
-        survey_no:updatedLand.survey_no,
-        area:updatedLand.area,
-        state:updatedLand.state,
-        city:updatedLand.city,
-        pincode:"656598",
-        address:updatedLand.address,
-        dob:updatedLand.dob
+        email: updatedLand.email,
+        phone: updatedLand.phone,
+        aadhar: updatedLand.aadhar,
+        owner_name: updatedLand.owner_name,
+        full_name: updatedLand.full_name,
+        survey_no: updatedLand.survey_no,
+        area: updatedLand.area,
+        state: updatedLand.state,
+        city: updatedLand.city,
+        pincode: "656598",
+        address: updatedLand.address,
+        dob: updatedLand.dob
         // landId
     }
-    const landData = await Land.create({ createdBy: decoded.id, applicationId,...data })
+    const landData = await Land.create({ createdBy: decoded.id, applicationId, ...data })
     if (landData) {
         await LandHistory.create({
             landId: landData._id,
@@ -277,11 +348,11 @@ const updateLandReciptStatus = async (req, res) => {
             { _id: body.id },  // Filter by ID
             { $set: update } // Dynamically set the field to update
         );
-        
+
         if (updatedLand.modifiedCount > 0) {
             if (body.status == 'file') {
-                const data = await  landReceipt.findOne({ _id: body.id })
-                regLand(req,data)
+                const data = await landReceipt.findOne({ _id: body.id })
+                regLand(req, data)
             }
             res.send({
                 message: "Status updated successfully",
@@ -495,5 +566,6 @@ export {
     getLandRecordre,
     createLandRecipt,
     getReciptList,
+    getRecipt,
     updateLandReciptStatus
 }

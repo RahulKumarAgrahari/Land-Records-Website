@@ -8,6 +8,8 @@ const app = express()
 import officialRoutes from './routes/official.routes.js'
 import userRoutes from './routes/user.routes.js'
 import landRoutes from './routes/land.routes.js'
+import commonRoutes from './routes/common.routes.js'
+
 const PORT = 8080
 app.use(express.json())
 app.use(cors({credentials: true }))
@@ -19,6 +21,7 @@ app.use((req, res, next) => {
 app.use("/api/official", officialRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/land", landRoutes);
+app.use("/api/common", commonRoutes);
 
 try {
     app.listen(PORT)
