@@ -37,7 +37,7 @@ const createLandRecipt = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const reciptNo = await generateReciptNo();
         const serveNo = await generateServeNo();
-        const landData = await landReceipt.create({ ...body, createdBy: decoded.id, receiptId: reciptNo, survey_no:serveNo  })
+        const landData = await landReceipt.create({ ...body, createdBy: decoded.id, receiptId: reciptNo, survey_no: serveNo })
         if (landData) {
             res.send({
                 message: `Land registration successful!\nReceipt No: ${reciptNo}\nSubmitted by: ${landData.full_name}`,
@@ -558,6 +558,22 @@ const updateLandRecordStatus = async (req, res) => {
     }
 }
 
+const getLandData = async (req, res) => {
+    try {
+        res.header("Access-Control-Allow-Origin", "*");
+        const paramas = req.params
+        const query = { _id: paramas.id }
+        const landData = await Land.findOne(query);
+        res.send({
+            message: "sucess",
+            status: true,
+            data: landData
+        })
+    } catch (error) {
+
+    }
+}
+
 export {
     registerLand,
     getLandRecord,
@@ -567,5 +583,6 @@ export {
     createLandRecipt,
     getReciptList,
     getRecipt,
-    updateLandReciptStatus
+    updateLandReciptStatus,
+    getLandData
 }
