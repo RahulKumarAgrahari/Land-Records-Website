@@ -458,7 +458,7 @@ const getLandRecordClerk = async (req, res) => {
         });
     }
 }
-const getLandRecordre = async (req, res) => {
+const getLandRecordReviewedBy = async (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const body = req.body
     try {
@@ -513,6 +513,9 @@ const updateLandRecordStatus = async (req, res) => {
     const body = req.body
     try {
         let update = { reviewedBy: body.reviewedBY }
+        if (body.reviewedBY == 'admin') {
+            update.status = 'approved'
+        }
         if (body.status == 'rejected') {
             update.status = 'rejected'
         }
@@ -579,7 +582,7 @@ export {
     getLandRecord,
     getLandRecordClerk,
     updateLandRecordStatus,
-    getLandRecordre,
+    getLandRecordReviewedBy,
     createLandRecipt,
     getReciptList,
     getRecipt,
